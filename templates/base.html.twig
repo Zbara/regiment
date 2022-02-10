@@ -70,13 +70,23 @@
         <footer class="footer footer-transparent d-print-none">
             <div class="container-xl">
                 <div class="row text-center align-items-center flex-row-reverse">
+                    <div class="col-lg-auto ms-lg-auto">
+                        <ul class="list-inline list-inline-dots mb-0">
+                            <li class="list-inline-item">
+                                <a href="https://vk.com/app8063650" class="link-secondary" target="_blank">Храбрый Полк</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="https://vk.com/ant_game" class="link-secondary" target="_blank">Узел связи</a>
+                            </li>
+                        </ul>
+                    </div>
                     <div class="col-12 col-lg-auto mt-3 mt-lg-0">
                         <ul class="list-inline list-inline-dots mb-0">
                             <li class="list-inline-item">
                                 Zbara &copy; {{ "now"|date("Y") }}
                             </li>
                             <li class="list-inline-item">
-                                build 1
+                                {{ gitFull() }}, {{ gitDate()|format_datetime('short', 'short') }}
                             </li>
                         </ul>
                     </div>

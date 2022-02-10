@@ -23,7 +23,7 @@ class AppVersionExtension extends AbstractExtension
         $branch = trim(exec('git symbolic-ref HEAD | sed -e "s/^refs\/heads\///"'));
         $rev = mb_str_split(exec('git rev-list HEAD --count'));
 
-        return sprintf('build v%s.%s.%s-%s.%s', self::MAJOR, $rev[0], $rev[1], $branch, self::getHash());
+        return sprintf('build v%s.%s.%s-%s.%s', self::MAJOR, $rev[0], 0, $branch, self::getHash());
     }
 
     public static function getDate(): string

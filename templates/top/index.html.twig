@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
-{% block title %}Топ игроков игры Храбрый Полк	{% endblock %}
+{% block title %}Топ игроков игры Храбрый Полк    {% endblock %}
 {% block header 'Топ игроков игры Храбрый Полк' %}
-{%  set damage = [
+{% set damage = [
     100000,
     250000,
     500000,
@@ -31,8 +31,8 @@
                     <table class="table card-table table-vcenter text-nowrap datatable">
                         <thead>
                         <tr>
-                            <th>№</th>
-                            <th>ID</th>
+                            <th class="w-1">№</th>
+                            <th class="w-3">Имя Фамилия</th>
                             <th{% if pagination.isSorted(['a.level']) %} class="sorted"{% endif %}>
                                 {{ knp_pagination_sortable(pagination, 'Уровень', ['a.level']) }}
                             </th>
@@ -45,7 +45,9 @@
                             <th{% if pagination.isSorted(['a.total_damage']) %} class="sorted"{% endif %}>
                                 {{ knp_pagination_sortable(pagination, 'Урон', ['a.total_damage']) }}
                             </th>
-                            <th>Вход в игру</th>
+                            <th{% if pagination.isSorted(['a.loginTime']) %} class="sorted"{% endif %}>
+                                {{ knp_pagination_sortable(pagination, 'Вход в игру', ['a.login_time']) }}
+                            </th>
                             <th>Статус</th>
                         </tr>
                         </thead>
@@ -56,22 +58,39 @@
                                     {{ key+1 }}
                                 </td>
                                 <td>
-                                    {{ item.socId }}
+                                    <div class="d-flex py-1 align-items-center">
+                                        <a href="https://vk.com/id{{ item.socId }}"
+                                           class="text-reset" target="_blank"><span class="avatar me-2"
+                                                                                    style="background-image: url({{ item.photo50 }})"></span>
+                                        </a>
+                                        <div class="flex-fill">
+                                            <div class="font-weight-medium">
+                                                <a href="https://vk.com/id{{ item.socId }}"
+                                                   class="text-reset" target="_blank">
+                                                    {{ item.firstName }} {{ item.lastName }}
+                                                </a>
+                                            </div>
+                                            <div class="text-muted">
+                                                <div class="text-reset">@id{{ item.socId }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
                                 <td>
-                                    {{ item.level }}
+                                    <div class="text-muted"> {{ item.level }}</div>
                                 </td>
                                 <td>
-                                    {{ item.sut }}
+                                    <div class="text-muted">{{ item.sut }}</div>
                                 </td>
                                 <td>
-                                    {{ item.usedTalents }}
+                                    <div class="text-muted"> {{ item.usedTalents }}</div>
                                 </td>
                                 <td>
-                                    {{ damage[item.totalDamage]|number_format(0, ',', '.') }}
+                                    <div class="text-muted">  {{ damage[item.totalDamage]|number_format(0, ',', '.') }}</div>
                                 </td>
                                 <td>
-                                    {{ convertTime(item.loginTime) }}
+                                    <div class="text-muted"> {{ convertTime(item.loginTime) }}</div>
                                 </td>
                                 <td>
                                     <span class="badge bg-success me-1"></span>нет в друзьях

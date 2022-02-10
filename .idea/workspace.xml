@@ -5,17 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1ef7649d-1c0b-4fe6-930d-55a61fa7c954" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Service/Vkontakte.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/icon-128.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/icon-16.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/icon-48.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/manifest.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/script.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Service/Friends.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/framework.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/framework.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Command/ParserCommand.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Command/ParserCommand.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Command/VkCommand.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Command/users.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/RegimentUsers.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/RegimentUsers.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nginx.regiment.conf" beforeDir="false" afterPath="$PROJECT_DIR$/nginx.regiment.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/FriendsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/FriendsController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Service/Parse.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Parse.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/users.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/top/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/top/index.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -163,7 +163,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/Service" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -175,11 +175,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/var" />
+      <recent name="$PROJECT_DIR$/client" />
       <recent name="$PROJECT_DIR$/src/Service" />
       <recent name="$PROJECT_DIR$/src/Command" />
-      <recent name="$PROJECT_DIR$/config/packages" />
-      <recent name="$PROJECT_DIR$/src/Twig" />
-      <recent name="$PROJECT_DIR$/templates" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -190,7 +190,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1644439091117</updated>
-      <workItem from="1644439092318" duration="38743000" />
+      <workItem from="1644439092318" duration="44821000" />
     </task>
     <servers />
   </component>

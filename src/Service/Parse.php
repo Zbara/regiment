@@ -120,6 +120,8 @@ class Parse
             ->setFirstName($user['first_name'])
             ->setTotalDamage($data['achievements']['total_damage']);
 
+        dump('update' .$regiment->getSocId());
+
         $this->entityManager->persist($regiment);
         $this->entityManager->flush();
     }
@@ -138,6 +140,8 @@ class Parse
             ->setLastName($user['last_name'])
             ->setFirstName($user['first_name'])
             ->setTotalDamage($data['achievements']['total_damage']);
+
+        dump('created' .$regiment->getSocId());
 
         $this->entityManager->persist($regiment);
         $this->entityManager->flush();

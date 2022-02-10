@@ -147,18 +147,6 @@ class RegimentUsers
         return $this;
     }
 
-    public function getInfoUsers(): ?VkUsers
-    {
-        return $this->infoUsers;
-    }
-
-    public function setInfoUsers(?VkUsers $infoUsers): self
-    {
-        $this->infoUsers = $infoUsers;
-
-        return $this;
-    }
-
     public function getFirstName(): ?string
     {
         return $this->first_name;

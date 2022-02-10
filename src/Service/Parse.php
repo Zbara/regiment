@@ -13,10 +13,10 @@ class Parse
     private EntityManagerInterface $entityManager;
 
     var $game_login = 135057576;
-    var $game_token = "eacb78bec65760e7d5fd4373389ab2e1";
-    var $current_time = 1644488343;
-    var $secret = "Ko7zWN";
-    var $game_key = 'Y4zT1AvovM';
+    var $game_token = "50950fd6625c5542139d99aee5d9a04d";
+    var $current_time = 1644519493;
+    var $secret = "jn5Jfk";
+    var $game_key = '3VeTssTdJ8';
     var $last_rnd;
     var $num;
     private mixed $usersVk;
@@ -41,6 +41,29 @@ class Parse
                 if ($user['result'] == 'ok') {
                     $userId = array_key_first($user['friends']);
 
+
+                    $client = HttpClient::create([
+                            'headers' => [
+                                'User-Agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36',
+                            ],
+                            'proxy' => 'http://:@127.0.0.1:8888',
+                            'verify_peer' => false,
+                            'verify_host' => false,
+                        ]
+                    );
+
+                    $response = $client->request('POST', 'https://api.vk.com/method/users.get', [
+                        'body' => [
+                            'user_ids' => $userId,
+                            'access_token' => '460b2c754b3fcbeac4bde191abfe1aa7c71f9a4f257f54539af1661b7360c731b70dd8e98a5b2898679ce',
+                            'v' => '5.139',
+                            'fields' => 'photo_50'
+                        ]
+                    ]);
+
+                    $response = $response->toArray();
+
+
                     $regiment = new RegimentUsers();
                     $regiment->setSocId($userId)
                         ->setLevel($user['friends'][$userId]['static_resources']['level'])
@@ -49,6 +72,9 @@ class Parse
                         ->setAchievements($user['friends'][$userId]['achievements'])
                         ->setLoginTime($user['friends'][$userId]['time_resources']['login_time'])
                         ->setCreated(time())
+                        ->setPhoto50($response['response']['0']['photo_50'])
+                        ->setLastName($response['response']['0']['last_name'])
+                        ->setFirstName($response['response']['0']['first_name'])
                         ->setTotalDamage($user['friends'][$userId]['achievements']['total_damage']);
 
                     dump($userId);

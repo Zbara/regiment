@@ -5,7 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1ef7649d-1c0b-4fe6-930d-55a61fa7c954" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/regiment.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/regiment.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/Parse.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Parse.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/users.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/users.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/top/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/top/index.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -176,7 +182,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1644439091117</updated>
-      <workItem from="1644439092318" duration="26476000" />
+      <workItem from="1644439092318" duration="30733000" />
     </task>
     <servers />
   </component>

@@ -14,6 +14,20 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
+            {% if app.user %}
+
+            {% else %}
+                <div class="navbar-nav flex-row order-md-last">
+                    <div class="nav-item">
+                        <a href="" class="nav-link d-flex lh-1 text-reset p-0">
+                            <div class="d-none d-xl-block ps-2">
+                                Войти через ВКонтакте
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
             <div class="collapse navbar-collapse" id="navbar-menu">
                 <div class="d-flex flex-column flex-md-row flex-fill align-items-stretch align-items-md-center">
                     <ul class="navbar-nav">
@@ -38,18 +52,6 @@
         </div>
     </header>
     <div class="page-wrapper">
-        <div class="position-absolute p-3 top-0 end-0" style="z-index: 11">
-            <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true"
-                 data-bs-toggle="toast" data-bs-delay="3000">
-                <div class="toast-header">
-                    <strong class="me-auto">%title%</strong>
-                    <button type="button" class="ms-2 btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                </div>
-                <div class="toast-body">
-                    %messages%
-                </div>
-            </div>
-        </div>
         <div class="container-xl">
             <div class="page-header d-print-none">
                 <div class="row align-items-center">

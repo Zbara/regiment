@@ -16,6 +16,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
     name: 'app:parse',
     description: 'Add a short description for your command',
 )]
+//'{"login":135057576,"token":"6ecee60b636c68e06f1775000004b5df","time":1644521056,"secret":"romNW3","key":"7y8aee5G2C","groups":190682495}'
 class ParserCommand extends Command
 {
 
@@ -28,11 +29,13 @@ class ParserCommand extends Command
     protected function configure(): void
     {
         $this
-            ->addArgument('id', InputArgument::OPTIONAL);
+            ->addArgument('params', InputArgument::OPTIONAL);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        return $this->parse->run($input);
+        $params = json_decode($input->getArgument('params'));
+
+        return $this->parse->run($params);
     }
 }

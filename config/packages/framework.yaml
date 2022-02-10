@@ -12,6 +12,15 @@ framework:
         cookie_samesite: lax
         storage_factory_id: session.storage.factory.native
 
+    http_client:
+        default_options:
+            verify_peer: false
+            verify_host: false
+            timeout: 10
+            headers:
+                'User-Agent': 'VKAndroidApp/6.54-9332 (Android 11; SDK 30; armeabi-v7a; samsung SM-G970F; ru; 2280x1080)'
+
+
     #esi: true
     #fragments: true
     php_errors:

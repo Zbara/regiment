@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+{% block title %}Топ игроков игры Храбрый Полк	{% endblock %}
+{% block header 'Топ игроков игры Храбрый Полк' %}
+{%  set damage = [
+    100000,
+    250000,
+    500000,
+    1000000,
+    3000000,
+    5000000,
+    10000000,
+    20000000,
+    30000000,
+    50000000,
+    75000000,
+    100000000,
+    250000000,
+    500000000,
+    1000000000,
+    5000000000,
+    10000000000,
+    25000000000,
+    50000000000,
+    100000000000
+] %}
+{% block main %}
+    <div class="row row-cards">
+        <div class="col-12">
+            <div class="card">
+                <div class="table-responsive">
+                    <table class="table card-table table-vcenter text-nowrap datatable">
+                        <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>ID</th>
+                            <th{% if pagination.isSorted(['a.level']) %} class="sorted"{% endif %}>
+                                {{ knp_pagination_sortable(pagination, 'Уровень', ['a.level']) }}
+                            </th>
+                            <th{% if pagination.isSorted(['a.sut']) %} class="sorted"{% endif %}>
+                                {{ knp_pagination_sortable(pagination, 'СУТ', ['a.sut']) }}
+                            </th>
+                            <th{% if pagination.isSorted(['a.used_talents']) %} class="sorted"{% endif %}>
+                                {{ knp_pagination_sortable(pagination, 'Таланты', ['a.used_talents']) }}
+                            </th>
+                            <th{% if pagination.isSorted(['a.total_damage']) %} class="sorted"{% endif %}>
+                                {{ knp_pagination_sortable(pagination, 'Урон', ['a.total_damage']) }}
+                            </th>
+                            <th>Вход в игру</th>
+                            <th>Статус</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for key, item in pagination %}
+                            <tr data-id="{{ item.id }}">
+                                <td>
+                                    {{ key+1 }}
+                                </td>
+                                <td>
+                                    {{ item.socId }}
+                                </td>
+                                <td>
+                                    {{ item.level }}
+                                </td>
+                                <td>
+                                    {{ item.sut }}
+                                </td>
+                                <td>
+                                    {{ item.usedTalents }}
+                                </td>
+                                <td>
+                                    {{ damage[item.totalDamage]|number_format(0, ',', '.') }}
+                                </td>
+                                <td>
+                                    {{ convertTime(item.loginTime) }}
+                                </td>
+                                <td>
+                                    <span class="badge bg-success me-1"></span>нет в друзьях
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {{ knp_pagination_render(pagination, 'libs/pagination.html.twig') }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

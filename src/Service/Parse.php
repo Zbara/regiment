@@ -60,7 +60,7 @@ class Parse
         ]);
 
         if (isset($appInfo['response']['view_url'])){
-            $app = $this->vkontakte->getApi($appInfo['response']['view_url'], [], 'object');
+            $app = $this->vkontakte->getApi($appInfo['response']['view_url'], [], 'object', false, 'GET');
 
             preg_match('/\{"api_url"(.+?)}/', $app->getContent(), $token);
 

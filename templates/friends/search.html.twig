@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+{% block title %}Поиск игроков  Храбрый Полк{% endblock %}
+{% block header 'Поиск игроков Храбрый Полк' %}
+
+{% block main %}
+    <div class="row row-deck row-cards">
+        <div class="col-md-12 col-lg-12">
+            <div class="card" style="height: calc(44rem + 10px)">
+                <div class="card-header">
+                    <h3 class="card-title">Информация о игроке</h3>
+                </div>
+                <div class="card-body card-body-scrollable card-body-scrollable-shadow" id="vk_comments">
+                </div>
+            </div>
+        </div>
+    </div>
+        <script src="https://vk.com/js/api/openapi.js?169" type="text/javascript"></script>
+        <script type="text/javascript">
+            VK.init({
+                apiId: 8078221,
+                onlyWidgets: true
+            });
+            VK.Widgets.Comments('vk_comments', {limit: 20, attach: "*"});
+        </script>
+{% endblock %}
+
+

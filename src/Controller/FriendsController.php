@@ -17,6 +17,12 @@ class FriendsController extends AbstractController
         return  $this->render('friends/information.html.twig');
     }
 
+    #[Route('/friends/search', name: 'friends-search')]
+    public function search(Request $request, Friends $friends): Response
+    {
+        return  $this->render('friends/search.html.twig');
+    }
+
     #[Route('/friends/get', name: 'friends-get')]
     public function index(Request $request, Friends $friends): Response
     {

@@ -44,7 +44,7 @@
     <dt class="col-5">Уровень техники:</dt>
     <dd class="col-7">{{ user.sut }}</dd>
     <dt class="col-5">Урон:</dt>
-    <dd class="col-7">{{ damage[user.totalDamage] }}</dd>
+    <dd class="col-7">{{ damage[user.totalDamage]|number_format(0, ',', '.') }}</dd>
     <dt class="col-5">Таланты:</dt>
     <dd class="col-7">{{ user.usedTalents }}</dd>
 </dl>

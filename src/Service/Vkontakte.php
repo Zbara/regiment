@@ -33,7 +33,7 @@ class Vkontakte
      *
      * @return false|mixed|void
      */
-    public function getUserId($url, $proxy, $access_token)
+    public function getUserId($url, $access_token)
     {
         if (mb_strpos($url, 'https://') > -1) {
             $url = mb_substr($url, 8);
@@ -43,19 +43,18 @@ class Vkontakte
         }
         $parts = explode('/', $url);
         if (2 === \count($parts) && ('vk.com' === $parts[0] || 'm.vk.com' === $parts[0])) {
-            if ($vk = self::getApi('https://api.vk.com/method/utils.resolveScreenName', $proxy,
+            if ($vk = self::getApi('https://api.vk.com/method/utils.resolveScreenName',
                 [
                     'screen_name' => $parts[1],
                     'v' => '5.135',
                     'access_token' => (string)$access_token,
                 ])) {
                 if (isset($vk['response']['object_id'])) {
-                    return $vk['response']['object_id'];
+                    return (int) $vk['response']['object_id'];
                 }
-            } else {
-                return false;
             }
         }
+        return 0;
     }
 
     public function getApi($url, $params, $returnType = 'arr', $file = false, $method = 'POST')

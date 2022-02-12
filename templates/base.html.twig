@@ -14,20 +14,6 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
-            {% if app.user %}
-
-            {% else %}
-{#                <div class="navbar-nav flex-row order-md-last">#}
-{#                    <div class="nav-item">#}
-{#                        <a href="" class="nav-link d-flex lh-1 text-reset p-0">#}
-{#                            <div class="d-none d-xl-block ps-2">#}
-{#                                Войти через ВКонтакте#}
-{#                            </div>#}
-{#                        </a>#}
-{#                    </div>#}
-{#                </div>#}
-            {% endif %}
             <div class="collapse navbar-collapse" id="navbar-menu">
                 <div class="d-flex flex-column flex-md-row flex-fill align-items-stretch align-items-md-center">
                     <ul class="navbar-nav">
@@ -43,6 +29,22 @@
                     </span>
                                 <span class="nav-link-title">
                       Топ игроков
+                    </span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item {{ is_active_route(app.request, ['friends']) ? 'active' }}">
+                            <a class="nav-link" href="{{ path('friends-main') }}">
+                    <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-award" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <circle cx="12" cy="9" r="6"></circle>
+   <polyline points="9 14.2 9 21 12 19 15 21 15 14.2" transform="rotate(-30 12 9)"></polyline>
+   <polyline points="9 14.2 9 21 12 19 15 21 15 14.2" transform="rotate(30 12 9)"></polyline>
+</svg>
+                    </span>
+                                <span class="nav-link-title">
+                      Информация о игроке
                     </span>
                             </a>
                         </li>

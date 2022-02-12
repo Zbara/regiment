@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+{% block title %}Информация про игрока{% endblock %}
+{% block header 'Информация про игрока Храбрый Полк' %}
+
+{% block main %}
+    <div class="row row-deck row-cards">
+        <div class="col-md-6 col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Введите даныне от аккаунта</h3>
+                </div>
+                <div class="card-body">
+                    <div class="note note-success">
+                        <p>
+                            Информация о игроке Храбрый Полк
+                        </p>
+                    </div>
+
+                    <div id="alert"></div>
+                    <form name="information" id="informationForm">
+                        <div class="row justify-content-center">
+                            <div class="col-5">
+                                <div class="input-group">
+                                    <input type="text" id="userId" name="userId"
+                                           placeholder="Введите ссылку" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-footer">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-4">
+                                    <button type="submit" id="information_submit" name="information[submit]"
+                                            class="btn btn-primary">Показать информацию
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 col-lg-6">
+            <div class="card" style="height: calc(24rem + 10px)">
+                <div class="card-header">
+                    <h3 class="card-title">Информация о игроке</h3>
+                </div>
+                <div class="card-body card-body-scrollable card-body-scrollable-shadow" id="userInfo">
+                    <div class="empty">
+                        <p class="empty-subtitle text-muted">
+                            Нет данных для отображения.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

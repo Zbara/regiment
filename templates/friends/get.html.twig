@@ -1,0 +1,50 @@
+{% set damage = [
+    100000,
+    250000,
+    500000,
+    1000000,
+    3000000,
+    5000000,
+    10000000,
+    20000000,
+    30000000,
+    50000000,
+    75000000,
+    100000000,
+    250000000,
+    500000000,
+    1000000000,
+    5000000000,
+    10000000000,
+    25000000000,
+    50000000000,
+    100000000000
+] %}
+<div class="row g-2 align-items-center">
+    <div class="col-auto">
+        <a href="//vk.com/id{{ user.socId }}" target="_blank">
+            <span class="avatar avatar-lg" style="background-image: url({{ user.photo50 }})"></span>
+        </a>
+    </div>
+    <div class="col">
+        <h4 class="card-title m-0">
+            <a href="//vk.com/id{{ user.socId }}" target="_blank">{{ user.firstName }} {{ user.lastName }}</a>
+        </h4>
+        <div class="text-muted">
+            Обновление: {{ convertTime(user.updateTime) }}
+        </div>
+        <div class="small mt-1">
+            <span class="badge bg-green"></span> Вход в игру: {{ convertTime(user.loginTime) }}
+        </div>
+    </div>
+</div>
+<dl class="row p-2">
+    <dt class="col-5">Уровень:</dt>
+    <dd class="col-7">{{ user.level }}</dd>
+    <dt class="col-5">Уровень техники:</dt>
+    <dd class="col-7">{{ user.sut }}</dd>
+    <dt class="col-5">Урон:</dt>
+    <dd class="col-7">{{ damage[user.totalDamage] }}</dd>
+    <dt class="col-5">Таланты:</dt>
+    <dd class="col-7">{{ user.usedTalents }}</dd>
+</dl>

@@ -167,6 +167,7 @@ class Parse
             ->setLoginTime($data['time_resources']['login_time'])
             ->setPhoto50($user['photo_50'])
             ->setLastName($user['last_name'])
+            ->setUpdateTime(time())
             ->setFirstName($user['first_name'])
             ->setTotalDamage($data['achievements']['total_damage']);
 
@@ -186,6 +187,7 @@ class Parse
             ->setAchievements($data['achievements'])
             ->setLoginTime($data['time_resources']['login_time'])
             ->setCreated(time())
+            ->setUpdateTime(time())
             ->setPhoto50($user['photo_50'])
             ->setLastName($user['last_name'])
             ->setFirstName($user['first_name'])

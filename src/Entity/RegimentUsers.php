@@ -47,6 +47,10 @@ class RegimentUsers
     #[ORM\Column(type: 'string', length: 255)]
     private $photo_50;
 
+    #[ORM\Column(type: 'integer')]
+    private $updateTime;
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -180,6 +184,18 @@ class RegimentUsers
     public function setPhoto50(string $photo_50): self
     {
         $this->photo_50 = $photo_50;
+
+        return $this;
+    }
+
+    public function getUpdateTime(): ?int
+    {
+        return $this->updateTime;
+    }
+
+    public function setUpdateTime(int $updateTime): self
+    {
+        $this->updateTime = $updateTime;
 
         return $this;
     }

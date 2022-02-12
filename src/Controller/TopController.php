@@ -23,12 +23,13 @@ class TopController extends AbstractController
             . 'offset = offset + 1000;'
             . '};'
             . 'return members;';
-        
+
 
         return $this->render('top/index.html.twig', [
             'pagination' => $paginator->paginate($regimentUsersRepository->findLatest(), $request->query->getInt('page', 1), 250, [
                 'defaultSortDirection' => 'desc'
-            ])
+            ]),
+            'update' => $regimentUsersRepository->updateTime()
         ]);
     }
 }

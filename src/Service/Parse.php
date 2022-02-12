@@ -8,21 +8,28 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 class Parse
 {
-    private EntityManagerInterface $entityManager;
-    private Vkontakte $vkontakte;
-
+    var int $appId = 8063650;
     var int $game_login;
     var string $game_token;
     var int $current_time;
-    var string $secret;
-    var string $game_key;
+    var mixed $secret = null;
+    var mixed $game_key = null;
     var int $last_rnd = 0;
     var int $groups;
     var int $members_count;
     private array $membersGroups = [];
+
+    private EntityManagerInterface $entityManager;
+    private Vkontakte $vkontakte;
     private RegimentUsersRepository $regimentUsersRepository;
 
     public function __construct(
@@ -36,10 +43,53 @@ class Parse
         $this->regimentUsersRepository = $regimentUsersRepository;
     }
 
+    /**
+     * @throws TransportExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ClientExceptionInterface
+     */
     public function run($params): int
     {
-        $this->setInfo($params);
-        $this->getUsers();
+        $this->groups = $params;
+
+        $appInfo = $this->vkontakte->getApi('https://api.vk.com/method/apps.getEmbeddedUrl', [
+            'app_id' => $this->appId,
+            'v' => '5.136',
+            'access_token' => $_ENV['ACCESS_TOKEN']
+        ]);
+
+        if (isset($appInfo['response']['view_url'])){
+            $app = $this->vkontakte->getApi($appInfo['response']['view_url'], [], 'object');
+
+            preg_match('/\{"api_url"(.+?)}/', $app->getContent(), $token);
+
+            if(isset($token['0'])){
+                $appGame = $this->vkontakte->getApi('https://vk.regiment.bravegames.ru/frame?' . http_build_query( json_decode($token['0'], 1)), [], 'object', false, 'GET');
+
+                if($appGame->getContent()){
+                    preg_match('/\window.game_login = (0|[1-9][0-9]*)/', $appGame->getContent(), $game_login);
+                    preg_match('/\window.game_token = "(.+?)"/', $appGame->getContent(), $game_token);
+                    preg_match('/\window.current_time = (0|[1-9][0-9]*)/', $appGame->getContent(), $current_time);
+
+                    $this->game_login = (int) $game_login[1];
+                    $this->current_time = (int) $current_time[1];
+                    $this->game_token = $game_token[1];
+
+                    $user = $this->generateQuery("init", "friends={}");
+
+                    if(isset($user['secret'])){
+                        $this->secret = $user['secret'];
+                        $this->game_key = $user['key'];
+
+                        if(isset( $this->game_key)){
+                            $this->getUsers();
+                        }
+                    }
+                }
+            }
+        } else dump('Ошибка приложения');
+
 
         return Command::SUCCESS;
     }
@@ -120,7 +170,7 @@ class Parse
             ->setFirstName($user['first_name'])
             ->setTotalDamage($data['achievements']['total_damage']);
 
-        dump('update' .$regiment->getSocId());
+        dump('update' . $regiment->getSocId());
 
         $this->entityManager->persist($regiment);
         $this->entityManager->flush();
@@ -141,7 +191,7 @@ class Parse
             ->setFirstName($user['first_name'])
             ->setTotalDamage($data['achievements']['total_damage']);
 
-        dump('created' .$regiment->getSocId());
+        dump('created' . $regiment->getSocId());
 
         $this->entityManager->persist($regiment);
         $this->entityManager->flush();
@@ -185,7 +235,9 @@ class Parse
         $this->last_rnd = $rnd;
         $str .= "&rnd=" . $rnd;
 
-        $hash = md5($this->secret . $str . $this->secret);
+        if ($method == "init") {
+            $hash = md5($str);
+        } else $hash = md5($this->secret . $str . $this->secret);
 
         $str .= "&sign=" . $hash;
 
@@ -201,28 +253,28 @@ class Parse
 
     public function api($url, $data, $sign)
     {
-        $client = HttpClient::create([
-                'headers' => [
-                    'User-Agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36',
-                    'Origin' => 'https://vk.regiment.bravegames.ru',
-                    'Game-key' => $this->game_key,
-                    'Game-check' => md5($sign),
+        try {
+            $client = HttpClient::create([
+                    'headers' => [
+                        'User-Agent' => 'VKAndroidApp/6.54-9332 (Android 11; SDK 30; armeabi-v7a; samsung SM-G970F; ru; 2280x1080)',
+                        'Origin' => 'https://vk.regiment.bravegames.ru',
+                        'Game-key' => $this->game_key,
+                        'Game-check' => md5($sign),
+                    ],
+                    //'proxy' => 'http://:@127.0.0.1:8888',
+                    //'verify_peer' => false,
+                    //'verify_host' => false,
                 ]
-            ]
-        );
-        $response = $client->request('POST', 'https://' . $url, ['body' => $this->compress($data)]);
+            );
+            $response = $client->request('POST', 'https://' . $url, ['body' => $this->compress($data)]);
 
-        return json_decode(rawurldecode(gzuncompress(base64_decode($response->getContent()))), 1);
-    }
-
-    private function setInfo($params)
-    {
-
-        $this->game_login = $params->login;
-        $this->game_token = $params->token;
-        $this->current_time = $params->time;
-        $this->secret = $params->secret;
-        $this->game_key = $params->key;
-        $this->groups = $params->groups;
+            if (Response::HTTP_OK === $response->getStatusCode()) {
+                return json_decode(rawurldecode(gzuncompress(base64_decode($response->getContent()))), 1);
+            }
+        } catch (TransportExceptionInterface|ClientExceptionInterface|RedirectionExceptionInterface|ServerExceptionInterface $e) {
+            return $e->getResponse()->toArray(false);
+        } catch (DecodingExceptionInterface $e) {
+            return $e->getMessage();
+        }
     }
 }

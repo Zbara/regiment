@@ -47,7 +47,7 @@ class Vkontakte
                 [
                     'screen_name' => $parts[1],
                     'v' => '5.135',
-                    'access_token' => (string) $access_token,
+                    'access_token' => (string)$access_token,
                 ])) {
                 if (isset($vk['response']['object_id'])) {
                     return $vk['response']['object_id'];
@@ -58,7 +58,7 @@ class Vkontakte
         }
     }
 
-    public function getApi($url, $params, $returnType = 'arr', $file = false)
+    public function getApi($url, $params, $returnType = 'arr', $file = false, $method = 'POST')
     {
         try {
             if ($file) {
@@ -70,9 +70,15 @@ class Vkontakte
                 $response = $this->httpClient->request('POST', $url, [
                     'headers' => $formData->getPreparedHeaders()->toArray(),
                     'body' => $formData->bodyToIterable(),
+
                 ]);
             } else {
-                $response = $this->httpClient->request('POST', $url, ['body' => $params]);
+                $response = $this->httpClient->request($method, $url, [
+                    'body' => $params,
+                    //'proxy' => 'http://:@127.0.0.1:8888',
+                    //'verify_peer' => false,
+                    //'verify_host' => false,
+                ]);
             }
 
             $response->getHeaders();
@@ -98,14 +104,14 @@ class Vkontakte
             case 'error':
                 switch ($response['error']['error_code']) {
                     case 14:
-                        copy($response['error']['captcha_img'], __DIR__.'/../../var/captcha/image_'.$response['error']['captcha_sid'].'.jpg');
+                        copy($response['error']['captcha_img'], __DIR__ . '/../../var/captcha/image_' . $response['error']['captcha_sid'] . '.jpg');
 
                         return $this->getCaptcha($url, $params, $response['error']['captcha_sid']);
 
                     default:
                         return $response;
                 }
-                // no break
+            // no break
             default:
                 return $response;
         }
@@ -135,7 +141,7 @@ class Vkontakte
         return match ($error['error'] ?? 0) {
             self::VK_AUTH_ERROR_INVALID_CLIENT => self::throwError(72, $error),
             self::VK_AUTH_ERROR_NEED_CAPTCHA => self::throwError(73, [
-                'captchaId' => (int) $error['captcha_sid'],
+                'captchaId' => (int)$error['captcha_sid'],
                 'o' => $error,
             ]),
             self::VK_AUTH_ERROR_NEED_VALIDATION => self::throwError(74, [

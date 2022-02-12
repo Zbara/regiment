@@ -62,7 +62,7 @@ class StatsLogsVisit
         return $this->referar;
     }
 
-    public function setReferar(string $referar = 'zbara.ru'): self
+    public function setReferar(string $referar): self
     {
         $this->referar = $referar;
 

@@ -25,7 +25,7 @@ class StatsSubscriber implements EventSubscriberInterface
             ->setPage($event->getRequest()->getRequestUri())
             ->setTime(time())
             ->setUa($event->getRequest()->headers->get('User-Agent'))
-            ->setReferar($event->getRequest()->headers->get('Referer'));
+            ->setReferar($event->getRequest()->headers->get('Referer') ?? 'no');
 
         $this->entityManager->persist($stats);
         $this->entityManager->flush();

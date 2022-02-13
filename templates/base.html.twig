@@ -35,10 +35,10 @@
                 </div>
             {% else %}
                 <div class="navbar-nav flex-row order-md-last">
-                    <div class="nav-item">
+                    <div class="nav-item dropdown">
                         <a href="{{ path('hwi_oauth_service_redirect', {'service': 'vkontakte' }) }}" class="nav-link d-flex lh-1 text-reset p-0">
-                            <div class="d-none d-xl-block ps-2">
-                                Войти через ВК
+                            <div class="d-xl-block ps-2 btn btn-secondary">
+                                Войти через ВКонтекте
                             </div>
                         </a>
                     </div>

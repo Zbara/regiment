@@ -6,10 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="1ef7649d-1c0b-4fe6-930d-55a61fa7c954" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/TopController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/TopController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/RegimentUsersRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/RegimentUsersRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/libs/pagination.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/libs/pagination.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/top/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/top/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -177,7 +174,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1644439091117</updated>
-      <workItem from="1644439092318" duration="91249000" />
+      <workItem from="1644439092318" duration="92055000" />
     </task>
     <servers />
   </component>

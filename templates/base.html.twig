@@ -14,6 +14,36 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            {% if app.user %}
+                <div class="navbar-nav flex-row order-md-last">
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown"
+                           aria-label="Open user menu">
+                            <span class="avatar avatar-sm"
+                                  style="background-image: url({{ app.user.photoMedium }})"></span>
+                            <div class="d-none d-xl-block ps-2">
+                                <div>{{ app.user.firstName }} {{ app.user.lastName }}</div>
+                                <div class="mt-1 small text-muted">
+                                    @{{ app.user.screenName }}
+                                </div>
+                            </div>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                            <a href="{{ path('app-logout') }}" class="dropdown-item">Выход</a>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="navbar-nav flex-row order-md-last">
+                    <div class="nav-item">
+                        <a href="{{ path('hwi_oauth_service_redirect', {'service': 'vkontakte' }) }}" class="nav-link d-flex lh-1 text-reset p-0">
+                            <div class="d-none d-xl-block ps-2">
+                                Войти через ВК
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
             <div class="collapse navbar-collapse" id="navbar-menu">
                 <div class="d-flex flex-column flex-md-row flex-fill align-items-stretch align-items-md-center">
                     <ul class="navbar-nav">
@@ -36,7 +66,9 @@
                         <li class="nav-item {{ is_active_route(app.request, ['friends-main']) ? 'active' }}">
                             <a class="nav-link" href="{{ path('friends-main') }}">
                     <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
-<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-award" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-award" width="24" height="24"
+     viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+     stroke-linejoin="round">
    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
    <circle cx="12" cy="9" r="6"></circle>
    <polyline points="9 14.2 9 21 12 19 15 21 15 14.2" transform="rotate(-30 12 9)"></polyline>
@@ -51,7 +83,9 @@
                         <li class="nav-item {{ is_active_route(app.request, ['friends-search']) ? 'active' }}">
                             <a class="nav-link" href="{{ path('friends-search') }}">
                     <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
-<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-vk" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-vk" width="24" height="24"
+     viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+     stroke-linejoin="round">
    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
    <path d="M10 6h2v12c-4.5 -1 -8 -6.5 -9 -12"></path>
    <path d="M20 6c-1 2 -3 5 -5 6h-3"></path>
@@ -92,10 +126,12 @@
                     <div class="col-lg-auto ms-lg-auto">
                         <ul class="list-inline list-inline-dots mb-0">
                             <li class="list-inline-item">
-                                <a href="https://vk.com/zbarazskiy" class="link-secondary" target="_blank">Разработчик</a>
+                                <a href="https://vk.com/zbarazskiy" class="link-secondary"
+                                   target="_blank">Разработчик</a>
                             </li>
                             <li class="list-inline-item">
-                                <a href="https://vk.com/app8063650" class="link-secondary" target="_blank">Храбрый Полк</a>
+                                <a href="https://vk.com/app8063650" class="link-secondary" target="_blank">Храбрый
+                                    Полк</a>
                             </li>
                             <li class="list-inline-item">
                                 <a href="https://vk.com/ant_game" class="link-secondary" target="_blank">Узел связи</a>

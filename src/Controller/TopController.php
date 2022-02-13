@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\RegimentUsersRepository;
+use App\Service\Vkontakte;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,24 +13,34 @@ use Symfony\Component\Routing\Annotation\Route;
 class TopController extends AbstractController
 {
     #[Route('/top', name: 'top')]
-    public function index(Request $request, PaginatorInterface $paginator, RegimentUsersRepository $regimentUsersRepository): Response
+    public function index(Request $request, PaginatorInterface $paginator, RegimentUsersRepository $regimentUsersRepository, Vkontakte $vkontakte): Response
     {
-
-        $code = 'var members = API.groups.getMembers({"group_id": 99584106, "v": "5.103", "sort": "id_asc", "count": "1000", "offset": 0, "fields": "photo_50"}).items;'
+        $code = 'var counters = API.users.get({"fields": "counters"});'
+            . 'var members = API.friends.get({"count": "1000", "offset": 0}).items;'
             . 'var offset = 1000;'
-            . 'while (offset < 25000 && (offset + 0) < 9159)'
+            . 'while (offset < counters[0].counters.friends && (offset + 0) < 10000)'
             . '{'
-            . 'members = members + API.groups.getMembers({"group_id": 99584106, "v": "5.103", "sort": "id_asc", "count": "1000", "offset": (0 + offset), "fields": "photo_50"}).items;'
+            . 'members = members + API.friends.get({"count": "1000", "offset": (0 + offset)}).items;'
             . 'offset = offset + 1000;'
             . '};'
             . 'return members;';
+
+        if($this->isGranted("IS_AUTHENTICATED_FULLY")){
+            $friends = $vkontakte->getApi('https://api.vk.com/method/execute', [
+                'access_token' => $this->getUser()->getAccessToken(),
+                'v' => '5.161',
+                'code' => $code
+            ]);
+            $friends = $friends['response'] ?? [];
+        } else $friends = [];
 
 
         return $this->render('top/index.html.twig', [
             'pagination' => $paginator->paginate($regimentUsersRepository->findLatest(), $request->query->getInt('page', 1), 250, [
                 'defaultSortDirection' => 'desc'
             ]),
-            'update' => $regimentUsersRepository->updateTime()
+            'update' => $regimentUsersRepository->updateTime(),
+            'friends' => $friends
         ]);
     }
 }

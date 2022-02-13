@@ -25,7 +25,13 @@ class AppExtension extends AbstractExtension
             new TwigFunction('rename', [$this, 'rename']),
             new TwigFunction('json_decode', [$this, 'jsonDecode']),
             new TwigFunction('convertTime', [$this, 'convertTime']),
+            new TwigFunction('array_search', [$this, 'array_search']),
         ];
+    }
+
+    public function array_search($a, $b): bool|int|string
+    {
+        return array_search($a, $b);
     }
 
     public function jsonDecode($str)

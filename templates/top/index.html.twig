@@ -27,7 +27,8 @@
     <div class="row row-cards">
         <div class="col-12">
             <div class="alert alert-success" role="alert">
-                Примерный ТОП игрков игры Храбрый Полк. Последнее обновление <b>{{ convertTime(update[0].updateTime) }}</b>.
+                Примерный ТОП игрков игры Храбрый Полк. Последнее обновление
+                <b>{{ convertTime(update[0].updateTime) }}</b>.
             </div>
             <div class="card">
                 <div class="table-responsive">
@@ -51,7 +52,13 @@
                             <th{% if pagination.isSorted(['a.loginTime']) %} class="sorted"{% endif %}>
                                 {{ knp_pagination_sortable(pagination, 'Вход в игру', ['a.login_time']) }}
                             </th>
-                            <th>Статус</th>
+                            <th>
+                                Статус
+
+                                <span class="form-help" tabindex="0" data-bs-toggle="popover" data-bs-trigger="focus"
+                                      data-bs-placement="top" data-bs-html="true"  data-bs-content="<p>Показывает есть ли человек у Вас в друзьях. <br/><br/> <b>Для работы пройдите авторизацию.</b></p>">?</span>
+
+                            </th>
                         </tr>
                         </thead>
                         <tbody>
@@ -96,7 +103,15 @@
                                     <div class="text-muted"> {{ convertTime(item.loginTime) }}</div>
                                 </td>
                                 <td>
-                                    <span class="badge bg-success me-1"></span>в разработке
+                                    {% if app.user %}
+                                        {% if array_search(item.socId, friends) %}
+                                            <span class="badge bg-success me-1"></span>есть в друзьях
+                                        {% else %}
+                                            <span class="badge bg-danger me-1"></span>не добавлен
+                                        {% endif %}
+                                    {% else %}
+                                        <span class="badge bg-success me-1"></span> не известно
+                                    {% endif %}
                                 </td>
                             </tr>
                         {% endfor %}

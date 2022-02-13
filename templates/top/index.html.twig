@@ -53,11 +53,26 @@
                                 {{ knp_pagination_sortable(pagination, 'Вход в игру', ['a.login_time']) }}
                             </th>
                             <th>
-                                Статус
+                                <div class="dropdown">
+                                    <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown">
+                                        Статус
+                                    </button>
+                                    <div class="dropdown-menu">
 
-                                <span class="form-help" tabindex="0" data-bs-toggle="popover" data-bs-trigger="focus"
-                                      data-bs-placement="top" data-bs-html="true"  data-bs-content="<p>Показывает есть ли человек у Вас в друзьях. <br/><br/> <b>Для работы пройдите авторизацию.</b></p>">?</span>
-
+                                        {% if app.user %}
+                                            <a class="dropdown-item"
+                                               href="{{ path('top', app.request.query.all|merge({'friends': 'yes'})) }}">
+                                                Друзья
+                                            </a>
+                                            <a class="dropdown-item" href="{{ path('top', app.request.query.all|merge({'friends': 'no'})) }}">
+                                                Нет в друзьях
+                                            </a>
+                                        {% endif %}
+                                        <a class="dropdown-item" href="{{ path('top', app.request.query.all|merge({'friends': 'all'})) }}">
+                                            Весь список
+                                        </a>
+                                    </div>
+                                </div>
                             </th>
                         </tr>
                         </thead>
@@ -65,7 +80,7 @@
                         {% for key, item in pagination %}
                             <tr data-id="{{ item.id }}">
                                 <td>
-                                    {{ key+1 }}
+                                    {{ key + 1 }}
                                 </td>
                                 <td>
                                     <div class="d-flex py-1 align-items-center">

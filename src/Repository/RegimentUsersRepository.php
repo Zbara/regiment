@@ -19,10 +19,24 @@ class RegimentUsersRepository extends ServiceEntityRepository
         parent::__construct($registry, RegimentUsers::class);
     }
 
-    public function findLatest(): \Doctrine\ORM\QueryBuilder
+    public function findLatest(string $category = 'all', array $friends = []): \Doctrine\ORM\QueryBuilder
     {
-        return $this->createQueryBuilder('a')
-            ->orderBy('a.level', 'DESC');
+        $builder = $this->createQueryBuilder('a');
+
+        switch ($category) {
+
+            case 'yes':
+                $builder->andWhere('a.socId  IN (:ids)')
+                    ->setParameter('ids', $friends);
+                break;
+
+            case 'no':
+                $builder->andWhere('a.socId NOT IN (:ids)')
+                    ->setParameter('ids', $friends);
+                break;
+            default:
+        }
+        return  $builder->orderBy('a.level', 'DESC');
     }
 
     public function updateTime()

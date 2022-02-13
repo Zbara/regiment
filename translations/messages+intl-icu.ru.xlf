@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="ru" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="http_error.name">
+                <source>http_error.name</source>
+                <target>Ошибка {status_code, number}</target>
+            </trans-unit>
+            <trans-unit id="http_error.description">
+                <source>http_error.description</source>
+                <target>Произошла неизвестная ошибка (HTTP {status_code, number}), которая помешала выполнить ваш
+                    запрос.
+                </target>
+            </trans-unit>
+            <trans-unit id="http_error.suggestion">
+                <source>http_error.suggestion</source>
+                <target>
+                    <![CDATA[Попробуйте загрузить эту страницу снова через несколько минут или <a href="{url}">вернитесь на главную страницу</a>.]]></target>
+            </trans-unit>
+            <trans-unit id="http_error_403.description">
+                <source>http_error_403.description</source>
+                <target>У вас нет разрешения на доступ к этому ресурсу.</target>
+            </trans-unit>
+            <trans-unit id="http_error_403.suggestion">
+                <source>http_error_403.suggestion</source>
+                <target>Запросите доступ к этому ресурсу у вашего менеджера или системного администратора.</target>
+            </trans-unit>
+            <trans-unit id="http_error_404.description">
+                <source>http_error_404.description</source>
+                <target>Мы не смогли найти запрашиваемую вами страницу.</target>
+            </trans-unit>
+            <trans-unit id="http_error_404.suggestion">
+                <source>http_error_404.suggestion</source>
+                <target>
+                    <![CDATA[Проверьте корректность введенного URL или <a href="{url}">вернитесь на главную страницу</a>.]]></target>
+            </trans-unit>
+            <trans-unit id="http_error_500.description">
+                <source>http_error_500.description</source>
+                <target>Произошла внутренняя ошибка сервера.</target>
+            </trans-unit>
+            <trans-unit id="http_error_500.suggestion">
+                <source>http_error_500.suggestion</source>
+                <target>
+                    <![CDATA[Попробуйте загрузить эту страницу снова через несколько минут или <a href="{url}">вернитесь на главную страницу</a>.]]></target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

@@ -34,7 +34,6 @@ class TopController extends AbstractController
             $friends = $friends['response'] ?? [];
         } else $friends = [];
 
-
         return $this->render('top/index.html.twig', [
             'pagination' => $paginator->paginate($regimentUsersRepository->findLatest($request->query->get('friends', 'all'), $friends), $request->query->getInt('page', 1), 250, [
                 'defaultSortDirection' => 'desc'

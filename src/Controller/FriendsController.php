@@ -14,13 +14,13 @@ class FriendsController extends AbstractController
     #[Route('/friends/information', name: 'friends-main')]
     public function information(Request $request, Friends $friends): Response
     {
-        return  $this->render('friends/information.html.twig');
+        return $this->render('friends/information.html.twig');
     }
 
     #[Route('/friends/search', name: 'friends-search')]
     public function search(Request $request, Friends $friends): Response
     {
-        return  $this->render('friends/search.html.twig');
+        return $this->render('friends/search.html.twig');
     }
 
     #[Route('/friends/get', name: 'friends-get')]
@@ -28,6 +28,17 @@ class FriendsController extends AbstractController
     {
         if ($userId = $request->get('userId', 0)) {
             return $this->json($friends->helper($userId));
+        } else  return $this->json(['status' => 0, 'error' => ['messages' => 'Пользователь не найден.']]);
+    }
+
+    #[Route('/friends/get/social', name: 'friends-social')]
+    public function social(Request $request, Friends $friends): Response
+    {
+        $userId = $request->get('userId', 0);
+        $ownerId = $request->get('ownerId', 0);
+
+        if ($userId and $ownerId) {
+            return $this->json($friends->social($userId, $ownerId));
         } else  return $this->json(['status' => 0, 'error' => ['messages' => 'Пользователь не найден.']]);
     }
 }

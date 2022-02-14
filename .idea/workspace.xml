@@ -5,16 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1ef7649d-1c0b-4fe6-930d-55a61fa7c954" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/config/routes/dev/twig.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/TwigBundle/Exception/error.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/TwigBundle/Exception/error404.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/TwigBundle/main.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/translations/messages+intl-icu.ru.xlf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/translations/security.ru.xlf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/js/script.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Service/Redis.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/regiment.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/regiment.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/twig.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/twig.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/TopController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/TopController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/friends/search.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/friends/search.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/icon-128.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/icon-16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/icon-48.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/script.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/bundles.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/bundles.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/framework.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/framework.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/services.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/services.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/FriendsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/FriendsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/RegimentUsersRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/RegimentUsersRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/Friends.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Friends.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,6 +34,13 @@
   <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
     <execution />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -35,6 +52,12 @@
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="PhpDebugGeneral" listening_started="true" />
+  <component name="PhpServers">
+    <servers>
+      <server host="regiment.zbara.pro" id="394060bd-46c5-4af8-bb05-4abf1eeabfa1" name="regiment.zbara.pro" port="443" />
+    </servers>
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
@@ -143,6 +166,8 @@
       <path value="$PROJECT_DIR$/vendor/symfony/process" />
       <path value="$PROJECT_DIR$/vendor/symfony/twig-bundle" />
       <path value="$PROJECT_DIR$/vendor/symfony/console" />
+      <path value="$PROJECT_DIR$/vendor/snc/redis-bundle" />
+      <path value="$PROJECT_DIR$/vendor/predis/predis" />
     </include_path>
   </component>
   <component name="ProjectId" id="24t9bxaJVoe1ipn8f9bHQRIENaW" />
@@ -154,25 +179,33 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/config/routes/dev" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/client/images" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="php.override.implement.member.chooser.php.doc" value="NONE" />
-    <property name="settings.editor.selected.configurable" value="Symfony2.SettingsForm" />
+    <property name="settings.editor.selected.configurable" value="settings.php.debug.servers" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/client/images" />
+      <recent name="$PROJECT_DIR$/src/Service" />
       <recent name="$PROJECT_DIR$/config/routes/dev" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/translations" />
-      <recent name="$PROJECT_DIR$/templates" />
-      <recent name="$PROJECT_DIR$/src/Controller" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/client/js" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Unnamed" type="PhpRemoteDebugRunConfigurationType" factoryName="PHP Remote Debug" nameIsGenerated="true" filter_connections="FILTER" server_name="regiment.zbara.pro" session_id="phpstorm">
+      <method v="2" />
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -182,7 +215,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1644439091117</updated>
-      <workItem from="1644439092318" duration="95740000" />
+      <workItem from="1644439092318" duration="133153000" />
     </task>
     <servers />
   </component>

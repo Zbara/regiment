@@ -19,6 +19,21 @@ class RegimentUsersRepository extends ServiceEntityRepository
         parent::__construct($registry, RegimentUsers::class);
     }
 
+    public function getLastId(int $userId)
+    {
+        $builder = $this->createQueryBuilder('a');
+
+        return true;
+
+        return $builder->andWhere('a.socId  IN (:ids)')
+            ->setParameter('ids', $userId)
+            ->andWhere('a.updateTime > :time')
+            ->setParameter('time', time() - 500000000)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     public function findLatest(string $category = 'all', array $friends = []): \Doctrine\ORM\QueryBuilder
     {
         $builder = $this->createQueryBuilder('a');

@@ -1,20 +1,15 @@
 {
-   "browser_action": {
-      "default_icon": "icon-48.png"
-   },
    "content_scripts": [{
-      "js": [  "script.js" ],
+      "js": [  "js/script.js" ],
       "matches": [ "https://vk.com/*" ]
-   } ],
-   "description": "OkopVK Script",
-   "icons": {
-      "128": "icon-128.png",
-      "16": "icon-16.png",
-      "48": "icon-48.png"
+   }],
+   "description": "Храбрый Полк - просмотр информации о игроке, не входя в игру.",
+   "action": {
+      "default_title": "Храбрый Полк",
+      "default_icon": "images/icon.png"
    },
-   "manifest_version": 2,
-   "name": "OkopVk Script",
-   "permissions": [ "https://regiment.zbara.ru/*" ],
-   "update_url": "http://clients2.google.com/service/update2/crx",
+   "manifest_version": 3,
+   "name": "Храбрый Полк",
+   "host_permissions": [ "https://regiment.zbara.ru/friends/*" ],
    "version": "0.1"
 }

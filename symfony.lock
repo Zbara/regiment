@@ -125,6 +125,9 @@
     "phpstan/phpdoc-parser": {
         "version": "1.2.0"
     },
+    "predis/predis": {
+        "version": "v1.1.10"
+    },
     "psr/cache": {
         "version": "3.0.0"
     },
@@ -150,6 +153,18 @@
         },
         "files": [
             "config/packages/sensio_framework_extra.yaml"
+        ]
+    },
+    "snc/redis-bundle": {
+        "version": "4.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "2.0",
+            "ref": "85bbdb3d2db531e20874de29bab0587f93604fa8"
+        },
+        "files": [
+            "config/packages/snc_redis.yaml"
         ]
     },
     "symfony/asset": {

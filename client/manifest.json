@@ -10,6 +10,6 @@
    },
    "manifest_version": 3,
    "name": "Храбрый Полк",
-   "host_permissions": [ "https://regiment.zbara.ru/friends/*" ],
+   "host_permissions": [ "https://regiment.zbara.ru/*" ],
    "version": "0.1"
 }

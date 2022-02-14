@@ -1,5 +1,5 @@
 ﻿(function () {
-        const getUserInfo = 'https://regiment.zbara.pro/friends/get/social';
+        const getUserInfo = 'https://regiment.zbara.ru/friends/get/social';
 
         let user = 0;
 

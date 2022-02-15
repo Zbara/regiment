@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+{% block title %}Скрипт для игры{% endblock %}
+{% block header 'Скрипт для игры для Храбрый Полк' %}
+
+{% block main %}
+    <div class="row row-deck row-cards">
+        <div class="col-md-12 col-lg-12">
+            <div class="card" style="height: calc(24rem + 10px)">
+                <div class="card-header">
+                    <h3 class="card-title">Информация для установки</h3>
+                </div>
+                <div class="card-body card-body-scrollable card-body-scrollable-shadow">
+                    <ol>
+                        <li>Скачать файл <a href="https://regiment.zbara.ru/client.zip" target="_blank">client.zip</a> и распаковать его, <b>важно папку удалять нельзя ибо пропадет после перезапуска</b>.</li>
+                        <li>Зайти в настройки расширений браузера (Chrome, Yandex, Opera, Chromium и др). Либо ввести в адресной строке chrome://extensions/ и перейти по ссылке.</li>
+                        <li>Нажать кнопку "РЕЖИМ РАЗРАБОТЧИКА" потом "ЗАГРУЗИТЬ РАСПАКОВАННОЕ РАСШИРЕНИЕ".</li>
+                        <li>Выбрать папку с файлами распакованного скрипта и установить его.</li>
+                        <li>Приятного использования ^_^</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

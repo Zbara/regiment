@@ -50,7 +50,7 @@ class Vkontakte
                     'access_token' => (string)$access_token,
                 ])) {
                 if (isset($vk['response']['object_id'])) {
-                    return (int) $vk['response']['object_id'];
+                    return (int)$vk['response']['object_id'];
                 }
             }
         }
@@ -74,9 +74,9 @@ class Vkontakte
             } else {
                 $response = $this->httpClient->request($method, $url, [
                     'body' => $params,
-                    'proxy' => 'http://:@127.0.0.1:8888',
-                    'verify_peer' => false,
-                    'verify_host' => false,
+                    //  'proxy' => 'http://:@127.0.0.1:8888',
+                    //   'verify_peer' => false,
+                    //  'verify_host' => false,
                 ]);
             }
             $response->getHeaders();

@@ -39,6 +39,6 @@ class FriendsController extends AbstractController
 
         if ($userId and $ownerId) {
             return $this->json($friends->social($userId, $ownerId));
-        } else  return $this->json(['status' => 0, 'error' => ['messages' => 'Пользователь не найден.']]);
+        } else  return $this->json(['status' => 0, 'error' => ['messages' => 'Отсутствуют параметры пользователя.']]);
     }
 }

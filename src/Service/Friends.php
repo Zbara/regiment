@@ -29,13 +29,13 @@ class Friends
     private ConnectGame $connectGame;
 
     public function __construct(
-        EntityManagerInterface $entityManager,
+        EntityManagerInterface  $entityManager,
         RegimentUsersRepository $regimentUsersRepository,
-        Environment $environment,
-        Vkontakte $vkontakte,
-        Redis $redis,
-        UsersScriptRepository $usersScriptRepository,
-        ConnectGame $connectGame
+        Environment             $environment,
+        Vkontakte               $vkontakte,
+        Redis                   $redis,
+        UsersScriptRepository   $usersScriptRepository,
+        ConnectGame             $connectGame
     )
     {
         $this->entityManager = $entityManager;
@@ -69,7 +69,7 @@ class Friends
     {
         $this->userLocal($ownerId);
 
-        if(is_null($this->regimentUsersRepository->getLastId($userId))) {
+        if (is_null($this->regimentUsersRepository->getLastId($userId))) {
             if ($this->connectGame->authInfo()) {
                 $requests = [];
                 $requests[] = ["method" => 'friends.view', "params" => ["friend" => $userId]];
@@ -80,6 +80,7 @@ class Friends
                     if ($user['result'] == 'ok') {
                         return $this->informationSuccess($user['friends'][$userId], $userId);
                     }
+                } elseif (in_array($user['descr'], ['session expired', 'failed authorization'])) {
                     $this->redis->delete(['authParams']);
                 }
             }
@@ -92,12 +93,13 @@ class Friends
         return ['status' => 0, 'error' => ['messages' => 'Игрок не найден. Запускал ли он Храбрый Полк?']];
     }
 
-    private function userLocal($ownerId){
+    private function userLocal($ownerId)
+    {
 
-        $user = $this->usersScriptRepository->findOneBy(['platformId' => (int) $ownerId]);
+        $user = $this->usersScriptRepository->findOneBy(['platformId' => (int)$ownerId]);
 
         if (null === $user) {
-            $users  = $this->vkontakte->getApi('https://api.vk.com/method/users.get', [
+            $users = $this->vkontakte->getApi('https://api.vk.com/method/users.get', [
                 'v' => '5.136',
                 'user_ids' => $ownerId,
                 'fields' => 'photo_50',
@@ -125,7 +127,7 @@ class Friends
             'status' => 1,
             'result' => [
                 'data' => [
-                    'platform_id' => (int) $userId,
+                    'platform_id' => (int)$userId,
                     'level' => $data['static_resources']['level'],
                     'sut' => $data['static_resources']['sut'],
                     'totalDamage' => $data['achievements']['total_damage'],
@@ -144,7 +146,7 @@ class Friends
         $user = $this->regimentUsersRepository->findOneBy(['socId' => (int)$userId]);
 
         if (null === $user) {
-            $users  = $this->vkontakte->getApi('https://api.vk.com/method/users.get', [
+            $users = $this->vkontakte->getApi('https://api.vk.com/method/users.get', [
                 'v' => '5.136',
                 'user_ids' => $userId,
                 'fields' => 'photo_50',

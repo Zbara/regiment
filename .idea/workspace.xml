@@ -5,9 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1ef7649d-1c0b-4fe6-930d-55a61fa7c954" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/templates/friends/extensions.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/FriendsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/FriendsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/ConnectGame.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/ConnectGame.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/Friends.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Friends.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/Parse.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Parse.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/Vkontakte.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Vkontakte.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -203,7 +205,7 @@
       <updated>1644439091117</updated>
       <workItem from="1644439092318" duration="153613000" />
       <workItem from="1644950819406" duration="1352000" />
-      <workItem from="1644952822964" duration="3253000" />
+      <workItem from="1644952822964" duration="6967000" />
     </task>
     <servers />
   </component>

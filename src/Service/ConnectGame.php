@@ -71,7 +71,7 @@ class ConnectGame
                                 'game_key' => $this->game_key
                             ];
 
-                            $this->redis->setValue('authParams', $auth, 1000, 1);
+                            $this->redis->setValue('authParams', $auth, 1600, 1);
 
                             return $auth;
                         }
@@ -147,9 +147,9 @@ class ConnectGame
                         'Game-key' => $this->game_key,
                         'Game-check' => md5($sign),
                     ],
-                    //'proxy' => 'http://:@127.0.0.1:8888',
-                   // 'verify_peer' => false,
-                    //'verify_host' => false,
+                    'proxy' => 'http://:@127.0.0.1:8888',
+                    'verify_peer' => false,
+                    'verify_host' => false,
                 ]
             );
             $response = $client->request('POST', 'https://' . $url, ['body' => $this->compress($data)]);

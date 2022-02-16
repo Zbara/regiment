@@ -19,6 +19,19 @@ class RegimentUsersRepository extends ServiceEntityRepository
         parent::__construct($registry, RegimentUsers::class);
     }
 
+    public function getLevelRank(){
+//select (select count(*) from `regiment_users` r where r.level>=u.level) as rank from `regiment_users` u where u.soc_id=1
+
+        $builder = $this->createQueryBuilder('a');
+
+        $builder->select('a')
+            ->addSelect('(select count(*) from `regiment_users` r where r.level>=u.level) as rank'
+            )
+            ->from('e:Address', 'a')
+            ->where('a.addressId = :addressId')
+            ->setParameter('addressId', 1);
+    }
+
     public function getLastId(int $userId)
     {
         $builder = $this->createQueryBuilder('a');

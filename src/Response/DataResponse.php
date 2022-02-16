@@ -4,19 +4,24 @@ namespace App\Response;
 
 use App\Service\GitRevision;
 use JetBrains\PhpStorm\ArrayShape;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
+use Symfony\Component\HttpKernel\EventListener\ResponseListener;
 
 class DataResponse
 {
     const STATUS_ERROR = 0;
     const STATUS_SUCCESS = 1;
     private GitRevision $git;
+    private bool $debug;
+    private string $environment;
 
-    public function __construct(GitRevision $gitRevision)
+    public function __construct($debug, $environment, GitRevision $gitRevision)
     {
+        $this->debug = $debug;
         $this->git = $gitRevision;
+        $this->environment = $environment;
     }
-
-
+    
     #[ArrayShape(['status' => "", 'result' => "", 'system' => "array"])]
     public function success($status, $result): array
     {
@@ -40,15 +45,17 @@ class DataResponse
         ];
     }
 
-    #[ArrayShape(['environment' => "mixed", 'memory' => "mixed", 'gitDate' => "string", 'gitRev' => "string", 'time' => "int"])]
+
+    #[ArrayShape(['environment' => "", 'memory' => "mixed", 'gitDate' => "string", 'gitRev' => "string", 'time' => "int", 'debug' => ""])]
     private function system(): array
     {
         return [
-            'environment' => $_ENV['APP_ENV'],
+            'environment' => $this->environment,
             'memory' => sys_getloadavg()[0],
             'gitDate' => $this->git->getDate(),
             'gitRev' => $this->git->getBuild(),
-            'time' => time()
+            'time' => time(),
+            'debug' => $this->debug
         ];
     }
 }

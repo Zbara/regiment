@@ -20,9 +20,12 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+    App\Response\DataResponse:
+      arguments:
+          $debug: '%kernel.debug%'
+          $environment: '%kernel.environment%'
+
     App\Service\Redis:
       arguments:
         - '@snc_redis.default'
         - 3600
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones

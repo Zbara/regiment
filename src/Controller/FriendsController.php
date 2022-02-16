@@ -42,8 +42,8 @@ class FriendsController extends AbstractController
     #[Route('/friends/get/social', name: 'friends-social')]
     public function social(Request $request, Friends $friends, DataResponse $dataResponse): Response
     {
-        $userId = $request->get('userId', 0);
-        $ownerId = $request->get('ownerId', 0);
+        $userId = $request->get('userId', null);
+        $ownerId = $request->get('ownerId', null);
 
         if (isset($userId) and isset($ownerId)) {
             return $this->json($friends->social($userId, $ownerId));

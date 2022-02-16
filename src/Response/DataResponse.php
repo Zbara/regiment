@@ -16,21 +16,23 @@ class DataResponse
         $this->git = $gitRevision;
     }
 
-    #[ArrayShape(['code' => "", 'result' => "array", 'system' => "array"])]
-    public function success($code, $result): array
+
+    #[ArrayShape(['status' => "", 'result' => "", 'system' => "array"])]
+    public function success($status, $result): array
     {
         return [
-            'code' => $code,
+            'status' => $status,
             'result' => $result,
             'system' => $this->system()
         ];
     }
 
-    #[ArrayShape(['code' => "", 'error' => "array", 'system' => "array"])]
-    public function error($code, $messages): array
+
+    #[ArrayShape(['status' => "", 'error' => "array", 'system' => "array"])]
+    public function error($status, $messages): array
     {
         return [
-            'code' => $code,
+            'status' => $status,
             'error' => [
                 'messages' => $messages
             ],

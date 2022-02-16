@@ -26,7 +26,7 @@ class RegimentUsersRepository extends ServiceEntityRepository
         return $builder->andWhere('a.socId  IN (:ids)')
             ->setParameter('ids', $userId)
             ->andWhere('a.updateTime > :time')
-            ->setParameter('time', time() - 5000000)
+            ->setParameter('time', time() - 500)
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();

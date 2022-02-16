@@ -1,7 +1,6 @@
 (function () {
         let getUserInfo = 'https://regiment.zbara.ru/friends/get/social';
         let user = 0;
-        let isGroup = [];
 
         let achievements = {
             "weapons": [0, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000, 25000, 50000, 100000],
@@ -264,6 +263,7 @@
         }
 
         function renderInfo(regiment = {}, response = {}) {
+            let isGroup = [];
             let data = response.result.data;
 
             let html = printRow('ID: ', data.platform_id);

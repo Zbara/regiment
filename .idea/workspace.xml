@@ -6,8 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="1ef7649d-1c0b-4fe6-930d-55a61fa7c954" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/ConnectGame.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/ConnectGame.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/Vkontakte.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Vkontakte.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/js/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/js/script.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/client.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/client.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/RegimentUsersRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/RegimentUsersRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/Friends.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Friends.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,6 +42,11 @@
   <component name="PhpServers">
     <servers>
       <server host="regiment.zbara.pro" id="394060bd-46c5-4af8-bb05-4abf1eeabfa1" name="regiment.zbara.pro" port="443" />
+      <server host="bot.zbara.pro" id="aaa5f985-9baf-4e72-bea8-a7f972f022e0" name="bot.zbara.pro" port="443" use_path_mappings="true">
+        <path_mappings>
+          <mapping local-root="$PROJECT_DIR$/public" remote-root="/home/zbara/www/mikce/public" />
+        </path_mappings>
+      </server>
     </servers>
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
@@ -202,7 +209,7 @@
       <updated>1644439091117</updated>
       <workItem from="1644439092318" duration="153613000" />
       <workItem from="1644950819406" duration="1352000" />
-      <workItem from="1644952822964" duration="7076000" />
+      <workItem from="1644952822964" duration="12402000" />
     </task>
     <servers />
   </component>

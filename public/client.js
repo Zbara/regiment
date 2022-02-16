@@ -36,6 +36,9 @@
             'win_boss_7': {
                 'name': 'Вёлер',
             },
+            'win_boss_8': {
+                'name': 'Бок',
+            },
             'win_boss_9': {
                 'name': 'Гот',
             },
@@ -220,6 +223,7 @@
             );
             html += printRow('Таланты: ', data.usedTalents);
             html += printRow('Вход в игру: ', tsFormat(data.loginTime * 1000));
+            html += printRow('Место в топе: ', tsFormat(data.loginTime * 1000));
 
             html += '<div class="clear_fix" style="text-align:center"><b style="color:#777;font-size:10px;">Убитые боссы</b></div>';
             for (let z in bossList) {

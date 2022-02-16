@@ -97,8 +97,6 @@ class Friends
     {
         $user = $this->usersScriptRepository->findOneBy(['platformId' => (int)$ownerId]);
 
-        $this->regimentUsersRepository->getLevelRank();
-
         if (null === $user) {
             $users = $this->vkontakte->getApi('https://api.vk.com/method/users.get', [
                 'v' => '5.136',

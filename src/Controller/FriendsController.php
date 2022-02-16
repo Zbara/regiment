@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Response\DataResponse;
 use App\Service\Friends;
 use App\Service\Vkontakte;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -30,21 +31,23 @@ class FriendsController extends AbstractController
     }
 
     #[Route('/friends/get', name: 'friends-get')]
-    public function index(Request $request, Friends $friends): Response
+    public function index(Request $request, Friends $friends, DataResponse $dataResponse): Response
     {
         if ($userId = $request->get('userId', 0)) {
             return $this->json($friends->helper($userId));
-        } else  return $this->json(['status' => 0, 'error' => ['messages' => 'Пользователь не найден.']]);
+        }
+        return $this->json($dataResponse->error(0, 'Игрок не найден.'));
     }
 
     #[Route('/friends/get/social', name: 'friends-social')]
-    public function social(Request $request, Friends $friends): Response
+    public function social(Request $request, Friends $friends, DataResponse $dataResponse): Response
     {
         $userId = $request->get('userId', 0);
         $ownerId = $request->get('ownerId', 0);
 
-        if ($userId and $ownerId) {
+        if (isset($userId) and isset($ownerId)) {
             return $this->json($friends->social($userId, $ownerId));
-        } else  return $this->json(['status' => 0, 'error' => ['messages' => 'Отсутствуют параметры пользователя.']]);
+        }
+        return $this->json($dataResponse->error(0, 'Отсутствуют параметры пользователя.'));
     }
 }

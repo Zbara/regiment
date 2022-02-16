@@ -6,6 +6,7 @@ use App\Entity\RegimentUsers;
 use App\Entity\UsersScript;
 use App\Repository\RegimentUsersRepository;
 use App\Repository\UsersScriptRepository;
+use App\Response\DataResponse;
 use Doctrine\ORM\EntityManagerInterface;
 use JetBrains\PhpStorm\ArrayShape;
 use Symfony\Component\Console\Command\Command;
@@ -27,6 +28,7 @@ class Friends
     private Redis $redis;
     private UsersScriptRepository $usersScriptRepository;
     private ConnectGame $connectGame;
+    private DataResponse $dataResponse;
 
     public function __construct(
         EntityManagerInterface  $entityManager,
@@ -35,7 +37,8 @@ class Friends
         Vkontakte               $vkontakte,
         Redis                   $redis,
         UsersScriptRepository   $usersScriptRepository,
-        ConnectGame             $connectGame
+        ConnectGame             $connectGame,
+        DataResponse            $dataResponse
     )
     {
         $this->entityManager = $entityManager;
@@ -45,7 +48,7 @@ class Friends
         $this->redis = $redis;
         $this->usersScriptRepository = $usersScriptRepository;
         $this->connectGame = $connectGame;
-
+        $this->dataResponse = $dataResponse;
     }
 
     public function helper($userId): array
@@ -90,7 +93,8 @@ class Friends
         ])) {
             return $this->informationError($user, $userId);
         }
-        return ['status' => 0, 'error' => ['messages' => 'Игрок не найден. Запускал ли он Храбрый Полк?']];
+
+        return $this->dataResponse->error(DataResponse::STATUS_ERROR, 'Игрок не найден. Запускал ли он Храбрый Полк?');
     }
 
     private function userLocal($ownerId)
@@ -122,22 +126,19 @@ class Friends
     {
         $this->update($data, $userId);
 
-        return [
-            'status' => 1,
-            'result' => [
-                'data' => [
-                    'platform_id' => (int)$userId,
-                    'level' => $data['static_resources']['level'],
-                    'sut' => $data['static_resources']['sut'],
-                    'totalDamage' => $data['achievements']['total_damage'],
-                    'usedTalents' => $data['static_resources']['used_talents'],
-                    'loginTime' => $data['time_resources']['login_time'],
-                    'achievements' => $data['achievements']
-                ],
-                'source' => 'game',
-                'messages' => '',
-                'environment' => $_ENV['APP_ENV']
-            ]];
+        return $this->dataResponse->success(DataResponse::STATUS_SUCCESS, [
+            'data' => [
+                'platform_id' => (int)$userId,
+                'level' => $data['static_resources']['level'],
+                'sut' => $data['static_resources']['sut'],
+                'totalDamage' => $data['achievements']['total_damage'],
+                'usedTalents' => $data['static_resources']['used_talents'],
+                'loginTime' => $data['time_resources']['login_time'],
+                'achievements' => $data['achievements']
+            ],
+            'source' => 'game',
+            'messages' => ''
+        ]);
     }
 
     private function update($data, $userId)
@@ -172,23 +173,20 @@ class Friends
     }
 
     #[ArrayShape(['status' => "int", 'result' => "array"])]
-    private function informationError(RegimentUsers $data, $userId): array
+    private function informationError(RegimentUsers $data): array
     {
-        return [
-            'status' => 1,
-            'result' => [
-                'data' => [
-                    'platform_id' => $data->getSocId(),
-                    'level' => $data->getLevel(),
-                    'sut' => $data->getSut(),
-                    'totalDamage' => $data->getTotalDamage(),
-                    'usedTalents' => $data->getUsedTalents(),
-                    'loginTime' => $data->getLoginTime(),
-                    'achievements' => $data->getAchievements()
-                ],
-                'source' => 'local',
-                'messages' => '',
-                'environment' => $_ENV['APP_ENV']
-            ]];
+        return $this->dataResponse->success(DataResponse::STATUS_SUCCESS, [
+            'data' => [
+                'platform_id' => $data->getSocId(),
+                'level' => $data->getLevel(),
+                'sut' => $data->getSut(),
+                'totalDamage' => $data->getTotalDamage(),
+                'usedTalents' => $data->getUsedTalents(),
+                'loginTime' => $data->getLoginTime(),
+                'achievements' => $data->getAchievements()
+            ],
+            'source' => 'local',
+            'messages' => ''
+        ]);
     }
 }

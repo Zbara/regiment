@@ -12,7 +12,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
-    name: 'UpdateAuth',
+    name: 'app:game',
     description: 'Add a short description for your command',
 )]
 class UpdateAuthCommand extends Command

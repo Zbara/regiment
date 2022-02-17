@@ -37,49 +37,47 @@ class ConnectGame
 
     public function authInfo(): bool|array|null
     {
-        if (empty($this->redis->getValue('authParams'))) {
-            $appInfo = $this->vkontakte->getApi('https://api.vk.com/method/apps.getEmbeddedUrl', [
-                'app_id' => $this->appId,
-                'v' => '5.136',
-                'access_token' => $_ENV['ACCESS_TOKEN']
-            ]);
-            if (isset($appInfo['response']['view_url'])) {
-                $app = $this->vkontakte->getApi($appInfo['response']['view_url'], [], 'object', false, 'GET');
+        $appInfo = $this->vkontakte->getApi('https://api.vk.com/method/apps.getEmbeddedUrl', [
+            'app_id' => $this->appId,
+            'v' => '5.136',
+            'access_token' => $_ENV['ACCESS_TOKEN']
+        ]);
+        if (isset($appInfo['response']['view_url'])) {
+            $app = $this->vkontakte->getApi($appInfo['response']['view_url'], [], 'object', false, 'GET');
 
-                preg_match('/\{"api_url"(.+?)}/', $app, $token);
+            preg_match('/\{"api_url"(.+?)}/', $app, $token);
 
-                if (isset($token['0'])) {
-                    $appGame = $this->vkontakte->getApi('https://vk.regiment.bravegames.ru/frame?' . http_build_query(json_decode($token['0'], 1)), [], 'object', false, 'GET');
+            if (isset($token['0'])) {
+                $appGame = $this->vkontakte->getApi('https://vk.regiment.bravegames.ru/frame?' . http_build_query(json_decode($token['0'], 1)), [], 'object', false, 'GET');
 
-                    if ($appGame) {
-                        preg_match('/\window.game_login = (0|[1-9][0-9]*)/', $appGame, $game_login);
-                        preg_match('/\window.game_token = "(.+?)"/', $appGame, $game_token);
-                        preg_match('/\window.current_time = (0|[1-9][0-9]*)/', $appGame, $current_time);
+                if ($appGame) {
+                    preg_match('/\window.game_login = (0|[1-9][0-9]*)/', $appGame, $game_login);
+                    preg_match('/\window.game_token = "(.+?)"/', $appGame, $game_token);
+                    preg_match('/\window.current_time = (0|[1-9][0-9]*)/', $appGame, $current_time);
 
-                        $this->game_login = (int)$game_login[1];
-                        $this->current_time = (int)$current_time[1];
-                        $this->game_token = $game_token[1];
+                    $this->game_login = (int)$game_login[1];
+                    $this->current_time = (int)$current_time[1];
+                    $this->game_token = $game_token[1];
 
-                        $user = $this->generateQuery("init", "friends={}");
+                    $user = $this->generateQuery("init", "friends={}");
 
-                        dump($user);
+                    dump($user);
 
-                        if (isset($user['secret'])) {
-                            $this->secret = $user['secret'];
-                            $this->game_key = $user['key'];
+                    if (isset($user['secret'])) {
+                        $this->secret = $user['secret'];
+                        $this->game_key = $user['key'];
 
-                            $auth = [
-                                'game_login' => $this->game_login,
-                                'game_token' => $this->game_token,
-                                'current_time' => $this->current_time,
-                                'secret' => $this->secret,
-                                'game_key' => $this->game_key
-                            ];
+                        $auth = [
+                            'game_login' => $this->game_login,
+                            'game_token' => $this->game_token,
+                            'current_time' => $this->current_time,
+                            'secret' => $this->secret,
+                            'game_key' => $this->game_key
+                        ];
 
-                            $this->redis->setValue('authParams', $auth, 3600, 1);
+                        $this->redis->setValue('authParams', $auth, 3600, 1);
 
-                            return Command::SUCCESS;
-                        }
+                        return Command::SUCCESS;
                     }
                 }
             }
@@ -153,9 +151,9 @@ class ConnectGame
                         'Game-key' => $this->game_key,
                         'Game-check' => md5($sign),
                     ],
-                   // 'proxy' => 'http://:@127.0.0.1:8888',
-                   // 'verify_peer' => false,
-                   // 'verify_host' => false,
+                    // 'proxy' => 'http://:@127.0.0.1:8888',
+                    // 'verify_peer' => false,
+                    // 'verify_host' => false,
                 ]
             );
             $response = $client->request('POST', 'https://' . $url, ['body' => $this->compress($data)]);

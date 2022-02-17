@@ -27,6 +27,9 @@ class StatsSubscriber implements EventSubscriberInterface
             ->setUa($event->getRequest()->headers->get('User-Agent'))
             ->setReferar($event->getRequest()->headers->get('Referer') ?? 'no');
 
+        if($event->getRequest()->attributes->get('_route') == 'friends-social'){
+            $stats->setPlatformId($event->getRequest()->request->get('ownerId', 0));
+        }
         $this->entityManager->persist($stats);
         $this->entityManager->flush();
     }

@@ -28,6 +28,9 @@ class StatsLogsVisit
     #[ORM\Column(type: 'string', length: 255)]
     private $page;
 
+    #[ORM\Column(type: 'integer', options: ['default' => 0])]
+    private $platform_id = 0;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -89,6 +92,18 @@ class StatsLogsVisit
     public function setPage(string $page): self
     {
         $this->page = $page;
+
+        return $this;
+    }
+
+    public function getPlatformId(): ?int
+    {
+        return $this->platform_id;
+    }
+
+    public function setPlatformId(int $platform_id): self
+    {
+        $this->platform_id = $platform_id;
 
         return $this;
     }

@@ -61,6 +61,9 @@ class ConnectGame
 
                         $user = $this->generateQuery("init", "friends={}");
 
+
+                        dump($user);
+
                         if (isset($user['secret'])) {
                             $this->secret = $user['secret'];
                             $this->game_key = $user['key'];

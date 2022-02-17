@@ -25,11 +25,13 @@ class ConnectGame
 
     private Vkontakte $vkontakte;
     private Redis $redis;
+    private Encrypt $encrypt;
 
-    public function __construct(Vkontakte $vkontakte, Redis $redis)
+    public function __construct(Vkontakte $vkontakte, Redis $redis, Encrypt $encrypt)
     {
         $this->vkontakte = $vkontakte;
         $this->redis = $redis;
+        $this->encrypt = $encrypt;
     }
 
     public function authInfo(): bool|array|null
@@ -134,7 +136,7 @@ class ConnectGame
     {
         $str = urlencode($str);
 
-        return base64_encode(gzcompress($str, 9));
+        return $this->encrypt->encode(base64_encode(gzcompress($str, 9)));
     }
 
     public function api($url, $data, $sign)
@@ -142,7 +144,7 @@ class ConnectGame
         try {
             $client = HttpClient::create([
                     'headers' => [
-                        'User-Agent' => 'VKAndroidApp/6.54-9332 (Android 11; SDK 30; armeabi-v7a; samsung SM-G970F; ru; 2280x1080)',
+                        'User-Agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36',
                         'Origin' => 'https://vk.regiment.bravegames.ru',
                         'Game-key' => $this->game_key,
                         'Game-check' => md5($sign),
@@ -155,7 +157,7 @@ class ConnectGame
             $response = $client->request('POST', 'https://' . $url, ['body' => $this->compress($data)]);
 
             if (Response::HTTP_OK === $response->getStatusCode()) {
-                return json_decode(rawurldecode(gzuncompress(base64_decode($response->getContent()))), 1);
+                return json_decode(rawurldecode(gzuncompress(base64_decode($this->encrypt->decode($response->getContent())))), 1);
             }
         } catch (TransportExceptionInterface|ClientExceptionInterface|RedirectionExceptionInterface|ServerExceptionInterface $e) {
             return false;

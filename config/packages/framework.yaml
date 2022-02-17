@@ -16,9 +16,9 @@ framework:
         default_options:
             verify_peer: false
             verify_host: false
-            timeout: 7
+            timeout: 10
             headers:
-                'User-Agent': 'VKAndroidApp/6.54-9332 (Android 11; SDK 30; armeabi-v7a; samsung SM-G970F; ru; 2280x1080)'
+                'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36'
 
 
     #esi: true

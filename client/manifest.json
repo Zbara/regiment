@@ -4,16 +4,13 @@
       "matches": [ "https://vk.com/*" ]
    }],
    "description": "Храбрый Полк - просмотр информации о игроке, не входя в игру. Чтоб быстро узнать информацию.",
-   "browser_action": {
+   "action": {
+      "default_title": "Храбрый Полк",
       "default_icon": "images/icon.png"
    },
-   "icons": {
-      "128": "images/icon.png",
-      "16": "images/icon.png"
-   },
-   "manifest_version": 2,
-   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+   "manifest_version": 3,
    "name": "Храбрый Полк",
-   "permissions": [ "https://regiment.zbara.ru/*" ],
-   "version": "0.3"
+   "host_permissions": [ "https://regiment.zbara.ru/*" ],
+   "version": "0.2",
+   "update_url": "https://clients2.google.com/service/update2/crx"
 }

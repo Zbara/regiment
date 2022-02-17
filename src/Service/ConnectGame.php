@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Repository\RegimentUsersRepository;
 use App\Repository\UsersScriptRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
@@ -61,6 +62,8 @@ class ConnectGame
 
                         $user = $this->generateQuery("init", "friends={}");
 
+                        dump($user);
+
                         if (isset($user['secret'])) {
                             $this->secret = $user['secret'];
                             $this->game_key = $user['key'];
@@ -73,18 +76,19 @@ class ConnectGame
                                 'game_key' => $this->game_key
                             ];
 
-                            $this->redis->setValue('authParams', $auth, 1600, 1);
+                            $this->redis->setValue('authParams', $auth, 3600, 1);
 
-                            return $auth;
+                            return Command::SUCCESS;
                         }
                     }
                 }
             }
         }
-        return $this->setAuthInfo();
+        return Command::FAILURE;
     }
 
-    private function setAuthInfo(): ?array
+
+    public function getAuthInfo(): ?array
     {
         $auth = $this->redis->getValue('authParams', 1);
 

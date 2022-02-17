@@ -42,6 +42,7 @@ class ConnectGame
             'v' => '5.136',
             'access_token' => $_ENV['ACCESS_TOKEN']
         ]);
+
         if (isset($appInfo['response']['view_url'])) {
             $app = $this->vkontakte->getApi($appInfo['response']['view_url'], [], 'object', false, 'GET');
 

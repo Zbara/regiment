@@ -23,12 +23,6 @@ class UpdateAuthCommand extends Command
         parent::__construct();
     }
 
-    protected function configure(): void
-    {
-        $this
-            ->addArgument('params', InputArgument::OPTIONAL);
-    }
-
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         return $this->connectGame->authInfo();

@@ -144,12 +144,12 @@ class ConnectGame
         try {
             $client = HttpClient::create([
                     'headers' => [
-                        'User-Agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36',
+                        'User-Agent' => 'VKAndroidApp/6.54-9332 (Android 11; SDK 30; armeabi-v7a; samsung SM-G970F; ru; 2280x1080)',
                         'Origin' => 'https://vk.regiment.bravegames.ru',
                         'Game-key' => $this->game_key,
                         'Game-check' => md5($sign),
                     ],
-                    ///'proxy' => 'http://:@127.0.0.1:8888',
+                    //'proxy' => 'http://:@127.0.0.1:8888',
                     //'verify_peer' => false,
                     //'verify_host' => false,
                 ]

@@ -46,8 +46,6 @@ class FriendsController extends AbstractController
         $ownerId = $request->get('ownerId', null);
 
 
-
-
         if (isset($userId) and isset($ownerId)) {
             return $this->json($friends->social($userId, $ownerId));
         }

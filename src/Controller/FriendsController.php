@@ -48,8 +48,6 @@ class FriendsController extends AbstractController
 
 
 
-
-
         if (isset($userId) and isset($ownerId)) {
             return $this->json($friends->social($userId, $ownerId));
         }

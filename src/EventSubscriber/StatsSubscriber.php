@@ -3,19 +3,23 @@
 namespace App\EventSubscriber;
 
 use App\Entity\StatsLogsVisit;
+use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use JetBrains\PhpStorm\ArrayShape;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
+use Symfony\Component\Security\Core\Security;
 
 class StatsSubscriber implements EventSubscriberInterface
 {
 
     private EntityManagerInterface $entityManager;
+    private Security $security;
 
-    public function __construct(EntityManagerInterface $entityManager){
+    public function __construct(EntityManagerInterface $entityManager, Security $security){
         $this->entityManager = $entityManager;
+        $this->security = $security;
     }
 
     public function onKernelResponse(RequestEvent $event)

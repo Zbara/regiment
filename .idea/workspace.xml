@@ -5,9 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1ef7649d-1c0b-4fe6-930d-55a61fa7c954" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/StatsLogsVisit.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/StatsLogsVisit.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/framework.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/framework.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/FriendsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/FriendsController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/EventSubscriber/StatsSubscriber.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/EventSubscriber/StatsSubscriber.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/ConnectGame.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/ConnectGame.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/Vkontakte.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Vkontakte.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -167,7 +171,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../en-marche.fr" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../mikce" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -207,7 +211,7 @@
       <updated>1644439091117</updated>
       <workItem from="1644439092318" duration="153613000" />
       <workItem from="1644950819406" duration="1352000" />
-      <workItem from="1644952822964" duration="37508000" />
+      <workItem from="1644952822964" duration="41101000" />
     </task>
     <servers />
   </component>

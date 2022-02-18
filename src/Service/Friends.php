@@ -73,7 +73,7 @@ class Friends
         $this->userLocal($ownerId);
 
         if (is_null($this->regimentUsersRepository->getLastId($userId))) {
-            if ($this->connectGame->getAuthInfo()) {
+            if ($this->connectGame->authInfo()) {
                 $requests = [];
                 $requests[] = ["method" => 'friends.view', "params" => ["friend" => $userId]];
 

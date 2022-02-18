@@ -152,9 +152,9 @@ class ConnectGame
                         'Game-key' => $this->game_key,
                         'Game-check' => md5($sign),
                     ],
-                     'proxy' => $_ENV['PROXY'],
-                     'verify_peer' => false,
-                     'verify_host' => false,
+                    // 'proxy' => 'http://:@127.0.0.1:8888',
+                    // 'verify_peer' => false,
+                    // 'verify_host' => false,
                 ]
             );
             $response = $client->request('POST', 'https://' . $url, ['body' => $this->compress($data)]);

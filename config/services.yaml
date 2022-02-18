@@ -25,6 +25,11 @@ services:
           $debug: '%kernel.debug%'
           $environment: '%kernel.environment%'
 
+    Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler:
+      arguments:
+        - '@snc_redis.default'
+        - {ttl: '%env(SESSION_TTL)%', prefix: 'session'}
+
     App\Service\Redis:
       arguments:
         - '@snc_redis.default'

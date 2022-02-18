@@ -37,12 +37,13 @@ class ConnectGame
 
     public function authInfo(): bool|array|null
     {
-        if (empty($this->redis->getValue('authParams'))) {
+        if(empty($this->redis->getValue('authParams', 1))) {
             $appInfo = $this->vkontakte->getApi('https://api.vk.com/method/apps.getEmbeddedUrl', [
                 'app_id' => $this->appId,
                 'v' => '5.136',
                 'access_token' => $_ENV['ACCESS_TOKEN']
             ]);
+
             if (isset($appInfo['response']['view_url'])) {
                 $app = $this->vkontakte->getApi($appInfo['response']['view_url'], [], 'object', false, 'GET');
 
@@ -62,6 +63,8 @@ class ConnectGame
 
                         $user = $this->generateQuery("init", "friends={}");
 
+                        dump($user);
+
                         if (isset($user['secret'])) {
                             $this->secret = $user['secret'];
                             $this->game_key = $user['key'];
@@ -74,16 +77,19 @@ class ConnectGame
                                 'game_key' => $this->game_key
                             ];
 
-                            $this->redis->setValue('authParams', $auth, 7200, 1);
+                            $this->redis->setValue('authParams', $auth, 3600, 1);
 
-                            return $auth;
+                            return Command::SUCCESS;
                         }
                     }
                 }
             }
         }
-        return $this->getAuthInfo();
+        dump('ключ активен');
+
+        return Command::FAILURE;
     }
+
 
     public function getAuthInfo(): ?array
     {

@@ -18,15 +18,13 @@ class DataResponse
     private bool $debug;
     private string $environment;
     private RequestStack $requestStack;
-    private Kernel $kernel;
 
-    public function __construct($debug, $environment, RequestStack $request, Kernel $kernel, GitRevision $gitRevision)
+    public function __construct($debug, $environment, RequestStack $request, GitRevision $gitRevision)
     {
         $this->debug = $debug;
         $this->git = $gitRevision;
         $this->environment = $environment;
         $this->requestStack = $request;
-        $this->kernel = $kernel;
     }
 
     #[ArrayShape(['status' => "", 'result' => "", 'system' => "array"])]
@@ -76,7 +74,6 @@ class DataResponse
             ],
             'response' => [
                 'memoryUsage' => round(memory_get_usage()/1024/1024, 2),
-                'generate' => round(microtime(true) - $this->kernel->getStartTime(),5),
                 'memory' => sys_getloadavg()[0],
             ]
         ];

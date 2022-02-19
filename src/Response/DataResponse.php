@@ -2,8 +2,10 @@
 
 namespace App\Response;
 
+use App\Kernel;
 use App\Service\GitRevision;
 use JetBrains\PhpStorm\ArrayShape;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\EventListener\ResponseListener;
 
@@ -11,17 +13,22 @@ class DataResponse
 {
     const STATUS_ERROR = 0;
     const STATUS_SUCCESS = 1;
+
     private GitRevision $git;
     private bool $debug;
     private string $environment;
+    private RequestStack $requestStack;
+    private Kernel $kernel;
 
-    public function __construct($debug, $environment, GitRevision $gitRevision)
+    public function __construct($debug, $environment, RequestStack $request, Kernel $kernel, GitRevision $gitRevision)
     {
         $this->debug = $debug;
         $this->git = $gitRevision;
         $this->environment = $environment;
+        $this->requestStack = $request;
+        $this->kernel = $kernel;
     }
-    
+
     #[ArrayShape(['status' => "", 'result' => "", 'system' => "array"])]
     public function success($status, $result): array
     {
@@ -46,16 +53,32 @@ class DataResponse
     }
 
 
-    #[ArrayShape(['environment' => "", 'memory' => "mixed", 'gitDate' => "string", 'gitRev' => "string", 'time' => "int", 'debug' => ""])]
+    #[ArrayShape([
+        'environment' => "string",
+        'memory' => "mixed",
+        'gitDate' => "string",
+        'gitRev' => "string",
+        'time' => "int",
+        'debug' => "bool",
+        'request' => "array",
+        'response' => "array"
+    ])]
     private function system(): array
     {
         return [
             'environment' => $this->environment,
-            'memory' => sys_getloadavg()[0],
             'gitDate' => $this->git->getDate(),
             'gitRev' => $this->git->getBuild(),
             'time' => time(),
-            'debug' => $this->debug
+            'debug' => $this->debug,
+            'request' => [
+                'route' => $this->requestStack->getCurrentRequest()->attributes->get('_route')
+            ],
+            'response' => [
+                'memoryUsage' => round(memory_get_usage()/1024/1024, 2),
+                'generate' => round(microtime(true) - $this->kernel->getStartTime(),5),
+                'memory' => sys_getloadavg()[0],
+            ]
         ];
     }
 }

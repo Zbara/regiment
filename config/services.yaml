@@ -24,6 +24,8 @@ services:
       arguments:
           $debug: '%kernel.debug%'
           $environment: '%kernel.environment%'
+          $request: '@request_stack'
+          $kernel: '@App\Kernel'
 
     Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler:
       arguments:

@@ -186,7 +186,7 @@ class Friends
                 'achievements' => $data->getAchievements()
             ],
             'source' => 'local',
-            'messages' => ''
+            'messages' => '<div style="text-align: center; padding: 10px 0 0 0"><i style="color: #F66341; cursor: pointer" data-title="Данные взяты с базы скрипта. <br/><br/> Для меньшей нагрузки на сервер игры." onmouseover="showTitle(this);">Данные об игроке закэшированные.</i></div>'
         ]);
     }
 }

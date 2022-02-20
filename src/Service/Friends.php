@@ -29,6 +29,7 @@ class Friends
     private UsersScriptRepository $usersScriptRepository;
     private ConnectGame $connectGame;
     private DataResponse $dataResponse;
+    private Libs $libs;
 
     public function __construct(
         EntityManagerInterface  $entityManager,
@@ -38,7 +39,8 @@ class Friends
         Redis                   $redis,
         UsersScriptRepository   $usersScriptRepository,
         ConnectGame             $connectGame,
-        DataResponse            $dataResponse
+        DataResponse            $dataResponse,
+        Libs $libs
     )
     {
         $this->entityManager = $entityManager;
@@ -49,6 +51,7 @@ class Friends
         $this->usersScriptRepository = $usersScriptRepository;
         $this->connectGame = $connectGame;
         $this->dataResponse = $dataResponse;
+        $this->libs = $libs;
     }
 
     public function helper($userId): array
@@ -175,6 +178,8 @@ class Friends
     #[ArrayShape(['status' => "int", 'result' => "array"])]
     private function informationError(RegimentUsers $data): array
     {
+        $update = $this->libs->rename(['%d секунду', '%d секунды', '%d секунд'], $data->getUpdateTime() + 500 - time());
+
         return $this->dataResponse->success(DataResponse::STATUS_SUCCESS, [
             'data' => [
                 'platform_id' => $data->getSocId(),
@@ -186,7 +191,7 @@ class Friends
                 'achievements' => $data->getAchievements()
             ],
             'source' => 'local',
-            'messages' => '<div style="text-align: center; padding: 10px 0 0 0"><i style="color: #F66341; cursor: pointer" data-title="Данные взяты с базы скрипта. <br/><br/> Для меньшей нагрузки на сервер игры." onmouseover="showTitle(this);">Данные об игроке закэшированные.</i></div>'
+            'messages' => '<div style="text-align: center; padding: 10px 0 0 0"><i style="color: #F66341; cursor: pointer" data-title="Можно будет обновить через ' .  $update. '." onmouseover="showTitle(this);">Данные об игроке закэшированные.</i></div>'
         ]);
     }
 }

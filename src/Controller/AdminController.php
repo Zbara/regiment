@@ -17,7 +17,8 @@ class AdminController extends AbstractController
         return $this->render('admin/users.html.twig', [
             'pagination' => $paginator->paginate($usersScriptRepository->findLatest(), $request->query->getInt('page', 1), 50, [
                 'defaultSortDirection' => 'desc'
-            ])
+            ]),
+            'lastTime' => count($usersScriptRepository->getLastId())
         ]);
     }
 }

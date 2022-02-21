@@ -24,4 +24,14 @@ class UsersScriptRepository extends ServiceEntityRepository
         $builder = $this->createQueryBuilder('a');
         return $builder->orderBy('a.lastTime', 'DESC');
     }
+
+    public function getLastId()
+    {
+        $builder = $this->createQueryBuilder('a');
+
+        return $builder->andWhere('a.lastTime > :time')
+            ->setParameter('time', time() - 86400)
+            ->getQuery()
+            ->getResult();
+    }
 }

@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+{% block title %}Юзеры Храбрый Полк    {% endblock %}
+{% block header 'Юзеры Храбрый Полк' %}
+{% block main %}
+    <div class="row row-cards">
+        <div class="col-12">
+            <div class="card">
+                <div class="table-responsive">
+                    <table class="table card-table table-vcenter text-nowrap datatable">
+                        <thead>
+                        <tr>
+                            <th class="w-1">№</th>
+                            <th class="w-3">Имя Фамилия</th>
+                            <th{% if pagination.isSorted(['a.created']) %} class="sorted"{% endif %}>
+                                {{ knp_pagination_sortable(pagination, 'Создан', ['a.created']) }}
+                            </th>
+                            <th{% if pagination.isSorted(['a.lastTime']) %} class="sorted"{% endif %}>
+                                {{ knp_pagination_sortable(pagination, 'Вход', ['a.lastTime']) }}
+                            </th>
+                            <th>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for key, item in pagination %}
+                            <tr data-id="{{ item.id }}">
+                                <td>
+                                    {{ key + 1 }}
+                                </td>
+                                <td>
+                                    <div class="d-flex py-1 align-items-center">
+                                        <a href="https://vk.com/id{{ item.platformId }}"
+                                           class="text-reset" target="_blank"><span class="avatar me-2"
+                                                                                    style="background-image: url({{ item.photo50 }})"></span>
+                                        </a>
+                                        <div class="flex-fill">
+                                            <div class="font-weight-medium">
+                                                <a href="https://vk.com/id{{ item.platformId }}"
+                                                   class="text-reset" target="_blank">
+                                                    {{ item.firstName }} {{ item.lastName }}
+                                                </a>
+                                            </div>
+                                            <div class="text-muted">
+                                                <div class="text-reset">@id{{ item.platformId }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="text-muted"> {{ convertTime(item.created) }}</div>
+                                </td>
+                                <td>
+                                    <div class="text-muted">{{ convertTime(item.lastTime) }}</div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {{ knp_pagination_render(pagination, 'libs/pagination.html.twig') }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

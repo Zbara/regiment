@@ -19,32 +19,9 @@ class UsersScriptRepository extends ServiceEntityRepository
         parent::__construct($registry, UsersScript::class);
     }
 
-    // /**
-    //  * @return UsersScript[] Returns an array of UsersScript objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findLatest(string $category = 'all', array $friends = []): \Doctrine\ORM\QueryBuilder
     {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('u.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $builder = $this->createQueryBuilder('a');
+        return $builder->orderBy('a.lastTime', 'DESC');
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?UsersScript
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

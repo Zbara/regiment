@@ -16,7 +16,7 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 class ConnectGame
 {
-    var int $appId = 8063650;
+    var int $appId = 8016542;
     var int $game_login;
     var string $game_token;
     var int $current_time;

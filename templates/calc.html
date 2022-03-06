@@ -1,0 +1,436 @@
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <style>
+        .main {
+            background-color: #000;
+        }
+
+        .author {
+            text-decoration: none;
+            font: 20px Lucida Console;
+            color: #200;
+            text-shadow: 1px 1px 1px #daa, 1px -1px 1px #daa, -1px 1px 1px #daa, -1px -1px 1px #daa;
+        }
+
+        .brd {
+            border: 1px dotted #a00;
+            border-radius: 4px;
+            background-color: #200;
+        }
+
+        .blackred {
+            font: 20px Lucida Console;
+            color: #000;
+            text-shadow: 1px 1px 1px #f00, 1px -1px 1px #f00, -1px 1px 1px #f00, -1px -1px 1px #f00;
+            border-radius: 7px;
+        }
+
+        .shadow {
+            font: 20px Lucida Console;
+            color: #000;
+            text-shadow: 1px 1px 1px #d7c89c, 1px -1px 1px #d7c89c, -1px 1px 1px #d7c89c, -1px -1px 1px #d7c89c;
+        }
+
+        .medicine {
+            padding: 0px 4px;
+            background-color: #000;
+            border: 2px solid #600;
+            border-radius: 14px;
+            font: 20px Lucida Console;
+            color: #000;
+            font-weight: 900;
+            text-shadow: 1px 1px 2px #f00, 1px -1px 2px #f00, -1px 1px 2px #f00, -1px -1px 2px #f00, 2px 2px 3px #666, 2px -2px 3px #666, -2px 2px 3px #666, -2px -2px 3px #666;
+        }
+
+        .shadow2 {
+            font: 20px Lucida Console;
+            color: #090;
+            text-shadow: 1px 1px 1px #600, 1px -1px 1px #600, -1px 1px 1px #600, -1px -1px 1px #600;
+            background-color: #000;
+            border: 1px dashed #333;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .shadow3 {
+            font: 20px Lucida Console;
+            color: #ааа;
+            text-shadow: 1px 1px 2px #fff, 1px -1px 2px #fff, -1px 1px 2px #fff, -1px -1px 2px #fff, 2px 2px 3px #00f, 2px -2px 3px #00f, -2px 2px 3px #00f, -2px -2px 3px #00f;
+        }
+
+        .shadow3:hover {
+            cursor: pointer;
+        }
+
+        .shadowbtn {
+            font: 18px Lucida Console;
+            color: #090;
+            text-shadow: 1px 1px 1px #600, 1px -1px 1px #600, -1px 1px 1px #600, -1px -1px 1px #600;
+            background-color: #000;
+            border: 1px solid #333;
+            border-radius: 7px;
+        }
+
+        .item_4 {
+            font: 20px Lucida Console;
+            color: #000;
+            text-shadow: 1px 1px 1px #fc0, 1px -1px 1px #fc0, -1px 1px 1px #fc0, -1px -1px 1px #fc0;
+            text-align: center;
+        }
+
+        .item_6 {
+            font: 20px Lucida Console;
+            color: #000;
+            text-shadow: 1px 1px 1px #f60, 1px -1px 1px #f60, -1px 1px 1px #f60, -1px -1px 1px #f60;
+            text-align: center;
+        }
+
+        .item_8 {
+            font: 20px Lucida Console;
+            color: #000;
+            text-shadow: 1px 1px 1px #c6f, 1px -1px 1px #c6f, -1px 1px 1px #c6f, -1px -1px 1px #c6f;
+            text-align: center;
+        }
+
+        .f1 {
+            font: 20px Lucida Console;
+            color: #000;
+            text-shadow: 6px 6px 6px #f00, 6px -6px 6px #f00, -6px 6px 6px #f00, -6px -6px 6px #f00, 6px 0px 6px #f00, 0px -6px 6px #f00, -6px 0px 6px #f00, 0px 6px 6px #f00;
+        }
+
+        .presetbtn {
+            font: 24px Castellar;
+            color: #999;
+            text-shadow: 2px 2px 2px #999, 2px -2px 2px #999, -2px 2px 2px #999, -2px -2px 2px #999;
+            background-color: #000;
+            border: 2px solid #800;
+            border-radius: 7px;
+            text-align: center;
+        }
+
+        .presetbtn:hover {
+            cursor: pointer;
+            color: #777;
+            text-shadow: 2px 2px 2px #f00, 2px -2px 2px #f00, -2px 2px 2px #f00, -2px -2px 2px #f00;
+        }
+
+        .edge {
+            padding: 2px 4px;
+            border: 1px solid #333
+        }
+
+        .edge:hover {
+            background-color: #222;
+        }
+
+        .top {
+            border-top: 1px solid red
+        }
+
+        .btm {
+            border-bottom: 1px solid red
+        }
+
+        .lft {
+            border-left: 1px solid red
+        }
+
+        .rgt {
+            border-right: 1px solid red
+        }
+    </style>
+    <title>Mad Mathematic v.1.4 (last change at 28.06.2012)</title>
+</head>
+<body class="blackred main" onKeyUp="RefreshDate();" onLoad="LoadSomething();">
+<span id="message"></span>
+<script>
+    var table_head = ['Имя босса', 'Норма урона', 'Выбиваю ?', 'Могу убить босса?', 'Урон без <span class="medicine">+</span>', '% нормы без <span class="medicine">+</span>', '<span class="medicine">+</span> для нормы', '<span class="medicine">+</span> для победы'];
+    var b_name = ['[F5-1] Генри Литен', '[F5-1] Амелия "Банши"', '[F5-2] Крошка "Сью"', '[F5-2] "Малыш" Джон', '[F5-3] Охранник Манфред', '[F5-3] Руди "Аналитик"', '[F4-1] Аксель Шварценштайн', '[F4-1] Агнет "Балерина"', '[F4-2] Дорин Гамбринто', '[F4-2] Бруно Цугенкноф', '[F4-3] Сестра Каролайн', '[F4-3] Олаф Слатер', '[F3-1] Гордон Кирбероуз', '[F3-1] Дуглас Макфадден', '[F3-2] Франческа Де ла Пизани', '[F3-2] Броуди Кавальери', '[F3-3] Элайза Картер', '[F3-3] Ален Грант', '[F2-1] Вальтер Шпинне', '[F2-1] Стефан и Ганс Крейг', '[F2-2] Геррод и Герда', '[F2-2] Зузанна и Анита Болеславски', '[F2-3] Аделаида Шальца', '[F2-3] Хуго Ван Дер Вейден', '[F1-1] Иероним Георг фон Риттер', '[F1-1] Фрау Анжелина Буркхардт', '[F1-2] Карл Магнус Иверман', '[F1-2] Отто Иверман', '[F1-3] Кибер-Адъюнкт v.3.5.', '[F1-3] Профессор Г. Буркхардт', '[F0-1] Вий', '[F0-1] Директориус', '[F0-2] Экзекутор', '[F0-2] Бабушка фон Берхард', '[F0-3] Нерождённые', '[F0-3] Оно', '[Spec] Эксперимент "Снеговик X-32"', '[Spec] Делириум'];
+    var b_health = [1333, 1333, 2777, 2777, 6943, 6943, 11387, 11387, 16982, 16982, 21005, 21005, 84123, 84123, 137845, 127954, 235476, 220365, 321576, 315496, 456234, 456234, 547809, 532567, 589123, 603478, 654933, 672345, 715364, 745893, 1076000, 1160064, 1278632, 1348621, 1466950, 1682238, 350000, 1159203];
+    var b_mindmg = [8, 10, 18, 18, 23, 23, 47, 47, 59, 59, 54, 54, 85, 85, 100, 120, 120, 165, 166, 157, 256, 253, 320, 343, 403, 407, 457, 460, 485, 490, 587, 595, 637, 657, 701, 663, 15, 358];
+    var b_maxdmg = [22, 20, 28, 28, 43, 43, 67, 67, 77, 77, 94, 94, 115, 115, 170, 170, 220, 205, 260, 251, 304, 327, 402, 417, 437, 453, 502, 494, 539, 530, 683, 705, 736, 743, 779, 897, 25, 432];
+    var help_msg = [
+        'Калькулятор для вычисления своего урона по боссам в игре Безумие.\nДля использования введите параметры своего персонажа и выберите босса из списка.\nВерсия 1.4 | Автор: (†††) Shinigami',
+        'Среднее значение урона, наносимого боссом за удар. На основе среднего урона ведётся большинство расчётов, например, количество ударов, нужное боссу для того, чтобы убить вас.',
+        'Среднее значение количества ударов, которые должен нанести босс, чтобы отнять всё здоровье у вашего персонажа. Будьте осторожны, если босса убьют, когда ваше здоровье на нуле - вы не получите награды за его убийство.',
+        'Количество ударов, которое вы должны нанести боссу, чтобы убить его (без помощи других игроков).',
+        'Это значение показывает, сколько в среднем урона вы нанесёте боссу, прежде чем у вас останется минимальное количество здоровья.',
+        'Это значение составляет 2% от полного здоровья босса, столько урона должен нанести каждый игрок боссу, если босса бьёт максимальное количество игроков (50). Если вы не можете выбить норму на боссе - не вступайте в бой, либо используйте аптечки и заначки для усиления персонажа.',
+        'Промежуточное значение для вычислений. Столько здоровья вы восстанавливаете при использовании простой аптечки (здесь и далее не ведутся вычисления с аптечкой за купюры и воплем за пилюли. Но вы можете увеличить параметр урона для имитации атак воплем.).',
+        'Это значение показывает, можете ли вы нанести минимальное значение урона (см. выше) боссу, не используя аптечки.',
+        'Это значение показывает, сколько процентов от нормы урона вы наносите боссу без использования аптечек.',
+        'Это значение показывает, сколько аптечек вам понадобится для нанесения нормы урона боссу. Второе число - результат расчётов с использованием вероятности, например, если урон босса = 165-205, а лечение от аптечки - 170, то вероятность нанести 2 удара равна 5/41 = 12.20%.',
+        'Это значение показывает, можете ли вы победить босса без использования аптечек в одиночку:)',
+        'Это значение показывает, сколько аптечек в среднем вам понадобится, чтобы победить босса в одиночку. Второе число - результат расчётов с использованием вероятности, например, если урон босса = 165-205, а лечение от аптечки - 170, то вероятность нанести 2 удара равна 5/41 = 12.20%.',
+        'Это значение отображает вероятность того, что при использовании аптечки вы сможете нанести боссу на один удар больше. См. второе значение в строках "[+] для нормы" и "[+] для победы", оно отображает более точную информацию, когда этот параметр больше 0.',
+        'Таблица была добавлена в калькулятор, начиная с версии 1.2. Границы ячеек могут не совсем корректно окрашиваться в некоторых браузерах (например, Опера), поэтому, если поставить галочку в форме слева, то все границы в таблице будут тёмно-серого цвета.'];
+
+    function NeedHelp(x) {
+        alert(help_msg[x]);
+    }
+
+    function fillSelect(id, content) {
+        var code = "";
+        for (var i = 0; i < content.length; i++) code += "<option value=\"" + i + "\">" + content[i] + "</option>";
+        document.getElementById(id).innerHTML = code;
+    }
+
+    function LoadSomething() {
+        for (var i = 0; i < 8; i++) document.getElementById('chkbox' + i).checked = (83 >> i) & 1;
+        fillSelect("BossSelect", b_name);
+    }
+
+    function idval(id) {
+        return document.getElementById(id).value;
+    }
+
+    function BossChanged() {
+        var i = idval('BossSelect');
+        document.getElementById("BossHealth").innerHTML = b_health[i];
+        document.getElementById("BossDamage").innerHTML = b_mindmg[i] + " ~ " + b_maxdmg[i];
+    }
+
+    function RefreshDate(x) {
+        var TBpar = [];
+        var y = x ? x - 1 : idval('BossSelect');
+        var shlt = 1 * idval('plHealth');
+        var sdmg = 1 * idval('plDamage');
+        var thlt = b_health[y];
+        var heal = shlt > 1000 ? Math.round(shlt / 10) : 100;
+        var tmin = b_mindmg[y];
+        var tmax = b_maxdmg[y];
+        var tavg = Math.ceil((tmin + tmax) >> 1);
+        var s = heal % tavg > tmin ? 1 : (heal > tmin && heal <= tmax) ? 2 : 0;
+        var factor = s ? Math.ceil(((s & 1 ? heal % tavg : heal) - tmin) / (1 + tmax - tmin) * 10000) / 100 : 0;
+        var debugcounter = 0;
+
+        function someCalc(ex, f) {
+            return Math.round(Math.ceil((ex) / sdmg) / (Math.ceil(heal / tavg) + (f && factor ? (factor - 1) / 100 : 0)));
+        }
+
+        if (!x) {
+            TBpar[0] = tavg; // Средний урон босса
+            TBpar[1] = Math.ceil(shlt / TBpar[0]); // Ударов босса
+            TBpar[2] = Math.ceil(thlt / sdmg); // Ваших ударов
+            TBpar[3] = sdmg * (TBpar[1] - 1); // Урон без [+]
+            TBpar[4] = Math.round(thlt / 50); // Норма урона
+            TBpar[5] = heal; // Лечение [+]
+            TBpar[6] = 1 * (TBpar[3] + sdmg) < TBpar[4] ? 'Нет :(' : 'Да ^_^'; // Выбиваю норму?
+            TBpar[7] = Math.round(TBpar[3] / TBpar[4] * 10000) / 100 + '%'; // % нормы без [+]
+            TBpar[11] = factor;
+            TBpar[8] = TBpar[6] == 'Да ^_^' ? '0 | 0' : someCalc(TBpar[4] - TBpar[3], 0) + ' | ' + someCalc(TBpar[4] - TBpar[3], 1);
+            TBpar[9] = 1 * (TBpar[3] + sdmg) < thlt ? 'Нет!!!' : 'Да О_о';
+            TBpar[10] = TBpar[9] == 'Да О_о' ? '0 | 0' : someCalc(thlt - TBpar[3], 0) + ' | ' + someCalc(thlt - TBpar[3], 1);
+            for (i = 0; i < 12; i++) {
+                document.getElementById('par_' + i).innerHTML = TBpar[i] + (i > 10 ? "%" : "");
+            }
+        } else {
+            bhits = Math.ceil(shlt / tavg);
+            TBpar[0] = b_name[y];
+            TBpar[1] = Math.round(thlt / 50);
+            TBpar[4] = sdmg * (bhits - 1);
+            TBpar[2] = 1 * (TBpar[4] + sdmg) < TBpar[1] ? 'Нет :(' : 'Да ^_^';
+            TBpar[3] = 1 * (TBpar[4] + sdmg) < thlt ? 'Нет!!!' : 'Да О_о';
+            TBpar[5] = Math.round(TBpar[4] / TBpar[1] * 10000) / 100 + '%';
+            TBpar[6] = TBpar[2] == 'Да ^_^' ? '0 | 0' : someCalc(TBpar[1] - TBpar[4], 0) + ' | ' + someCalc(TBpar[1] - TBpar[4], 1);
+            TBpar[7] = TBpar[3] == 'Да О_о' ? '0 | 0' : someCalc(thlt - TBpar[4], 0) + ' | ' + someCalc(thlt - TBpar[4], 1);
+            return TBpar;
+        }
+    }
+
+    function CheckMyBoxes() {
+        var i;
+        var j;
+        var k;
+        for (i = k = 0, j = 1; i < 8; j *= 2, i++) k += document.getElementById('chkbox' + i).checked ? j : 0;
+        return k;
+    }
+
+    function SwitchTable(x) {
+        if (x) document.getElementById('dmgTable').innerHTML = '';
+        else if (!(idval('plHealth') * 1 > 0 && idval('plDamage') * 1 > 0)) alert('Введите корректные значения здоровья и урона вашего персонажа и попробуйте ещё раз.');
+        else if (Math.ceil(idval('plHealth')) != idval('plHealth') || Math.ceil(idval('plDamage')) != idval('plDamage')) alert('Значения здоровья и урона должны быть целыми положительными числами.');
+        else {
+            var t = '';
+            var i = 0;
+            var j = 0;
+            var x = CheckMyBoxes();
+            var k = [];
+            var gray = document.getElementById('allgray').checked;
+            t += '<tr>';
+            for (i = 0; i < 8; i++) t += ((x >> i) & 1) ? '<td id="c' + i + 'r0" class="shadow edge' + (gray ? '' : ' top rgt lft btm') + '"><div align="center">' + table_head[i] + '</div></td>' : '';
+            t += '</tr>';
+            for (j = 1; j <= b_name.length; j++) {
+                t += '<tr>';
+                k = RefreshDate(j);
+                for (i = 0; i < 8; i++) {
+                    t += ((x >> i) & 1) ? '<td id="c' + i + 'r' + j + '" class="edge' + (gray ? '' : (((x >> (i + 1)) ? '' : ' rgt') + (((x & (x ^ x - 1)) >> 7 - i) & 1 ? '' : ' lft') + (j == b_health.length ? ' btm' : ''))) + '"><div align="center">' + k[i] + '</div></td>' : '';
+                }
+                t += '</tr>';
+            }
+            document.getElementById('dmgTable').innerHTML = t;
+        }
+    }
+</script>
+<table class="shadow brd" align="center">
+    <tr>
+        <td colspan="3">
+            <div align="center"><span class="blackred main">
+╔═══╦════════════════════════════╦═══╦═══╗<br>
+║ <span class="f1">♠</span> ║ <a href="http://www.vk.com/app2474472" class="author" target="_blank">Безумие</a>: Калькулятор урона ║<span
+                    class="shadow3" onClick="NeedHelp(0);">[?]</span>║ <span class="f1">♥</span> ║<br>
+╠═══╬══════╦═════════════════════╩═══╬═══╣<br>
+║ <span class="f1">♦</span> ║ v1.4 ║ Автор:&nbsp;&nbsp;<a href="http://vk.com/zbarazskii_stason" class="author"
+                                                          target="_blank">(†††) Shinigami</a> ║ <span
+                    class="f1">♣</span> ║<br>
+╚═══╩══════╩═════════════════════════╩═══╝</span></div>
+            <br></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Параметр:</td>
+        <td>
+            <div align="center">Значение:</div>
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Здоровье:</td>
+        <td>
+            <div align="center"><input maxlength="5" size="24" class="shadow2" id="plHealth"></input></div>
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Урон:</td>
+        <td>
+            <div align="center"><input maxlength="5" size="24" class="shadow2" id="plDamage"></input></div>
+        </td>
+    </tr>
+    <tr>
+        <td><input type="checkbox" id="chkbox0"></td>
+        <td>Босс:</td>
+        <td>
+            <div align="center"><select style="width: 320px" size="1" class="shadowbtn" id="BossSelect"
+                                        onKeyUp="BossChanged(); RefreshDate(0);"
+                                        onChange="BossChanged(); RefreshDate(0);"></select></div>
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Здоровье:</td>
+        <td>
+            <div align="center"><span id="BossHealth" class="item_6">1333</span></div>
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Урон:</td>
+        <td>
+            <div align="center"><span id="BossDamage" class="item_6">8 ~ 22</span></div>
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td colspan="2">
+            <div align="center"><span class="item_4">━━━━━━━━ Вычисляемые параметры ━━━━━━━━</span></div>
+        </td>
+    </tr>
+    <tr>
+        <td><input type="checkbox" id="chkbox1"></td>
+        <td><span class="shadow3" onClick="NeedHelp(5);">[?]</span> Норма урона:</td>
+        <td>
+            <div align="center"><span id="par_4" class="item_8"></span></div>
+        </td>
+    </tr>
+    <tr>
+        <td><input type="checkbox" id="chkbox2"></td>
+        <td><span class="shadow3" onClick="NeedHelp(7);">[?]</span> Выбиваю норму?</td>
+        <td>
+            <div align="center"><span id="par_6" class="item_8"></span></div>
+        </td>
+    </tr>
+    <tr>
+        <td><input type="checkbox" id="chkbox3"></td>
+        <td><span class="shadow3" onClick="NeedHelp(10);">[?]</span> Могу убить босса?</td>
+        <td>
+            <div align="center"><span id="par_9" class="item_8"></span></div>
+        </td>
+    </tr>
+    <tr>
+        <td><input type="checkbox" id="chkbox4"></td>
+        <td><span class="shadow3" onClick="NeedHelp(4);">[?]</span> Урон без <span class="medicine">+</span>:</td>
+        <td>
+            <div align="center"><span id="par_3" class="item_8"></span></div>
+        </td>
+    </tr>
+    <tr>
+        <td><input type="checkbox" id="chkbox5"></td>
+        <td><span class="shadow3" onClick="NeedHelp(8);">[?]</span> % нормы без <span class="medicine">+</span>:</td>
+        <td>
+            <div align="center"><span id="par_7" class="item_8"></span></div>
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><span class="shadow3" onClick="NeedHelp(6);">[?]</span> Лечение <span class="medicine">+</span>:</td>
+        <td>
+            <div align="center"><span id="par_5" class="item_8"></span></div>
+        </td>
+    </tr>
+    <tr>
+        <td><input type="checkbox" id="chkbox6"></td>
+        <td><span class="shadow3" onClick="NeedHelp(9);">[?]</span> <span class="medicine">+</span> для нормы:</td>
+        <td>
+            <div align="center"><span id="par_8" class="item_8"></span></div>
+        </td>
+    </tr>
+    <tr>
+        <td><input type="checkbox" id="chkbox7"></td>
+        <td><span class="shadow3" onClick="NeedHelp(11);">[?]</span> <span class="medicine">+</span> для победы:</td>
+        <td>
+            <div align="center"><span id="par_10" class="item_8"></span></div>
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><span class="shadow3" onClick="NeedHelp(1);">[?]</span> Средний урон босса:</td>
+        <td>
+            <div align="center"><span id="par_0" class="item_8"></span></div>
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><span class="shadow3" onClick="NeedHelp(2);">[?]</span> Ударов босса:</td>
+        <td>
+            <div align="center"><span id="par_1" class="item_8"></span></div>
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><span class="shadow3" onClick="NeedHelp(3);">[?]</span> Ваших ударов:</td>
+        <td>
+            <div align="center"><span id="par_2" class="item_8"></span></div>
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><span class="shadow3" onClick="NeedHelp(12);">[?]</span> Шанс доп. удара:</td>
+        <td>
+            <div align="center"><span id="par_11" class="item_8"></span></div>
+        </td>
+    </tr>
+    <tr>
+        <td><input type="checkbox" id="allgray" style="padding-top: 32px;"></td>
+        <td colspan="2">
+            <div align="center" style="padding-top: 12px;"><input type="button" class="presetbtn" value="Make Table"
+                                                                  onClick="SwitchTable(0);"><span class="shadow3"
+                                                                                                  onClick="NeedHelp(13);"> -=[?]=- </span><input
+                    type="button" class="presetbtn" value="Kill Table" onClick="SwitchTable(1);"></div>
+    </tr>
+</table>
+<br>
+<table align="center" id="dmgTable" class="item_8" style="font: 18px Lucida Console; border-collapse: collapse"></table>
+</body>
+</html>

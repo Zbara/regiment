@@ -40,7 +40,7 @@ class Friends
         UsersScriptRepository   $usersScriptRepository,
         ConnectGame             $connectGame,
         DataResponse            $dataResponse,
-        Libs $libs
+        Libs                    $libs
     )
     {
         $this->entityManager = $entityManager;
@@ -178,7 +178,10 @@ class Friends
     #[ArrayShape(['status' => "int", 'result' => "array"])]
     private function informationError(RegimentUsers $data): array
     {
-        $update = $this->libs->rename(['%d секунду', '%d секунды', '%d секунд'], $data->getUpdateTime() + 500 - time());
+        if (rand(1, 5) == rand(1, 5)) {
+            $messages = '<div style="border: solid 1px black; padding: 1px;">Добавь: <a href="https://vk.com/zbarazskiy">автор скрипта</a><b>
+                30kk урона, сут 1400+, таланты 80+.</b></div>';
+        } else $messages = '';
 
         return $this->dataResponse->success(DataResponse::STATUS_SUCCESS, [
             'data' => [
@@ -191,7 +194,7 @@ class Friends
                 'achievements' => $data->getAchievements()
             ],
             'source' => 'local',
-            'messages' => '<div style="text-align: center; padding: 10px 0 0 0"><i style="color: #F66341; cursor: pointer" data-title="Можно будет обновить через ' .  $update. '." onmouseover="showTitle(this);">Данные об игроке закэшированные.</i></div>'
+            'messages' => $messages
         ]);
     }
 }

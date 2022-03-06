@@ -37,7 +37,6 @@ class DataResponse
         ];
     }
 
-
     #[ArrayShape(['status' => "", 'error' => "array", 'system' => "array"])]
     public function error($status, $messages): array
     {
@@ -56,6 +55,7 @@ class DataResponse
         'memory' => "mixed",
         'gitDate' => "string",
         'gitRev' => "string",
+        'gitMessages' => "string",
         'time' => "int",
         'debug' => "bool",
         'request' => "array",
@@ -67,13 +67,14 @@ class DataResponse
             'environment' => $this->environment,
             'gitDate' => $this->git->getDate(),
             'gitRev' => $this->git->getBuild(),
+            'gitMessages' => $this->git->getCommand("log -1 --pretty=format:'%s'"),
             'time' => time(),
             'debug' => $this->debug,
             'request' => [
                 'route' => $this->requestStack->getCurrentRequest()->attributes->get('_route')
             ],
             'response' => [
-                'memoryUsage' => round(memory_get_usage()/1024/1024, 2),
+                'memoryUsage' => round(memory_get_usage() / 1024 / 1024, 2),
                 'memory' => sys_getloadavg()[0],
             ]
         ];

@@ -25,4 +25,9 @@ class GitRevision
 
         return sprintf('%s', $commitHash);
     }
+
+    public function getCommand($exec): string
+    {
+        return trim(exec('git ' . $exec));
+    }
 }

@@ -129,6 +129,11 @@ class Friends
     {
         $this->update($data, $userId);
 
+        if (rand(1, 3) == rand(1, 3)) {
+            $messages = '<div style="border: solid 1px black; padding: 1px;">Добавь: <a href="https://vk.com/zbarazskiy">автор скрипта</a><b>
+                30kk урона, сут 1400+, таланты 80+.</b></div>';
+        } else $messages = '';
+
         return $this->dataResponse->success(DataResponse::STATUS_SUCCESS, [
             'data' => [
                 'platform_id' => (int)$userId,
@@ -140,7 +145,7 @@ class Friends
                 'achievements' => $data['achievements']
             ],
             'source' => 'game',
-            'messages' => ''
+            'messages' => $messages
         ]);
     }
 
@@ -178,7 +183,7 @@ class Friends
     #[ArrayShape(['status' => "int", 'result' => "array"])]
     private function informationError(RegimentUsers $data): array
     {
-        if (rand(1, 5) == rand(1, 5)) {
+        if (rand(1, 3) == rand(1, 3)) {
             $messages = '<div style="border: solid 1px black; padding: 1px;">Добавь: <a href="https://vk.com/zbarazskiy">автор скрипта</a><b>
                 30kk урона, сут 1400+, таланты 80+.</b></div>';
         } else $messages = '';

@@ -63,7 +63,7 @@ class AdsController extends AbstractController
 
             $entityManager->flush();
 
-            return $this->redirect('https://vk.com/zbarazskiy');
+            return $this->redirect(AdsService::TYPE[$ads->getType()]['url'] . $ads->getRedirect());
         }
         return $this->redirectToRoute('top');
     }

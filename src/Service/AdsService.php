@@ -26,6 +26,11 @@ class AdsService
             'name' => 'Личная страница',
             'title' => 'Добавь',
             'url' => '//vk.com/id'
+        ],
+        'host' => [
+            'name' => 'Сервер',
+            'title' => 'Хочешь друзей?',
+            'url' => '//regiment.zbara.ru/ads?ref='
         ]
     ];
     private Environment $environment;
@@ -94,7 +99,7 @@ class AdsService
             $ads->setViews($ads->getViews() + 1);
             $this->entityManager->flush();
 
-            return  '<div style="border: solid 1px black; padding: 1px;">' . self::TYPE[$ads->getType()]['title'] . ': <a target="_blank" href="https://regiment.zbara.ru/ads/views/' . $ads->getId() . '">' . $ads->getName() . '</a>  <b style="color: #' . $color[array_rand($color, 1)] .'">' . $ads->getMessages() . '</b></div>';
+            return  '<div style="border: solid 1px black; padding: 1px;">' . self::TYPE[$ads->getType()]['title'] . ': <a target="_blank" href="https://regiment.zbara.ru/ads/views/' . $ads->getId() . '">' . $ads->getName() . '</a>  —  <span style="color: #' . $color[array_rand($color, 1)] .'">' . $ads->getMessages() . '</span></div>';
         }
         return '';
     }

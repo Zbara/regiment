@@ -30,6 +30,7 @@ class Friends
     private ConnectGame $connectGame;
     private DataResponse $dataResponse;
     private Libs $libs;
+    private AdsService $ads;
 
     public function __construct(
         EntityManagerInterface  $entityManager,
@@ -40,7 +41,8 @@ class Friends
         UsersScriptRepository   $usersScriptRepository,
         ConnectGame             $connectGame,
         DataResponse            $dataResponse,
-        Libs                    $libs
+        Libs                    $libs,
+        AdsService $adsService
     )
     {
         $this->entityManager = $entityManager;
@@ -52,6 +54,7 @@ class Friends
         $this->connectGame = $connectGame;
         $this->dataResponse = $dataResponse;
         $this->libs = $libs;
+        $this->ads = $adsService;
     }
 
     public function helper($userId): array
@@ -129,11 +132,6 @@ class Friends
     {
         $this->update($data, $userId);
 
-        if (rand(1, 3) == rand(1, 3)) {
-            $messages = '<div style="border: solid 1px black; padding: 1px;">Добавь: <a href="https://vk.com/zbarazskiy">автор скрипта</a><b>
-                30kk урона, сут 1400+, таланты 80+.</b></div>';
-        } else $messages = '';
-
         return $this->dataResponse->success(DataResponse::STATUS_SUCCESS, [
             'data' => [
                 'platform_id' => (int)$userId,
@@ -145,7 +143,7 @@ class Friends
                 'achievements' => $data['achievements']
             ],
             'source' => 'game',
-            'messages' => $messages
+            'messages' => $this->ads->user()
         ]);
     }
 
@@ -183,11 +181,6 @@ class Friends
     #[ArrayShape(['status' => "int", 'result' => "array"])]
     private function informationError(RegimentUsers $data): array
     {
-        if (rand(1, 3) == rand(1, 3)) {
-            $messages = '<div style="border: solid 1px black; padding: 1px;">Добавь: <a href="https://vk.com/zbarazskiy">автор скрипта</a><b>
-                30kk урона, сут 1400+, таланты 80+.</b></div>';
-        } else $messages = '';
-
         return $this->dataResponse->success(DataResponse::STATUS_SUCCESS, [
             'data' => [
                 'platform_id' => $data->getSocId(),
@@ -199,7 +192,7 @@ class Friends
                 'achievements' => $data->getAchievements()
             ],
             'source' => 'local',
-            'messages' => $messages
+            'messages' => $this->ads->user()
         ]);
     }
 }

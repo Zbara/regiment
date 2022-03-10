@@ -1,0 +1,26 @@
+<tr id="ads_{{ ads.id }}" data-ads-id="{{ ads.id }}">
+    <td>{{ ads.id }}</td>
+    <td>{{ type[ads.type]['name'] }}</td>
+    <td><a href="{{ type[ads.type]['url'] }}{{ ads.redirect }}"
+           target="_blank">{{ ads.name }}</a></td>
+    <td>{{ convertTime(ads.created) }}</td>
+    <td>{{ ads.views }} {{ rename(['раз', 'раза', 'раз'], ads.views) }}</td>
+    {% if ads.lastTime > 0 %}
+        <td>{{ convertTime(ads.redirect) }}</td>
+    {% else %}
+        <td>нет переходов</td>
+    {% endif %}
+    <td>{{ ads.count }} {{ rename(['раз', 'раза', 'раз'], ads.count) }}</td>
+    <td>
+                                    <span class="text-muted cursor-pointer" data-bs-toggle="tooltip"
+                                          data-bs-placement="bottom" data-bs-original-title="Удалить"
+                                          id="delete-ads">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                                 viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                                 stroke-linecap="round" stroke-linejoin="round"><path stroke="none"
+                                                                                                      d="M0 0h24v24H0z"
+                                                                                                      fill="none"></path><line
+                                                        x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18"
+                                                                                                   y2="18"></line></svg> </span>
+    </td>
+</tr>

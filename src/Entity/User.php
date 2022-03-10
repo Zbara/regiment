@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use phpDocumentor\Reflection\Types\Integer;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -45,6 +47,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'string', length: 255)]
     private $photo_medium;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Ads::class)]
+    private $ads;
+
+    public function __construct()
+    {
+        $this->ads = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -204,6 +214,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPhotoMedium(string $photo_medium): self
     {
         $this->photo_medium = $photo_medium;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Ads[]
+     */
+    public function getAds(): Collection
+    {
+        return $this->ads;
+    }
+
+    public function addAd(Ads $ad): self
+    {
+        if (!$this->ads->contains($ad)) {
+            $this->ads[] = $ad;
+            $ad->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAd(Ads $ad): self
+    {
+        if ($this->ads->removeElement($ad)) {
+            // set the owning side to null (unless already changed)
+            if ($ad->getUser() === $this) {
+                $ad->setUser(null);
+            }
+        }
 
         return $this;
     }

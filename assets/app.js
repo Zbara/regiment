@@ -1,3 +1,3 @@
 /** core modules */
 import './js/modules.js'
-import './js/PolckParse.js'
+import './js/Ads.js'

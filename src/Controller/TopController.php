@@ -12,6 +12,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class TopController extends AbstractController
 {
+    #[
+        Route('/calculator', name: 'calculator')
+    ]
+    public function contract(): Response
+    {
+        return $this->render('top/calculator.html.twig');
+    }
+
     #[Route('/top', name: 'top')]
     public function index(Request $request, PaginatorInterface $paginator, RegimentUsersRepository $regimentUsersRepository, Vkontakte $vkontakte): Response
     {
@@ -35,7 +43,7 @@ class TopController extends AbstractController
         } else $friends = [];
 
         return $this->render('top/index.html.twig', [
-            'pagination' => $paginator->paginate($regimentUsersRepository->findLatest($request->query->get('friends', 'all'), $friends), $request->query->getInt('page', 1), 250, [
+            'pagination' => $paginator->paginate($regimentUsersRepository->findLatest($request->query->get('friends', 'all'), $friends), $request->query->getInt('page', 1), 25, [
                 'defaultSortDirection' => 'desc'
             ]),
             'update' => $regimentUsersRepository->updateTime(),

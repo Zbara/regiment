@@ -39,7 +39,7 @@
                         <a href="{{ path('hwi_oauth_service_redirect', {'service': 'vkontakte' }) }}"
                            class="nav-link d-flex lh-1 text-reset p-0">
                             <div class="d-xl-block ps-2 btn btn-secondary">
-                                Войти через ВКонтекте
+                                Войти через ВКонтакте
                             </div>
                         </a>
                     </div>
@@ -99,7 +99,8 @@
                             </a>
                         </li>
                         <li class="nav-item {{ is_active_route(app.request, ['friends-extensions']) ? 'active' }}">
-                            <a class="nav-link" href="{{ path('friends-extensions') }}">
+                            <a class="nav-link" target="_blank"
+                               href="https://chrome.google.com/webstore/detail/%D1%85%D1%80%D0%B0%D0%B1%D1%80%D1%8B%D0%B9-%D0%BF%D0%BE%D0%BB%D0%BA/ajnjombloocfjaopfnnhlemflpgcfnpa/related?utm_source=chrome-ntp-icon">
                     <span class="nav-link-icon d-md-none d-lg-inline-block">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
                              stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
@@ -113,16 +114,51 @@
 
                     </span>
                                 <span class="nav-link-title">
-                      Скрипт
+                      Скрипт для игры
                     </span>
                             </a>
                         </li>
+                        <li class="nav-item {{ is_active_route(app.request, ['ads']) ? 'active' }}">
+                            <a class="nav-link"
+                               href="{{ path('ads') }}">
+                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-businessplan"
+                             width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                             fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <ellipse cx="16" cy="6" rx="5" ry="3"></ellipse>
+   <path d="M11 6v4c0 1.657 2.239 3 5 3s5 -1.343 5 -3v-4"></path>
+   <path d="M11 10v4c0 1.657 2.239 3 5 3s5 -1.343 5 -3v-4"></path>
+   <path d="M11 14v4c0 1.657 2.239 3 5 3s5 -1.343 5 -3v-4"></path>
+   <path d="M7 9h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5"></path>
+   <path d="M5 15v1m0 -8v1"></path>
+</svg>
+
+                    </span>
+                                <span class="nav-link-title">
+                      Реклама
+                    </span>
+                            </a>
+                        </li>
+
                     </ul>
                 </div>
             </div>
         </div>
     </header>
     <div class="page-wrapper">
+        <div class="position-absolute p-3 top-0 end-0" style="z-index: 11">
+            <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true"
+                 data-bs-toggle="toast" data-bs-delay="3000">
+                <div class="toast-header">
+                    <strong class="me-auto">%title%</strong>
+                    <button type="button" class="ms-2 btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    %messages%
+                </div>
+            </div>
+        </div>
         <div class="container-xl">
             <div class="page-header d-print-none">
                 <div class="row align-items-center">

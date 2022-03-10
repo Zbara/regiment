@@ -1,0 +1,21 @@
+{%- block form_row -%}
+    <div class="input-group">
+        {{- form_widget(form, { attr: {class: 'form-control'}}) -}}
+        {% if form.vars.help %}
+            <span class="input-group-text">
+                <span tabindex="0" class="form-help" data-bs-toggle="popover" data-bs-trigger="focus"
+                      data-bs-placement="top" data-bs-html="true" data-bs-content="{{ form.vars.help|trans }}">?</span>
+            </span>
+        {% endif %}
+
+        {% if form.vars.attr.custom is defined %}
+            <span class="input-group-text" id="replaceText">{{ form.vars.attr.custom_text|trans }}</span>
+        {% endif %}
+
+        <div class="invalid-feedback" id="{{ form.vars.name }}">%%error%%</div>
+    </div>
+{%- endblock form_row -%}
+
+{% block form_label -%}
+    {{ label|trans }}
+{%- endblock form_label %}

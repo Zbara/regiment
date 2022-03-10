@@ -77,10 +77,10 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% for key, item in pagination %}
+                        {% for item in pagination %}
                             <tr data-id="{{ item.id }}">
                                 <td>
-                                    {{ key + 1 }}
+                                    {{ loop.index }}
                                 </td>
                                 <td>
                                     <div class="d-flex py-1 align-items-center">

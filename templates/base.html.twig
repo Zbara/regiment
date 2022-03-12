@@ -118,9 +118,10 @@
                     </span>
                             </a>
                         </li>
-                        <li class="nav-item {{ is_active_route(app.request, ['ads']) ? 'active' }}">
-                            <a class="nav-link"
-                               href="{{ path('ads') }}">
+                        {% if app.user %}
+                            <li class="nav-item {{ is_active_route(app.request, ['ads']) ? 'active' }}">
+                                <a class="nav-link"
+                                   href="{{ path('ads') }}">
                     <span class="nav-link-icon d-md-none d-lg-inline-block">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-businessplan"
                              width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
@@ -135,12 +136,12 @@
 </svg>
 
                     </span>
-                                <span class="nav-link-title">
+                                    <span class="nav-link-title">
                       Реклама
                     </span>
-                            </a>
-                        </li>
-
+                                </a>
+                            </li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>

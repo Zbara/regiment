@@ -64,11 +64,13 @@
                                                href="{{ path('top', app.request.query.all|merge({'friends': 'yes'})) }}">
                                                 Друзья
                                             </a>
-                                            <a class="dropdown-item" href="{{ path('top', app.request.query.all|merge({'friends': 'no'})) }}">
+                                            <a class="dropdown-item"
+                                               href="{{ path('top', app.request.query.all|merge({'friends': 'no'})) }}">
                                                 Нет в друзьях
                                             </a>
                                         {% endif %}
-                                        <a class="dropdown-item" href="{{ path('top', app.request.query.all|merge({'friends': 'all'})) }}">
+                                        <a class="dropdown-item"
+                                           href="{{ path('top', app.request.query.all|merge({'friends': 'all'})) }}">
                                             Весь список
                                         </a>
                                     </div>

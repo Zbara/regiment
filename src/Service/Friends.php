@@ -42,7 +42,7 @@ class Friends
         ConnectGame             $connectGame,
         DataResponse            $dataResponse,
         Libs                    $libs,
-        AdsService $adsService
+        AdsService              $adsService
     )
     {
         $this->entityManager = $entityManager;
@@ -62,16 +62,14 @@ class Friends
         if ($user = $this->regimentUsersRepository->findOneBy([
             'socId' => $this->vkontakte->getUserId($userId, $_ENV['ACCESS_TOKEN'])
         ])) {
-            return [
-                'status' => 1,
-                'result' => [
-                    'data' => $user,
-                    'html' => $this->environment->render('friends/get.html.twig', [
-                        'user' => $user
-                    ])
-                ]];
+            return $this->dataResponse->success(DataResponse::STATUS_SUCCESS, [
+                'data' => $user,
+                'html' => $this->environment->render('friends/get.html.twig', [
+                    'user' => $user
+                ])
+            ]);
         }
-        return ['status' => 0, 'error' => ['messages' => 'Пользователь не найден.']];
+        return $this->dataResponse->error(DataResponse::STATUS_ERROR, 'Игрок не найден. Запускал ли он Храбрый Полк?');
     }
 
     public function social($userId, $ownerId): array

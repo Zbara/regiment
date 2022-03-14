@@ -164,7 +164,7 @@
                 }).catch(function (error) {
                     console.log(error)
 
-                    regiment.innerHTML = '<div style="text-align: center"><b style="color:#7F0000;font-weight:bold;">Ошибка при подключение к серверу скрипта.</b></div>';
+                    regiment.innerHTML = '<div style="text-align: center"><b style="color:#7F0000;font-weight:bold;">Ошибка при подключении к серверу скрипта.</b></div>';
                 })
             );
         }

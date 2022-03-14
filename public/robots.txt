@@ -1,0 +1,2 @@
+Sitemap: https://regiment.zbara.ru/sitemap.xml
+User-agent: *

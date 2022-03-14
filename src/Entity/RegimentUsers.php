@@ -50,6 +50,9 @@ class RegimentUsers
     #[ORM\Column(type: 'integer')]
     private $updateTime;
 
+    #[ORM\Column(type: 'integer')]
+    private $experience = 0;
+
 
     public function getId(): ?int
     {
@@ -196,6 +199,18 @@ class RegimentUsers
     public function setUpdateTime(int $updateTime): self
     {
         $this->updateTime = $updateTime;
+
+        return $this;
+    }
+
+    public function getExperience(): ?int
+    {
+        return $this->experience;
+    }
+
+    public function setExperience(int $experience): self
+    {
+        $this->experience = $experience;
 
         return $this;
     }

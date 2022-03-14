@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\RegimentUsers;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,9 +20,8 @@ class RegimentUsersRepository extends ServiceEntityRepository
         parent::__construct($registry, RegimentUsers::class);
     }
 
-    public function getLevelRank(){
-//select (select count(*) from `regiment_users` r where r.level>=u.level) as rank from `regiment_users` u where u.soc_id=1
-
+    public function getLevelRank()
+    {
         $builder = $this->createQueryBuilder('a');
 
         $builder->select('a')
@@ -62,7 +62,7 @@ class RegimentUsersRepository extends ServiceEntityRepository
                 break;
             default:
         }
-        return  $builder->orderBy('a.level', 'DESC');
+        return $builder->orderBy('a.level', 'DESC');
     }
 
     public function updateTime()
@@ -72,5 +72,23 @@ class RegimentUsersRepository extends ServiceEntityRepository
             ->setMaxResults(1)
             ->getQuery()
             ->getResult();
+    }
+
+    public function rank(?int $socId)
+    {
+        $sql = 'select (select count(*) from regiment_users r where r.experience>=u.experience) as rank from regiment_users u where u.soc_id = :socId';
+
+        $rsm = new ResultSetMapping();
+        $rsm->addScalarResult('rank', 'rank');
+        $query = $this->getEntityManager()->createNativeQuery($sql, $rsm);
+        $query->setParameter('socId', $socId);
+
+        $rows = $query->getResult();
+
+        if (count($rows)) {
+            return (int) $rows[0]['rank'];
+        } else {
+            return 10000;
+        }
     }
 }

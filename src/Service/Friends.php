@@ -31,6 +31,7 @@ class Friends
     private DataResponse $dataResponse;
     private Libs $libs;
     private AdsService $ads;
+    private Clan $clan;
 
     public function __construct(
         EntityManagerInterface  $entityManager,
@@ -42,7 +43,8 @@ class Friends
         ConnectGame             $connectGame,
         DataResponse            $dataResponse,
         Libs                    $libs,
-        AdsService              $adsService
+        AdsService              $adsService,
+        Clan $clan
     )
     {
         $this->entityManager = $entityManager;
@@ -55,6 +57,7 @@ class Friends
         $this->dataResponse = $dataResponse;
         $this->libs = $libs;
         $this->ads = $adsService;
+        $this->clan = $clan;
     }
 
     public function helper($userId): array
@@ -134,14 +137,18 @@ class Friends
             'data' => [
                 'platform_id' => (int)$userId,
                 'level' => $data['static_resources']['level'],
+                'xp' => $data['experiences']['experience'],
                 'sut' => $data['static_resources']['sut'],
+                'clan' => $this->clan->info($userId),
                 'totalDamage' => $data['achievements']['total_damage'],
                 'usedTalents' => $data['static_resources']['used_talents'],
                 'loginTime' => $data['time_resources']['login_time'],
-                'achievements' => $data['achievements']
+                'achievements' => $data['achievements'],
+                'top' => $this->regimentUsersRepository->rank($userId),
             ],
             'source' => 'game',
-            'messages' => $this->ads->user()
+            'messages' => $this->ads->user(),
+            'library' => RegimentLibs::libs()
         ]);
     }
 
@@ -169,6 +176,7 @@ class Friends
             ->setUsedTalents($data['static_resources']['used_talents'])
             ->setAchievements($data['achievements'])
             ->setLoginTime($data['time_resources']['login_time'])
+            ->setExperience($data['experiences']['experience'])
             ->setUpdateTime(time())
             ->setTotalDamage($data['achievements']['total_damage']);
 
@@ -183,14 +191,18 @@ class Friends
             'data' => [
                 'platform_id' => $data->getSocId(),
                 'level' => $data->getLevel(),
+                'xp' => $data->getExperience(),
                 'sut' => $data->getSut(),
+                'clan' => $this->clan->info($data->getSocId()),
                 'totalDamage' => $data->getTotalDamage(),
                 'usedTalents' => $data->getUsedTalents(),
                 'loginTime' => $data->getLoginTime(),
-                'achievements' => $data->getAchievements()
+                'achievements' => $data->getAchievements(),
+                'top' => $this->regimentUsersRepository->rank($data->getSocId()),
             ],
             'source' => 'local',
-            'messages' => $this->ads->user()
+            'messages' => $this->ads->user(),
+            'library' => RegimentLibs::libs()
         ]);
     }
 }

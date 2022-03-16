@@ -37,8 +37,8 @@
                         <tr>
                             <th class="w-1">№</th>
                             <th class="w-3">Имя Фамилия</th>
-                            <th{% if pagination.isSorted(['a.level']) %} class="sorted"{% endif %}>
-                                {{ knp_pagination_sortable(pagination, 'Уровень', ['a.level']) }}
+                            <th{% if pagination.isSorted(['a.experience']) %} class="sorted"{% endif %}>
+                                {{ knp_pagination_sortable(pagination, 'Уровень', ['a.experience']) }}
                             </th>
                             <th{% if pagination.isSorted(['a.sut']) %} class="sorted"{% endif %}>
                                 {{ knp_pagination_sortable(pagination, 'СУТ', ['a.sut']) }}

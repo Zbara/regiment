@@ -62,7 +62,7 @@ class RegimentUsersRepository extends ServiceEntityRepository
                 break;
             default:
         }
-        return $builder->orderBy('a.level', 'DESC');
+        return $builder->orderBy('a.experience', 'DESC');
     }
 
     public function updateTime()

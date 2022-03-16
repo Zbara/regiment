@@ -105,7 +105,10 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="text-muted"> {{ item.level }}</div>
+                                    {% set levels = item.experience - level[item.level - 1] %}
+                                    {% set procent =  levels * 100 / (level[item.level] - level[item.level - 1]) %}
+
+                                    <div class="text-muted"> {{ item.level }} ({{ procent|round }}%)</div>
                                 </td>
                                 <td>
                                     <div class="text-muted">{{ item.sut }}</div>

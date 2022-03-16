@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Repository\RegimentUsersRepository;
+use App\Service\RegimentLibs;
+use App\Service\Top;
 use App\Service\Vkontakte;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,33 +23,17 @@ class TopController extends AbstractController
     }
 
     #[Route('/top', name: 'top')]
-    public function index(Request $request, PaginatorInterface $paginator, RegimentUsersRepository $regimentUsersRepository, Vkontakte $vkontakte): Response
+    public function index(Request $request, PaginatorInterface $paginator, RegimentUsersRepository $regimentUsersRepository, Top $top): Response
     {
-        $code = 'var counters = API.users.get({"fields": "counters"});'
-            . 'var members = API.friends.get({"count": "1000", "offset": 0}).items;'
-            . 'var offset = 1000;'
-            . 'while (offset < counters[0].counters.friends && (offset + 0) < 10000)'
-            . '{'
-            . 'members = members + API.friends.get({"count": "1000", "offset": (0 + offset)}).items;'
-            . 'offset = offset + 1000;'
-            . '};'
-            . 'return members;';
-
-        if($this->isGranted("IS_AUTHENTICATED_FULLY")){
-            $friends = $vkontakte->getApi('https://api.vk.com/method/execute', [
-                'access_token' => $this->getUser()->getAccessToken(),
-                'v' => '5.161',
-                'code' => $code
-            ]);
-            $friends = $friends['response'] ?? [];
-        } else $friends = [];
+        $friends = $top->getFriends();
 
         return $this->render('top/index.html.twig', [
             'pagination' => $paginator->paginate($regimentUsersRepository->findLatest($request->query->get('friends', 'all'), $friends), $request->query->getInt('page', 1), 250, [
                 'defaultSortDirection' => 'desc'
             ]),
             'update' => $regimentUsersRepository->updateTime(),
-            'friends' => $friends
+            'friends' => $friends,
+            'level' => RegimentLibs::LEVEL
         ]);
     }
 }

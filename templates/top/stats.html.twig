@@ -31,7 +31,8 @@
             <div class="col-12">
                 <div class="alert alert-success" role="alert">
                     Примерное продвижение игрока - <a href="https://vk.com/id{{ user.socId }}"
-                                                      class="text-reset" target="_blank">{{ user.firstName }} {{ user.lastName }}</a>
+                                                      class="text-reset"
+                                                      target="_blank">{{ user.firstName }} {{ user.lastName }}</a>
                 </div>
                 <div class="card">
                     <div class="table-responsive">
@@ -41,7 +42,7 @@
                                 <th>
                                     Дата
                                 </th>
-                                <th >
+                                <th>
                                     Уровень
                                 </th>
                                 <th>
@@ -71,10 +72,10 @@
                                         <div class="text-muted">    {{ item.level }}</div>
                                     </td>
                                     <td>
-                                        <div class="text-muted">  {{ item.experience }}</div>
+                                        <div class="text-muted">  {{ item.experience|number_format(0, ',', '.') }}</div>
                                     </td>
                                     <td>
-                                        <div class="text-muted">  {{ item.sut }}</div>
+                                        <div class="text-muted">  {{ item.sut|number_format(0, ',', '.') }}</div>
                                     </td>
                                     <td>
                                         <div class="text-muted">   {{ item.usedTalents }}</div>

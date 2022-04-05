@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\RegimentUsersRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: RegimentUsersRepository::class)]
@@ -52,6 +54,14 @@ class RegimentUsers
 
     #[ORM\Column(type: 'integer')]
     private $experience = 0;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: RegimentStatsUsers::class, cascade: ['persist', 'remove'])]
+    private $regimentStatsUsers;
+
+    public function __construct()
+    {
+        $this->regimentStatsUsers = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -211,6 +221,36 @@ class RegimentUsers
     public function setExperience(int $experience): self
     {
         $this->experience = $experience;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|RegimentStatsUsers[]
+     */
+    public function getRegimentStatsUsers(): Collection
+    {
+        return $this->regimentStatsUsers;
+    }
+
+    public function addRegimentStatsUser(RegimentStatsUsers $regimentStatsUser): self
+    {
+        if (!$this->regimentStatsUsers->contains($regimentStatsUser)) {
+            $this->regimentStatsUsers[] = $regimentStatsUser;
+            $regimentStatsUser->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRegimentStatsUser(RegimentStatsUsers $regimentStatsUser): self
+    {
+        if ($this->regimentStatsUsers->removeElement($regimentStatsUser)) {
+            // set the owning side to null (unless already changed)
+            if ($regimentStatsUser->getUser() === $this) {
+                $regimentStatsUser->setUser(null);
+            }
+        }
 
         return $this;
     }

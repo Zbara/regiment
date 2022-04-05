@@ -1,0 +1,112 @@
+{% extends 'base.html.twig' %}
+{% block title 'Статистика продвижения игрока' %}
+{% block header 'Статистика продвижения игрока' %}
+{% set damage = [
+    100000,
+    250000,
+    500000,
+    1000000,
+    3000000,
+    5000000,
+    10000000,
+    20000000,
+    30000000,
+    50000000,
+    75000000,
+    100000000,
+    250000000,
+    500000000,
+    1000000000,
+    5000000000,
+    10000000000,
+    25000000000,
+    50000000000,
+    100000000000
+] %}
+{% block main %}
+
+    {% if stats %}
+
+        <div class="row row-cards">
+            <div class="col-12">
+                <div class="alert alert-success" role="alert">
+                    Примерное продвижение игрока - <a href="https://vk.com/id{{ user.socId }}"
+                                                      class="text-reset" target="_blank">{{ user.firstName }} {{ user.lastName }}</a>
+                </div>
+                <div class="card">
+                    <div class="table-responsive">
+                        <table class="table card-table table-vcenter text-nowrap datatable">
+                            <thead>
+                            <tr>
+                                <th>
+                                    Дата
+                                </th>
+                                <th >
+                                    Уровень
+                                </th>
+                                <th>
+                                    Опыт
+                                </th>
+                                <th>
+                                    Сут
+                                </th>
+                                <th>
+                                    Таланты
+                                </th>
+                                <th>
+                                    Урон
+                                </th>
+                                <th>
+                                    Обновление
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for item in stats %}
+                                <tr data-id="{{ item.id }}">
+                                    <td>
+                                        <div class="text-muted">  {{ item.created|format_datetime('short', 'short') }}</div>
+                                    </td>
+                                    <td>
+                                        <div class="text-muted">    {{ item.level }}</div>
+                                    </td>
+                                    <td>
+                                        <div class="text-muted">  {{ item.experience }}</div>
+                                    </td>
+                                    <td>
+                                        <div class="text-muted">  {{ item.sut }}</div>
+                                    </td>
+                                    <td>
+                                        <div class="text-muted">   {{ item.usedTalents }}</div>
+                                    </td>
+                                    <td>
+                                        <div class="text-muted">  {{ damage[item.totalDamage]|number_format(0, ',', '.') }}</div>
+                                    </td>
+                                    <td>
+                                        <div class="text-muted"> {{ convertTime(item.updateTime) }}</div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="container-xl d-flex flex-column justify-content-center">
+            <div class="empty">
+                <p class="empty-subtitle text-muted">
+                    Недостаточно информации что-бы построить таблицу.
+                </p>
+                <div class="empty-action">
+                    <a href="{{ path('top') }}" class="btn btn-primary">
+                        Вернуться к Топу.
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+

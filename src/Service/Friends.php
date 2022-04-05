@@ -2,8 +2,10 @@
 
 namespace App\Service;
 
+use App\Entity\RegimentStatsUsers;
 use App\Entity\RegimentUsers;
 use App\Entity\UsersScript;
+use App\Repository\RegimentStatsUsersRepository;
 use App\Repository\RegimentUsersRepository;
 use App\Repository\UsersScriptRepository;
 use App\Response\DataResponse;
@@ -32,19 +34,21 @@ class Friends
     private Libs $libs;
     private AdsService $ads;
     private Clan $clan;
+    private RegimentStatsUsersRepository $regimentStatsUsersRepository;
 
     public function __construct(
-        EntityManagerInterface  $entityManager,
-        RegimentUsersRepository $regimentUsersRepository,
-        Environment             $environment,
-        Vkontakte               $vkontakte,
-        Redis                   $redis,
-        UsersScriptRepository   $usersScriptRepository,
-        ConnectGame             $connectGame,
-        DataResponse            $dataResponse,
-        Libs                    $libs,
-        AdsService              $adsService,
-        Clan $clan
+        EntityManagerInterface       $entityManager,
+        RegimentUsersRepository      $regimentUsersRepository,
+        Environment                  $environment,
+        Vkontakte                    $vkontakte,
+        Redis                        $redis,
+        UsersScriptRepository        $usersScriptRepository,
+        ConnectGame                  $connectGame,
+        DataResponse                 $dataResponse,
+        Libs                         $libs,
+        AdsService                   $adsService,
+        Clan                         $clan,
+        RegimentStatsUsersRepository $regimentStatsUsersRepository
     )
     {
         $this->entityManager = $entityManager;
@@ -58,6 +62,7 @@ class Friends
         $this->libs = $libs;
         $this->ads = $adsService;
         $this->clan = $clan;
+        $this->regimentStatsUsersRepository = $regimentStatsUsersRepository;
     }
 
     public function helper($userId): array
@@ -85,7 +90,7 @@ class Friends
                 $requests[] = ["method" => 'friends.view', "params" => ["friend" => $userId]];
 
                 $user = $this->connectGame->generateQuery("action", "requests=" . json_encode($requests));
-
+                
                 if (isset($user['result'])) {
                     if ($user['result'] == 'ok') {
                         return $this->informationSuccess($user['friends'][$userId], $userId);
@@ -180,9 +185,33 @@ class Friends
             ->setUpdateTime(time())
             ->setTotalDamage($data['achievements']['total_damage']);
 
+        $user->addRegimentStatsUser($this->updateStatsDay($user));
+
         $this->entityManager->persist($user);
         $this->entityManager->flush();
     }
+
+
+    public function updateStatsDay(RegimentUsers $users): ?RegimentStatsUsers
+    {
+        $user = $this->regimentStatsUsersRepository->findOneBy(['created' => new \DateTime(), 'user' => $users->getId()]);
+
+        if (null === $user) {
+            $user = new RegimentStatsUsers();
+            $user->setUser($users)
+                ->setCreated(new \DateTime());
+        }
+        $user->setExperience($users->getExperience())
+            ->setLevel($users->getLevel())
+            ->setTotalDamage($users->getTotalDamage())
+            ->setUsedTalents($users->getUsedTalents())
+            ->setSut($users->getSut())
+            ->setAchievements($users->getAchievements())
+            ->setUpdateTime(time());
+
+        return $user;
+    }
+
 
     #[ArrayShape(['status' => "int", 'result' => "array"])]
     private function informationError(RegimentUsers $data): array

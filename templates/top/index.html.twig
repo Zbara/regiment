@@ -52,12 +52,13 @@
                             <th{% if pagination.isSorted(['a.loginTime']) %} class="sorted"{% endif %}>
                                 {{ knp_pagination_sortable(pagination, 'Вход в игру', ['a.login_time']) }}
                             </th>
+                            <th>Статистика</th>
                             <th>
                                 <div class="dropdown">
-                                    <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown">
+                                    <a class="dropdown-toggle text-muted" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Статус
-                                    </button>
-                                    <div class="dropdown-menu">
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-end">
 
                                         {% if app.user %}
                                             <a class="dropdown-item"
@@ -98,7 +99,8 @@
                                                 </a>
                                             </div>
                                             <div class="text-muted">
-                                                <div class="text-reset">@id{{ item.socId }}
+                                                <div class="text-reset">
+                                                    @id{{ item.socId }}
                                                 </div>
                                             </div>
                                         </div>
@@ -121,6 +123,15 @@
                                 </td>
                                 <td>
                                     <div class="text-muted"> {{ convertTime(item.loginTime) }}</div>
+                                </td>
+                                <td>
+                                    <div class="text-muted">
+
+                                        <a href="{{ path('top-stats', {'id': item.id }) }}"
+                                           class="text-reset">
+                                            просмотреть
+                                        </a>
+                                    </div>
                                 </td>
                                 <td>
                                     {% if app.user %}

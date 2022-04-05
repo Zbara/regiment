@@ -1,5 +1,5 @@
 ﻿(function () {
-        let getUserInfo = 'https://regiment.zbara.ru/friends/get/social';
+        let getUserInfo = 'https://regiment.zbara.pro/friends/get/social';
         let user = 0;
         let version = 0.3;
 

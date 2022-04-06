@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\StatsLogsVisit;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -14,37 +16,39 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class StatsLogsVisitRepository extends ServiceEntityRepository
 {
+
+    const PAGE_VK = '/friends/get/social';
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, StatsLogsVisit::class);
     }
 
-    // /**
-    //  * @return StatsLogsVisit[] Returns an array of StatsLogsVisit objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function getCount(string $type = 'all')
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        try {
+            $builder = $this->createQueryBuilder('a');
 
-    /*
-    public function findOneBySomeField($value): ?StatsLogsVisit
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            switch ($type) {
+                case 'all':
+                    $builder
+                        ->select('count(a.id)');
+                    break;
+
+                case 'day':
+                    $builder
+                        ->select('count(a.id)')
+                        ->andWhere('a.time > :time')
+                        ->setParameter('time', time() - 86400);
+                    break;
+            }
+            return $builder->andWhere('a.page = :page')
+                ->setParameter('page', self::PAGE_VK)
+                ->getQuery()
+                ->getSingleScalarResult();
+
+        } catch (NoResultException|NonUniqueResultException $e) {
+            return $e->getCode();
+        }
     }
-    */
 }

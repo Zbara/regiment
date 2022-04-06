@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Repository\StatsLogsVisitRepository;
+use App\Repository\UsersScriptRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -28,4 +30,18 @@ class MainController extends AbstractController
     {
         return $this->render('main/contract-offer.html.twig');
     }
+
+    #[
+        Route('/stats', name: 'main-stats')
+    ]
+    public function stats(UsersScriptRepository $usersScriptRepository, StatsLogsVisitRepository $logsVisitRepository): Response
+    {
+        return $this->render('main/stats.twig', [
+            'user_all' => $usersScriptRepository->getCount('all'),
+            'user_day' => $usersScriptRepository->getCount('day'),
+            'visit_all' => $logsVisitRepository->getCount('all'),
+            'visit_day' => $logsVisitRepository->getCount('day')
+        ]);
+    }
+
 }

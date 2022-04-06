@@ -1,0 +1,129 @@
+{% extends 'base.html.twig' %}
+{% block title 'Статистика' %}
+{% block header 'Статистика скрипта' %}
+{% block main %}
+
+    <div class="row row-deck row-cards">
+        <div class="col-sm-6 col-lg-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="subheader">Пользователей за все время</div>
+                    </div>
+                    <div class="d-flex align-items-baseline">
+                        <div class="h1 mb-0 me-2">{{ user_all|number_format(0, ',', '.') }} {{ rename(['пользователь', 'пользователя', 'пользователей'], user_all) }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="subheader">Новых пользователей</div>
+                    </div>
+                    <div class="d-flex align-items-baseline">
+                        <div class="h1 mb-0 me-2">{{ user_day }} {{ rename(['пользователь', 'пользователя', 'пользователей'], user_day) }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="subheader">Запусков за все время</div>
+                    </div>
+                    <div class="d-flex align-items-baseline">
+                        <div class="h1 mb-0 me-2">{{ visit_all|number_format(0, ',', '.') }} {{ rename(['запуск', 'запуска', 'запусков'], visit_all) }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="subheader">Запусков за день</div>
+                    </div>
+                    <div class="d-flex align-items-baseline">
+                        <div class="h1 mb-0 me-2">{{ visit_day|number_format(0, ',', '.') }} {{ rename(['запуск', 'запуска', 'запусков'], visit_day) }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            window.ApexCharts && (new ApexCharts(document.getElementById('chart-canvas'), {
+                chart: {
+                    type: "bar",
+                    fontFamily: 'inherit',
+                    height: 240,
+                    parentHeightOffset: 0,
+                    toolbar: {
+                        show: false,
+                    },
+                    animations: {
+                        enabled: false
+                    },
+                },
+                plotOptions: {
+                    bar: {
+                        columnWidth: '50%',
+                    }
+                },
+                dataLabels: {
+                    enabled: false,
+                },
+                fill: {
+                    opacity: 1,
+                },
+                series: [{
+                    name: "Доходы",
+                    data: [10]
+                }, {
+                    name: "Растраты",
+                    data: [50]
+                }],
+                grid: {
+                    padding: {
+                        top: -20,
+                        right: 0,
+                        left: -4,
+                        bottom: -4
+                    },
+                    strokeDashArray: 4,
+                },
+                xaxis: {
+                    labels: {
+                        padding: 0,
+                    },
+                    tooltip: {
+                        enabled: false
+                    },
+                    axisBorder: {
+                        show: false,
+                    },
+                    type: 'datetime',
+                },
+                yaxis: {
+                    labels: {
+                        padding: 4
+                    },
+                },
+                labels: [
+                    '2020-01-22'
+                ],
+                colors: ["#206bc4", "#cd201f"],
+                legend: {
+                    show: false,
+                },
+            })).render();
+        });
+        // @formatter:on
+    </script>
+
+{% endblock %}
+

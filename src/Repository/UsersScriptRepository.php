@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\UsersScript;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -32,6 +34,32 @@ class UsersScriptRepository extends ServiceEntityRepository
         return $builder->andWhere('a.lastTime > :time')
             ->setParameter('time', time() - 86400)
             ->getQuery()
-            ->getResult();
+            ->getSingleScalarResult();
+    }
+
+
+    public function getCount(string $type = 'all')
+    {
+        try {
+            $builder = $this->createQueryBuilder('a');
+
+            switch ($type) {
+                case 'all':
+                    $builder->select('count(a.id)');
+                    break;
+
+                case 'day':
+                    $builder
+                        ->select('count(a.id)')
+                        ->andWhere('a.created > :time')
+                        ->setParameter('time', time() - 86400);
+                    break;
+            }
+            return $builder->getQuery()
+                ->getSingleScalarResult();
+
+        } catch (NoResultException|NonUniqueResultException $e) {
+            return $e->getCode();
+        }
     }
 }

@@ -42,8 +42,7 @@ class StatsLogsVisitRepository extends ServiceEntityRepository
                         ->setParameter('time', time() - 86400);
                     break;
             }
-            return $builder->andWhere('a.page = :page')
-                ->setParameter('page', self::PAGE_VK)
+            return $builder
                 ->getQuery()
                 ->getSingleScalarResult();
 

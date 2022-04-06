@@ -39,7 +39,7 @@ class StatsLogsVisitRepository extends ServiceEntityRepository
                     $builder
                         ->select('count(a.id)')
                         ->andWhere('a.time > :time')
-                        ->setParameter('time', time() - 86400);
+                        ->setParameter('time', strtotime((new \DateTime())->format('Y-m-d')));
                     break;
             }
             return $builder

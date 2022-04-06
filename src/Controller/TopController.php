@@ -31,10 +31,13 @@ class TopController extends AbstractController
     {
         $friends = $top->getFriends();
 
+        $users = $paginator->paginate($regimentUsersRepository->findLatest($request->query->get('friends', 'all'), $friends), $request->query->getInt('page', 1), 250, [
+            'defaultSortDirection' => 'desc'
+        ]);
+        $users->setTotalItemCount(2500);
+
         return $this->render('top/index.html.twig', [
-            'pagination' => $paginator->paginate($regimentUsersRepository->findLatest($request->query->get('friends', 'all'), $friends), $request->query->getInt('page', 1), 250, [
-                'defaultSortDirection' => 'desc'
-            ]),
+            'pagination' => $users,
             'update' => $regimentUsersRepository->updateTime(),
             'friends' => $friends,
             'level' => RegimentLibs::LEVEL

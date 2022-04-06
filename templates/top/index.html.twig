@@ -83,7 +83,7 @@
                         {% for item in pagination %}
                             <tr data-id="{{ item.id }}">
                                 <td>
-                                    {{ loop.index }}
+                                    {{ (pagination.currentPageNumber-1) * 250 + loop.index }}
                                 </td>
                                 <td>
                                     <div class="d-flex py-1 align-items-center">

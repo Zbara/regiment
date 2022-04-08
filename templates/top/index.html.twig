@@ -55,7 +55,8 @@
                             <th>Статистика</th>
                             <th>
                                 <div class="dropdown">
-                                    <a class="dropdown-toggle text-muted" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <a class="dropdown-toggle text-muted" href="#" data-bs-toggle="dropdown"
+                                       aria-haspopup="true" aria-expanded="false">
                                         Статус
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-end">
@@ -80,6 +81,66 @@
                         </tr>
                         </thead>
                         <tbody>
+                        {% if app.user %}
+                            <tr data-id="{{ profile.user.id }}">
+                                <td>
+                                    {{ profile.top }}
+                                </td>
+                                <td>
+                                    <div class="d-flex py-1 align-items-center">
+                                        <a href="https://vk.com/id{{ profile.user.socId }}"
+                                           class="text-reset" target="_blank"><span class="avatar me-2"
+                                                                                    style="background-image: url({{ profile.user.photo50 }})"></span>
+                                        </a>
+                                        <div class="flex-fill">
+                                            <div class="font-weight-medium">
+                                                <a href="https://vk.com/id{{ profile.user.socId }}"
+                                                   class="text-reset" target="_blank">
+                                                    {{ profile.user.firstName }} {{ profile.user.lastName }}
+                                                </a>
+                                            </div>
+                                            <div class="text-muted">
+                                                <div class="text-reset">
+                                                    @id{{ profile.user.socId }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    {% set levels = profile.user.experience - level[profile.user.level - 1] %}
+                                    {% set procent =  levels * 100 / (level[profile.user.level] - level[ profile.user.level - 1]) %}
+
+                                    <div class="text-muted"> {{ profile.user.level }} ({{ procent|round }}%)</div>
+                                </td>
+                                <td>
+                                    <div class="text-muted">{{ profile.user.sut }}</div>
+                                </td>
+                                <td>
+                                    <div class="text-muted"> {{ profile.user.usedTalents }}</div>
+                                </td>
+                                <td>
+                                    <div class="text-muted">  {{ damage[profile.user.totalDamage]|number_format(0, ',', '.') }}</div>
+                                </td>
+                                <td>
+                                    <div class="text-muted"> {{ convertTime(profile.user.loginTime) }}</div>
+                                </td>
+                                <td>
+                                    <div class="text-muted">
+
+                                        <a href="{{ path('top-stats', {'id': profile.user.id }) }}"
+                                           class="text-reset">
+                                            просмотреть
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <span class="badge bg-success me-1"></span>ваша страница
+                                </td>
+                            </tr>
+                        {% endif %}
+
                         {% for item in pagination %}
                             <tr data-id="{{ item.id }}">
                                 <td>

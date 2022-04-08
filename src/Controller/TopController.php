@@ -36,11 +36,20 @@ class TopController extends AbstractController
         ]);
         $users->setTotalItemCount(2500);
 
+
+        if($this->isGranted('IS_AUTHENTICATED')){
+            $profile = [
+                'top' => $regimentUsersRepository->rank($this->getUser()->getVkontakteID()),
+                'user' => $regimentUsersRepository->findOneBy(['socId' => $this->getUser()->getVkontakteID()])
+            ];
+        } else $profile = [];
+
         return $this->render('top/index.html.twig', [
             'pagination' => $users,
             'update' => $regimentUsersRepository->updateTime(),
             'friends' => $friends,
-            'level' => RegimentLibs::LEVEL
+            'level' => RegimentLibs::LEVEL,
+            'profile' => $profile
         ]);
     }
 }

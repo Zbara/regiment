@@ -19,8 +19,6 @@ class Redis
     {
         $this->redis = $redis;
         $this->lifetime = $lifetime;
-
-
     }
 
     public function getItemName(string $token): string

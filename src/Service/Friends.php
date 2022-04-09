@@ -115,16 +115,31 @@ class Friends
     {
         $stat = [];
 
-        foreach ($this->regimentStatsUsersRepository->findBy(['user' => $data]) as $users){
+        foreach ($user = $this->regimentStatsUsersRepository->findBy(['user' => $data]) as $i => $users) {
             $stat[] = [
                 'id' => $users->getId(),
-                'created' => $users->getCreated(),
-                'level' => $users->getLevel(),
-                'xp' => $users->getExperience(),
-                'sut' => $users->getSut(),
-                'totalDamage' => $users->getTotalDamage(),
-                'usedTalents' => $users->getUsedTalents(),
-                'loginTime' => $users->getUpdateTime()
+                'created' => $users->getCreated()->format('Y-m-d H:i:s'),
+                'update' => (new \DateTime())->setTimestamp($users->getUpdateTime())->format('Y-m-d H:i:s'),
+                'level' => [
+                    'current' => $users->getLevel(),
+                    'prev' => $user[ ($i > 0) ? $i - 1 : 0]->getLevel(),
+                ],
+                'xp' => [
+                    'current' => $users->getExperience(),
+                    'prev' => $user[ ($i > 0) ? $i - 1 : 0]->getExperience()
+                ],
+                'sut' => [
+                    'current' => $users->getSut(),
+                    'prev' => $user[ ($i > 0) ? $i - 1 : 0]->getSut()
+                ],
+                'usedTalents' => [
+                    'current' => $users->getUsedTalents(),
+                    'prev' => $user[ ($i > 0) ? $i - 1 : 0]->getUsedTalents()
+                ],
+                'totalDamage' => [
+                    'current' => $users->getTotalDamage(),
+                    'prev' => $user[ ($i > 0) ? $i - 1 : 0]->getTotalDamage()
+                ]
             ];
         }
         return $this->dataResponse->success(DataResponse::STATUS_SUCCESS, [
@@ -138,7 +153,7 @@ class Friends
                 'totalDamage' => $data->getTotalDamage(),
                 'usedTalents' => $data->getUsedTalents(),
                 'loginTime' => $data->getLoginTime(),
-                'stats' => $stat,
+                'stats' => array_reverse($stat),
                 'achievements' => $data->getAchievements(),
                 'top' => $this->regimentUsersRepository->rank($data->getSocId()),
             ],

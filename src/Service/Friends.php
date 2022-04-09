@@ -65,6 +65,7 @@ class Friends
         $this->regimentStatsUsersRepository = $regimentStatsUsersRepository;
     }
 
+
     public function helper($userId): array
     {
         if ($user = $this->regimentUsersRepository->findOneBy([
@@ -86,14 +87,15 @@ class Friends
 
         if (is_null($this->regimentUsersRepository->getLastId($userId))) {
             if ($this->connectGame->getAuthInfo()) {
-                $requests = [];
-                $requests[] = ["method" => 'friends.view', "params" => ["friend" => $userId]];
+                $user = $this->connectGame->generateQuery("action", "requests=" . json_encode(
+                        [
+                            ["method" => 'friends.view', "params" => ["friend" => $userId]]
+                        ])
+                );
 
-                $user = $this->connectGame->generateQuery("action", "requests=" . json_encode($requests));
-                
                 if (isset($user['result'])) {
                     if ($user['result'] == 'ok') {
-                        return $this->informationSuccess($user['friends'][$userId], $userId);
+                        return $this->information($this->update($user['friends'][$userId], $userId), 'game');
                     }
                 } elseif (in_array($user['descr'], ['session expired', 'failed authorization'])) {
                     $this->redis->delete(['authParams']);
@@ -103,11 +105,49 @@ class Friends
         if ($user = $this->regimentUsersRepository->findOneBy([
             'socId' => $userId
         ])) {
-            return $this->informationError($user, $userId);
+            return $this->information($user, 'local');
         }
-
         return $this->dataResponse->error(DataResponse::STATUS_ERROR, 'Игрок не найден. Запускал ли он Храбрый Полк?');
     }
+
+    #[ArrayShape(['status' => "int", 'result' => "array"])]
+    private function information(RegimentUsers $data, string $source): array
+    {
+        $stat = [];
+
+        foreach ($this->regimentStatsUsersRepository->findBy(['user' => $data]) as $users){
+            $stat[] = [
+                'id' => $users->getId(),
+                'created' => $users->getCreated(),
+                'level' => $users->getLevel(),
+                'xp' => $users->getExperience(),
+                'sut' => $users->getSut(),
+                'totalDamage' => $users->getTotalDamage(),
+                'usedTalents' => $users->getUsedTalents(),
+                'loginTime' => $users->getUpdateTime()
+            ];
+        }
+        return $this->dataResponse->success(DataResponse::STATUS_SUCCESS, [
+            'data' => [
+                'uid' => $data->getId(),
+                'platform_id' => $data->getSocId(),
+                'level' => $data->getLevel(),
+                'xp' => $data->getExperience(),
+                'sut' => $data->getSut(),
+                'clan' => $this->clan->info($data->getSocId()),
+                'totalDamage' => $data->getTotalDamage(),
+                'usedTalents' => $data->getUsedTalents(),
+                'loginTime' => $data->getLoginTime(),
+                'stats' => $stat,
+                'achievements' => $data->getAchievements(),
+                'top' => $this->regimentUsersRepository->rank($data->getSocId()),
+            ],
+            'source' => $source,
+            'messages' => $this->ads->user(),
+            'library' => RegimentLibs::libs()
+        ]);
+    }
+
 
     private function userLocal($ownerId)
     {
@@ -133,31 +173,7 @@ class Friends
         $this->entityManager->flush();
     }
 
-    #[ArrayShape(['status' => "int", 'result' => "array"])]
-    private function informationSuccess($data, $userId): array
-    {
-        $this->update($data, $userId);
-
-        return $this->dataResponse->success(DataResponse::STATUS_SUCCESS, [
-            'data' => [
-                'platform_id' => (int)$userId,
-                'level' => $data['static_resources']['level'],
-                'xp' => $data['experiences']['experience'],
-                'sut' => $data['static_resources']['sut'],
-                'clan' => $this->clan->info($userId),
-                'totalDamage' => $data['achievements']['total_damage'],
-                'usedTalents' => $data['static_resources']['used_talents'],
-                'loginTime' => $data['time_resources']['login_time'],
-                'achievements' => $data['achievements'],
-                'top' => $this->regimentUsersRepository->rank($userId),
-            ],
-            'source' => 'game',
-            'messages' => $this->ads->user(),
-            'library' => RegimentLibs::libs()
-        ]);
-    }
-
-    private function update($data, $userId)
+    private function update($data, $userId): ?RegimentUsers
     {
         $user = $this->regimentUsersRepository->findOneBy(['socId' => (int)$userId]);
 
@@ -189,6 +205,8 @@ class Friends
 
         $this->entityManager->persist($user);
         $this->entityManager->flush();
+
+        return $user;
     }
 
 
@@ -210,28 +228,5 @@ class Friends
             ->setUpdateTime(time());
 
         return $user;
-    }
-
-
-    #[ArrayShape(['status' => "int", 'result' => "array"])]
-    private function informationError(RegimentUsers $data): array
-    {
-        return $this->dataResponse->success(DataResponse::STATUS_SUCCESS, [
-            'data' => [
-                'platform_id' => $data->getSocId(),
-                'level' => $data->getLevel(),
-                'xp' => $data->getExperience(),
-                'sut' => $data->getSut(),
-                'clan' => $this->clan->info($data->getSocId()),
-                'totalDamage' => $data->getTotalDamage(),
-                'usedTalents' => $data->getUsedTalents(),
-                'loginTime' => $data->getLoginTime(),
-                'achievements' => $data->getAchievements(),
-                'top' => $this->regimentUsersRepository->rank($data->getSocId()),
-            ],
-            'source' => 'local',
-            'messages' => $this->ads->user(),
-            'library' => RegimentLibs::libs()
-        ]);
     }
 }

@@ -32,8 +32,8 @@ class StatsSubscriber implements EventSubscriberInterface
         if ($event->getRequest()->attributes->get('_route') == 'friends-social') {
             $stats->setPlatformId($event->getRequest()->request->get('ownerId', 0));
         }
-        $this->entityManager->persist($stats);
-        $this->entityManager->flush();
+        //$this->entityManager->persist($stats);
+        //$this->entityManager->flush();
     }
 
     #[ArrayShape(['kernel.request' => "string"])]

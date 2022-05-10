@@ -26,15 +26,12 @@ class Vkontakte
         $this->httpClient = $httpClient;
     }
 
-    /**
-     * @param $url
-     * @param $proxy
-     * @param $access_token
-     *
-     * @return false|mixed|void
-     */
-    public function getUserId($url, $access_token)
+
+    public function getUserId(string $url, string $access_token, bool $return = false)
     {
+        if (is_numeric($url)) {
+            return $url;
+        }
         if (mb_strpos($url, 'https://') > -1) {
             $url = mb_substr($url, 8);
         }
@@ -50,7 +47,7 @@ class Vkontakte
                     'access_token' => (string)$access_token,
                 ])) {
                 if (isset($vk['response']['object_id'])) {
-                    return $vk['response'];
+                    return $return ? $vk['response']['object_id'] : $vk['response'];
                 }
             }
         }

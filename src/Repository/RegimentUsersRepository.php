@@ -45,6 +45,17 @@ class RegimentUsersRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
+
+    public function getUsers(array $users): mixed
+    {
+        $builder = $this->createQueryBuilder('a');
+
+        return $builder->andWhere('a.socId  IN (:ids)')
+            ->setParameter('ids', $users)
+            ->getQuery()
+            ->getResult();
+    }
+
     public function findLatest(string $category = 'all', array $friends = []): \Doctrine\ORM\QueryBuilder
     {
         $builder = $this->createQueryBuilder('a');

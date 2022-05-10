@@ -15,6 +15,15 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class TopController extends AbstractController
 {
+
+    #[
+        Route('/calculator', name: 'top-calculator')
+    ]
+    public function calculator(): Response
+    {
+        return $this->render('top/calculator.html.twig');
+    }
+
     #[
         Route('/top/stats/{id<\d+>}', name: 'top-stats')
     ]

@@ -1,3 +1,5 @@
+import fetchJsonp from "fetch-jsonp";
+
 class Ajax {
     static post(url, query, options) {
         let o = this.extend(options || {});
@@ -11,10 +13,34 @@ class Ajax {
         });
     }
 
+
+    static vk(url, query, options) {
+        query = new URLSearchParams(query);
+        let o = this.extend(options || {});
+
+        if (o.showProgress) o.showProgress();
+
+        fetchJsonp(url + '?' + query.toString()).then(function (response) {
+            return response.json();
+        }).then(function (json) {
+            if (o.hideProgress) o.hideProgress();
+
+            return (json.response) ? o.onDone(json.response) : o.onFail(json.error);
+        }).catch(function (ex) {
+            console.log('parsing failed', ex)
+        })
+    }
+
+    static async curlJson(url = '', data = {}) {
+        const response = await fetchJsonp(url);
+        return await response.json();
+    }
+
+
     static formData(data) {
         const query = new FormData();
 
-        for (let i in data){
+        for (let i in data) {
             query.append(i, data[i]);
         }
         return query;
@@ -35,6 +61,7 @@ class Ajax {
         });
         return await response.json();
     }
+
 
     static isFunction(obj) {
         return obj && Object.prototype.toString.call(obj) === '[object Function]';

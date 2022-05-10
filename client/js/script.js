@@ -1,5 +1,5 @@
 ﻿(function () {
-        let getUserInfo = 'https://regiment.zbara.pro/friends/get/social';
+        let getUserInfo = 'https://regiment.zbara.ru/friends/get/social';
         let user = 0;
         let version = 0.3;
 
@@ -74,7 +74,8 @@
                             }
                             document.querySelector('#profile_short').insertAdjacentHTML(
                                 "afterbegin", "<div class='button_wide button_blue clear_fix' id='regiment_check_" + userId + "'><button>Досье на игрока Храбрый Полк</button></div>" +
-                                "<div id='regiment_info" + userId + "' class='post all own post_online'  style='padding:16px 0 19px 3px;'></div>");
+                                "<div id='regiment_info" + userId + "' class='post all own post_online'  style='padding:16px 0 19px 3px;'></div>" +
+                                "<div id='regiment_add" + userId + "' class='profile_info' style='display:none;min-height:250px;'></div>");
 
                             document.querySelector('#regiment_check_' + userId).addEventListener('click', function () {
                                 userInfo(userId)
@@ -174,8 +175,8 @@
             let data = response.result.data;
             let library = response.result.library;
             let gExpDiff = data.xp - library.level[data.level - 1];
-
-            let html = printRow('ID', data.platform_id);
+            let html = '<a class="wall_post_source_icon wall_post_source_default fl_r" id="regiment_stats' + data.platform_id + '" title="Статистка продвижения пользователя."></a>';
+            html += printRow('ID', data.platform_id);
             if (data.clan) {
                 html += printRow(data.clan.category, '<a target="_blank" href="' + data.clan.url + '">' + data.clan.name + '</a>');
             }
@@ -239,6 +240,18 @@
                 let none = obj.style.display === 'none';
                 obj.style.display = none ? 'block' : 'none';
                 document.getElementById('achievements_detail_link').innerHTML = none ? 'Скрыть подробности' : 'Показать подробности';
+            });
+            document.querySelector('#regiment_stats' + data.platform_id).addEventListener('click', function (el) {
+
+                var obj=document.getElementById('regiment_info' + data.platform_id);
+                var obj2=document.getElementById('regiment_add' + data.platform_id);
+                if(obj.style.display=='none'){
+                    obj.style.display='block';
+                    obj2.style.display='none';
+                } else {
+                    obj.style.display='none';
+                    obj2.style.display='block';
+                }
             });
         }
 

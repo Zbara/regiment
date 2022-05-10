@@ -1,16 +1,17 @@
-{% extends 'base.html.twig' %}
-{% block title 'Калькулятор урона Храбрый Полк' %}
-{% block header 'Калькулятор урона Храбрый Полк' %}
-{% block main %}
-    <div class="row row-deck row-cards">
-        <div class="col-md-6 col-lg-12">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row row-cards">
+<script>
 
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-{% endblock %}
+    let favorites = [];
+    await this.page.goto('https://www.dream-singles.com/members/account/listMenWhoBlockedLady', {
+        waitUntil: 'networkidle2',
+    }).catch(async (err) => {
+        //clg
+        await this.page.goto('https://www.dream-singles.com/members/account/listMenWhoBlockedLady', {
+            waitUntil: 'networkidle2',
+        }).catch((err) => {
+            /**add error to front */
+            //clg
+        })
+    });
+
+
+</script>

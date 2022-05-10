@@ -14,6 +14,10 @@ Encore
     .enableVersioning(Encore.isProduction())
     .addStyleEntry('styles', './assets/app.scss')
     .enableSassLoader()
+    .copyFiles({
+        from: './assets/static',
+        to: 'static/[path][name].[ext]'
+    })
     .configureBabelPresetEnv((config) => {
         config.useBuiltIns = 'usage';
         config.corejs = 3;

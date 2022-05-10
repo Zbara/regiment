@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+{% block title 'Сканер друзей' %}
+{% block header 'Сканер друзей' %}
+{% block main %}
+    <div class="row row-cards">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Авторизация</h3>
+                </div>
+                <div class="card-body p-4">
+                    <div class="bg-light p-3">Нажмите на эту кнопку&nbsp;&nbsp;<a
+                                href="https://oauth.vk.com/authorize?client_id=2685278&scope=friends,offline,apps&redirect_uri=https://oauth.vk.com/blank.html&display=page&response_type=token"
+                                target="_blank" class="btn btn-primary">Получить access_token</a></div>
+
+                    <div class="accordion" style="margin: 20px 0;">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="heading-2">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapse-2" aria-expanded="false">
+                                    Если появилось окно с запросом доступа, нажмите кнопку "Разрешить"
+                                </button>
+                            </h2>
+                            <div id="collapse-2" class="accordion-collapse collapse"
+                                 data-bs-parent="#accordion-example">
+                                <div class="accordion-body pt-0">
+                                    <img src="{{ asset('build/static/AppStartToken.png') }}" width="100%"
+                                         alt="{{ asset('build/static/AppStartToken.png') }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="heading-3">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapse-3" aria-expanded="false">
+                                    Скопируйте содержимое адресной строки.
+                                </button>
+                            </h2>
+                            <div id="collapse-3" class="accordion-collapse collapse"
+                                 data-bs-parent="#accordion-example">
+                                <div class="accordion-body pt-0">
+                                    <img src="{{ asset('build/static/accessEnd.png') }}" width="100%"
+                                         alt="{{ asset('build/static/accessEnd.png') }}"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-light p-3">
+                        <div id="alert"></div>
+                        <form id="addToken">
+                            <div class="input-group mb-2">
+                                <input type="text" placeholder="Вставьте содержимое адресной строки."
+                                       pattern=".*[0-9a-f]{85,93}.*" class="form-control" name="access_token">
+                                <button class="btn" type="submit">Добавить</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+{% block title 'Сканер друзей' %}
+{% block header 'Сканер друзей' %}
+{% block main %}
+    <script>
+        window.access_token = '{{ user.accessToken }}';
+    </script>
+    <div class="row row-deck row-cards">
+        <div class="col-md-4 col-lg-4">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Сканер ваших друзей</h3>
+                </div>
+                <div class="card-body">
+                    <div id="alert"></div>
+                    <form id="scannerForm">
+                        <div class="form-footer">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-4">
+                                    <button type="submit" name="friends_bot" class="btn btn-primary">Сканер друзей</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8 col-lg-8">
+            <div class="card" style="height: calc(37rem + 10px)">
+                <div class="card-header">
+                    <h3 class="card-title">Список аккаунтов</h3>
+                </div>
+                <div class="card-body card-body-scrollable card-body-scrollable-shadow">
+                    <div class="table-responsive">
+                        <table class="table table-hover" id="ads-table">
+                            <thead>
+                            <tr>
+                                <th>№</th>
+                                <th>Имя Фамилия</th>
+                                <th>Уровень</th>
+                                <th>СУТ</th>
+                                <th>Таланты</th>
+                                <th>Урон</th>
+                                <th>Вход в игру</th>
+                                <th>Статистика</th>
+                            </tr>
+                            </thead>
+                            <tbody id="usersTable">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

@@ -8,3 +8,4 @@ hwi_oauth:
             type:                vkontakte
             client_id:           '8078221'
             client_secret:       '9WBo7Jq5p7ainKGPbEfz'
+            scope: 'friends,offline'

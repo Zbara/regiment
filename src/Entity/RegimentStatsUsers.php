@@ -117,7 +117,7 @@ class RegimentStatsUsers
         return $this;
     }
 
-    public function getAchievements()
+    public function getAchievements(): array
     {
         return $this->achievements;
     }

@@ -20,6 +20,9 @@ use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 class Friends
 {
@@ -66,17 +69,21 @@ class Friends
     }
 
 
-    public function helper($userId): array
+    public function helper($userId): string|array
     {
         if ($user = $this->regimentUsersRepository->findOneBy([
-            'socId' => $this->vkontakte->getUserId($userId, $_ENV['ACCESS_TOKEN'])
+            'socId' => (int) $this->vkontakte->getUserId($userId, $_ENV['ACCESS_TOKEN'],true)
         ])) {
-            return $this->dataResponse->success(DataResponse::STATUS_SUCCESS, [
-                'data' => $user,
-                'html' => $this->environment->render('friends/get.html.twig', [
-                    'user' => $user
-                ])
-            ]);
+            try {
+                return $this->dataResponse->success(DataResponse::STATUS_SUCCESS, [
+                    'data' => [],
+                    'html' => $this->environment->render('friends/get.html.twig', [
+                        'user' => $user
+                    ])
+                ]);
+            } catch (LoaderError|RuntimeError $e) {
+                return  $e->getMessage();
+            }
         }
         return $this->dataResponse->error(DataResponse::STATUS_ERROR, 'Игрок не найден. Запускал ли он Храбрый Полк?');
     }
@@ -113,35 +120,6 @@ class Friends
     #[ArrayShape(['status' => "int", 'result' => "array"])]
     private function information(RegimentUsers $data, string $source): array
     {
-        $stat = [];
-
-        foreach ($user = $this->regimentStatsUsersRepository->findBy(['user' => $data]) as $i => $users) {
-            $stat[] = [
-                'id' => $users->getId(),
-                'created' => $users->getCreated()->format('Y-m-d H:i:s'),
-                'update' => (new \DateTime())->setTimestamp($users->getUpdateTime())->format('Y-m-d H:i:s'),
-                'level' => [
-                    'current' => $users->getLevel(),
-                    'prev' => $user[ ($i > 0) ? $i - 1 : 0]->getLevel(),
-                ],
-                'xp' => [
-                    'current' => $users->getExperience(),
-                    'prev' => $user[ ($i > 0) ? $i - 1 : 0]->getExperience()
-                ],
-                'sut' => [
-                    'current' => $users->getSut(),
-                    'prev' => $user[ ($i > 0) ? $i - 1 : 0]->getSut()
-                ],
-                'usedTalents' => [
-                    'current' => $users->getUsedTalents(),
-                    'prev' => $user[ ($i > 0) ? $i - 1 : 0]->getUsedTalents()
-                ],
-                'totalDamage' => [
-                    'current' => $users->getTotalDamage(),
-                    'prev' => $user[ ($i > 0) ? $i - 1 : 0]->getTotalDamage()
-                ]
-            ];
-        }
         return $this->dataResponse->success(DataResponse::STATUS_SUCCESS, [
             'data' => [
                 'uid' => $data->getId(),
@@ -153,7 +131,38 @@ class Friends
                 'totalDamage' => $data->getTotalDamage(),
                 'usedTalents' => $data->getUsedTalents(),
                 'loginTime' => $data->getLoginTime(),
-                'stats' => array_reverse($stat),
+                'stats' => (function($user){
+                    $stat = [];
+
+                    foreach ($user = $this->regimentStatsUsersRepository->findBy(['user' => $user]) as $i => $users) {
+                        $stat[] = [
+                            'id' => $users->getId(),
+                            'created' => $users->getCreated()->format('Y-m-d H:i:s'),
+                            'update' => (new \DateTime())->setTimestamp($users->getUpdateTime())->format('Y-m-d H:i:s'),
+                            'level' => [
+                                'current' => $users->getLevel(),
+                                'prev' => $user[ ($i > 0) ? $i - 1 : 0]->getLevel(),
+                            ],
+                            'xp' => [
+                                'current' => $users->getExperience(),
+                                'prev' => $user[ ($i > 0) ? $i - 1 : 0]->getExperience()
+                            ],
+                            'sut' => [
+                                'current' => $users->getSut(),
+                                'prev' => $user[ ($i > 0) ? $i - 1 : 0]->getSut()
+                            ],
+                            'usedTalents' => [
+                                'current' => $users->getUsedTalents(),
+                                'prev' => $user[ ($i > 0) ? $i - 1 : 0]->getUsedTalents()
+                            ],
+                            'totalDamage' => [
+                                'current' => $users->getTotalDamage(),
+                                'prev' => $user[ ($i > 0) ? $i - 1 : 0]->getTotalDamage()
+                            ]
+                        ];
+                    }
+                    return array_reverse($stat);
+                })($data),
                 'achievements' => $data->getAchievements(),
                 'top' => $this->regimentUsersRepository->rank($data->getSocId()),
             ],

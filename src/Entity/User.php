@@ -51,6 +51,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Ads::class)]
     private $ads;
 
+    #[ORM\OneToOne(mappedBy: 'user', targetEntity: UsersToken::class, cascade: ['persist', 'remove'])]
+    private $usersToken;
+
     public function __construct()
     {
         $this->ads = new ArrayCollection();
@@ -244,6 +247,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $ad->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUsersToken(): ?UsersToken
+    {
+        return $this->usersToken;
+    }
+
+    public function setUsersToken(?UsersToken $usersToken): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($usersToken === null && $this->usersToken !== null) {
+            $this->usersToken->setUser(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($usersToken !== null && $usersToken->getUser() !== $this) {
+            $usersToken->setUser($this);
+        }
+
+        $this->usersToken = $usersToken;
 
         return $this;
     }

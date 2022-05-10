@@ -14,22 +14,25 @@ class StatsLogsVisit
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $ip;
+    private ?string $ip;
 
     #[ORM\Column(type: 'string', length: 255)]
     private $time;
-
-    #[ORM\Column(type: 'string', length: 255)]
-    private $referar;
-
-    #[ORM\Column(type: 'string', length: 255)]
-    private $ua;
 
     #[ORM\Column(type: 'string', length: 255)]
     private $page;
 
     #[ORM\Column(type: 'integer', options: ['default' => 0])]
     private $platform_id = 0;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $platform;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $version;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $browser;
 
     public function getId(): ?int
     {
@@ -60,30 +63,6 @@ class StatsLogsVisit
         return $this;
     }
 
-    public function getReferar(): ?string
-    {
-        return $this->referar;
-    }
-
-    public function setReferar(string $referar): self
-    {
-        $this->referar = $referar;
-
-        return $this;
-    }
-
-    public function getUa(): ?string
-    {
-        return $this->ua;
-    }
-
-    public function setUa(string $ua): self
-    {
-        $this->ua = $ua;
-
-        return $this;
-    }
-
     public function getPage(): ?string
     {
         return $this->page;
@@ -104,6 +83,42 @@ class StatsLogsVisit
     public function setPlatformId(int $platform_id): self
     {
         $this->platform_id = $platform_id;
+
+        return $this;
+    }
+
+    public function getPlatform(): ?string
+    {
+        return $this->platform;
+    }
+
+    public function setPlatform(?string $platform): self
+    {
+        $this->platform = $platform;
+
+        return $this;
+    }
+
+    public function getVersion(): ?string
+    {
+        return $this->version;
+    }
+
+    public function setVersion(?string $version): self
+    {
+        $this->version = $version;
+
+        return $this;
+    }
+
+    public function getBrowser(): ?string
+    {
+        return $this->browser;
+    }
+
+    public function setBrowser(string $browser): self
+    {
+        $this->browser = $browser;
 
         return $this;
     }

@@ -22,31 +22,18 @@ class StatsSubscriber implements EventSubscriberInterface
 
     public function onKernelResponse(RequestEvent $event)
     {
-
-        $stats = new StatsLogsVisit();
-        $stats->setIp($event->getRequest()->getClientIp())
+        $stats = (new StatsLogsVisit())->setIp($event->getRequest()->getClientIp())
             ->setPage($event->getRequest()->getRequestUri())
             ->setTime(time())
-            ->setUa($event->getRequest()->headers->get('User-Agent'))
-            ->setReferar($event->getRequest()->headers->get('Referer') ?? 'no');
+            ->setPlatform($this->browser->getPlatform())
+            ->setBrowser($this->browser->getBrowser())
+            ->setVersion($this->browser->getVersion());
 
-        if($event->getRequest()->attributes->get('_route') == 'friends-social'){
+        if ($event->getRequest()->attributes->get('_route') == 'friends-social') {
             $stats->setPlatformId($event->getRequest()->request->get('ownerId', 0));
         }
-
-
-//        $stats = (new StatsLogsVisit())->setIp($event->getRequest()->getClientIp())
-//            ->setPage($event->getRequest()->getRequestUri())
-//            ->setTime(time())
-//            ->setPlatform($this->browser->getPlatform())
-//            ->setBrowser($this->browser->getBrowser())
-//            ->setVersion($this->browser->getVersion());
-//
-//        if ($event->getRequest()->attributes->get('_route') == 'friends-social') {
-//            $stats->setPlatformId($event->getRequest()->request->get('ownerId', 0));
-//        }
-        $this->entityManager->persist($stats);
-        $this->entityManager->flush();
+        //$this->entityManager->persist($stats);
+        //$this->entityManager->flush();
     }
 
     #[ArrayShape(['kernel.request' => "string"])]

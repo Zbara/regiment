@@ -14,13 +14,11 @@ use Symfony\Component\Security\Core\Security;
 class MainController extends AbstractController
 {
     #[Route('/', name: 'main')]
-    public function index(Security $security): Response
+    public function index(): Response
     {
-
-        if ($security->isGranted('ROLE_USER')) {
-            return $this->redirectToRoute('top');
-        }
-
+//        if ($security->isGranted('ROLE_USER')) {
+//            return $this->redirectToRoute('top');
+//        }
         return $this->render('main/index.html.twig');
     }
 

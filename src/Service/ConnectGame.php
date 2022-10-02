@@ -37,6 +37,7 @@ class ConnectGame
 
     public function authInfo(): bool|array|null
     {
+
         if(empty($this->redis->getValue('authParams', 1))) {
             $appInfo = $this->vkontakte->getApi('https://api.vk.com/method/apps.getEmbeddedUrl', [
                 'app_id' => $this->appId,
@@ -156,9 +157,9 @@ class ConnectGame
                         'Game-key' => $this->game_key,
                         'Game-check' => md5($sign),
                     ],
-                    'proxy' => 'http://:@185.238.228.183:80',
-                    'verify_peer' => false,
-                    'verify_host' => false,
+//                    'proxy' => 'http://:@185.238.228.183:80',
+//                    'verify_peer' => false,
+//                    'verify_host' => false,
                 ]
             );
             $response = $client->request('POST', 'https://' . $url, ['body' => $this->compress($data)]);

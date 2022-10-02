@@ -16,6 +16,7 @@ class MainController extends AbstractController
     #[Route('/', name: 'main')]
     public function index(Security $security): Response
     {
+
         if ($security->isGranted('ROLE_USER')) {
             return $this->redirectToRoute('top');
         }
@@ -43,5 +44,4 @@ class MainController extends AbstractController
             'visit_day' => $logsVisitRepository->getCount('day')
         ]);
     }
-
 }

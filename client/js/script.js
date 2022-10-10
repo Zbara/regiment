@@ -1,7 +1,9 @@
 ﻿(function () {
         let getUserInfo = 'https://regiment.zbara.ru/friends/get/social';
+        let getUserInfoApi = 'https://regiment.zbara.ru/friends/get/username';
         let user = 0;
-        let version = 0.3;
+        let version = 0.4;
+        let userPage = null;
 
         async function myId() {
             if (document.body.innerHTML.match(/"id":(\d+),/)) {
@@ -11,10 +13,10 @@
         }
 
         async function platform_id_type() {
-            if (document.querySelector('#profile_edit_act')) {
+            if (document.querySelector("a[href^='/edit']")) {
                 return 1;
             }
-            if (document.querySelector('.PageActionCellSeparator')) {
+            if (document.querySelector('.OwnerPageName')) {
                 return 2;
             }
             if (document.querySelector("div[id^='friends_user_row']")) {
@@ -32,12 +34,33 @@
                 case 1:
                     return user;
                 case 2:
-                    const el = document.querySelector('.profile_content');
-                    const regex = /Profile.showGiftBox\((\d+),/;
+                    let link = window.location.href.split('/');
 
-                    if (el) {
-                        if (regex.exec(el.innerHTML)) {
-                            return regex.exec(el.innerHTML)[1]
+                    if(link) {
+                        if (userPage !== link[3]) {
+
+                            userPage = link[3];
+
+                            return fetch(getUserInfoApi, {
+                                method: 'POST',
+                                mode: 'cors',
+                                body: formData({
+                                    userId: link[3],
+                                })
+                            }).then(function (response) {
+                                if (!response.ok) {
+                                    throw response;
+                                }
+                                return response.json();
+
+                            }).then(function (response) {
+                                if(response.status === 1){
+                                    return response.result.user_id;
+                                }
+                                return 0;
+                            }).catch(function (error) {
+                                console.log('error')
+                            })
                         }
                     }
                     return 0;
@@ -69,10 +92,13 @@
                             if (isNaN(userId) || (userId < 0) || (userId === 0)) {
                                 return;
                             }
+
+                            console.log(userId)
+
                             if (document.querySelector('#regiment_check_' + userId)) {
                                 return;
                             }
-                            document.querySelector('#profile_short').insertAdjacentHTML(
+                            document.querySelector('.Profile__column').insertAdjacentHTML(
                                 "afterbegin", "<div class='button_wide button_blue clear_fix' id='regiment_check_" + userId + "'><button>Досье на игрока Храбрый Полк</button></div>" +
                                 "<div id='regiment_info" + userId + "' class='post all own post_online'  style='padding:16px 0 19px 3px;'></div>" +
                                 "<div id='regiment_add" + userId + "' class='profile_info' style='display:none;min-height:250px;'></div>");
@@ -133,7 +159,7 @@
 
         function printTitle(text = '', a = '') {
             if (!a) a = '';
-            return '<h4 style="height:4px;padding:3px 0 15px 0">' + a + '<b style="padding-right:6px;font-size:11px;background-color:white">' + text + '</b></h4>';
+            return '<h4 style="height:4px;padding:3px 0 15px 0">' + a + '<b style="padding-right:6px;font-size:11px;">' + text + '</b></h4>';
         }
 
         async function loader(dom = {}) {
@@ -181,17 +207,17 @@
                 html += printRow(data.clan.category, '<a target="_blank" href="' + data.clan.url + '">' + data.clan.name + '</a>');
             }
             html += printRow('Уровень', data.level + ' (' + Math.floor(gExpDiff * 100 / (library.level[data.level] - library.level[data.level - 1])) + '%)');
-            html += printRow('Сут', '<b  style="color:#' + library.color.sut[data.achievements.sut] + ';font-size:10px;background:#fff">' + data.sut + ' </b>');
+            html += printRow('Сут', '<b  style="color:#' + library.color.sut[data.achievements.sut] + ';font-size:10px;">' + data.sut + ' </b>');
             html += printRow('Боевые достижения', '' +
-                '<b  style="color:#' + library.color.damage[data.totalDamage] + ';font-size:10px;background:#fff">' + intToString(library.achievements['damage'][data.totalDamage]) + ' урона, </b>' +
-                '<b  style="color:#' + library.color.weapons[data.achievements.tokens] + ';font-size:10px;background:#fff">' + intToString(library.achievements['tokens'][data.achievements.tokens]) + ' жетонов, </b>' +
-                '<b  style="color:#' + library.color.weapons[data.achievements.weapon_6] + ';font-size:10px;background:#fff">' + intToString(library.achievements['weapons'][data.achievements.weapon_6]) + ' кумулятивных</b>'
+                '<b  style="color:#' + library.color.damage[data.totalDamage] + ';font-size:10px;">' + intToString(library.achievements['damage'][data.totalDamage]) + ' урона, </b>' +
+                '<b  style="color:#' + library.color.weapons[data.achievements.tokens] + ';font-size:10px;">' + intToString(library.achievements['tokens'][data.achievements.tokens]) + ' жетонов, </b>' +
+                '<b  style="color:#' + library.color.weapons[data.achievements.weapon_6] + ';font-size:10px;">' + intToString(library.achievements['weapons'][data.achievements.weapon_6]) + ' кумулятивных</b>'
             );
             html += printRow('Валюта:', printCurrency(data, library));
 
             for (let z in library.color.talant) {
                 if (data.usedTalents >= library.color.talant[z].min && data.usedTalents <= library.color.talant[z].max) {
-                    html += printRow('Вложено талантов', '<b  style="color:' + library.color.talant[z].color + ';font-size:10px;background:#fff">' + data.usedTalents + ' </b>');
+                    html += printRow('Вложено талантов', '<b  style="color:' + library.color.talant[z].color + ';font-size:10px;">' + data.usedTalents + ' </b>');
                 }
             }
 
@@ -217,7 +243,7 @@
                     }
                 }
             }
-            html += printTitle('Достижения', '<a id="achievements_detail_link" class="fl_r" style="color:#A3B0BC;font-size:10px;padding:0 2px 0 6px;background:#fff">Показать подробности</a>');
+            html += printTitle('Достижения', '<a id="achievements_detail_link" class="fl_r" style="color:#A3B0BC;font-size:10px;padding:0 2px 0 6px;">Показать подробности</a>');
             html += '<div id="achievements_detail" style="display:none">';
 
             for (let z in library.achievements_list) {

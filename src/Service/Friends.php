@@ -253,4 +253,29 @@ class Friends
 
         return $user;
     }
+
+    public function username(string $userId): array
+    {
+        if($user = $this->redis->getValue('user_name_' . $userId)){
+            return $this->dataResponse->success(DataResponse::STATUS_SUCCESS, [
+                'user_id' => $user
+            ]);
+        }
+
+        $users = $this->vkontakte->getApi('https://api.vk.com/method/utils.resolveScreenName', [
+            'v' => '5.136',
+            'screen_name' => $userId,
+            'access_token' => $_ENV['ACCESS_TOKEN']
+        ]);
+
+        if(isset($users['response']['object_id'])){
+
+            $this->redis->setValue('user_name_' . $userId, $users['response']['object_id'], 86400);
+
+            return $this->dataResponse->success(DataResponse::STATUS_SUCCESS, [
+                'user_id' => $users['response']['object_id']
+            ]);
+        }
+        return $this->dataResponse->error(DataResponse::STATUS_ERROR, 'vk api error.');
+    }
 }

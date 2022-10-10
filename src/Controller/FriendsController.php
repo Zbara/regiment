@@ -39,6 +39,16 @@ class FriendsController extends AbstractController
         return $this->json($dataResponse->error(0, 'Игрок не найден.'));
     }
 
+
+    #[Route('/friends/get/username', name: 'friends-get-username')]
+    public function username(Request $request, Friends $friends, DataResponse $dataResponse): Response
+    {
+        if ($userId = $request->get('userId', 0)) {
+            return $this->json($friends->username($userId));
+        }
+        return $this->json($dataResponse->error(0, 'Игрок не найден.'));
+    }
+
     #[Route('/friends/get/social', name: 'friends-social')]
     public function social(Request $request, Friends $friends, DataResponse $dataResponse): Response
     {

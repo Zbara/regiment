@@ -531,7 +531,7 @@ abstract class RegimentLibs
             ],
             [
                 'min' => 251,
-                'max' => 1000,
+                'max' => 2000,
                 'color' => '#FF0000'
             ]
         ]

@@ -92,9 +92,6 @@
                             if (isNaN(userId) || (userId < 0) || (userId === 0)) {
                                 return;
                             }
-
-                            console.log(userId)
-
                             if (document.querySelector('#regiment_check_' + userId)) {
                                 return;
                             }
@@ -201,8 +198,7 @@
             let data = response.result.data;
             let library = response.result.library;
             let gExpDiff = data.xp - library.level[data.level - 1];
-            let html = '<a class="wall_post_source_icon wall_post_source_default fl_r" id="regiment_stats' + data.platform_id + '" title="Статистка продвижения пользователя."></a>';
-            html += printRow('ID', data.platform_id);
+            let html = printRow('ID', data.platform_id);
             if (data.clan) {
                 html += printRow(data.clan.category, '<a target="_blank" href="' + data.clan.url + '">' + data.clan.name + '</a>');
             }
@@ -266,18 +262,6 @@
                 let none = obj.style.display === 'none';
                 obj.style.display = none ? 'block' : 'none';
                 document.getElementById('achievements_detail_link').innerHTML = none ? 'Скрыть подробности' : 'Показать подробности';
-            });
-            document.querySelector('#regiment_stats' + data.platform_id).addEventListener('click', function (el) {
-
-                var obj=document.getElementById('regiment_info' + data.platform_id);
-                var obj2=document.getElementById('regiment_add' + data.platform_id);
-                if(obj.style.display=='none'){
-                    obj.style.display='block';
-                    obj2.style.display='none';
-                } else {
-                    obj.style.display='none';
-                    obj2.style.display='block';
-                }
             });
         }
 

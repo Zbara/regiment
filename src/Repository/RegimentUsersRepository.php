@@ -87,7 +87,7 @@ class RegimentUsersRepository extends ServiceEntityRepository
 
     public function rank(?int $socId)
     {
-        $sql = 'select (select count(*) from regiment_users r where r.experience>=u.experience) as rank from regiment_users u where u.soc_id = :socId';
+        $sql = 'select (select count(*) from regiment_users r where r.sut>=u.sut) as rank from regiment_users u where u.soc_id = :socId';
 
         $rsm = new ResultSetMapping();
         $rsm->addScalarResult('rank', 'rank');

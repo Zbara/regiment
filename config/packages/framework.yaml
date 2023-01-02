@@ -14,7 +14,6 @@ framework:
         default_options:
             verify_peer: false
             verify_host: false
-            proxy: 'http://7R7Jcj:VF4XoT@198.20.160.75:8000'
             timeout: 15
             headers:
                 'User-Agent': 'VKAndroidApp/6.54-9332 (Android 11; SDK 30; armeabi-v7a; samsung SM-G970F; ru; 2280x1080)'

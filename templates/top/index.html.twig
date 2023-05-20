@@ -108,10 +108,13 @@
                                     </div>
                                 </td>
                                 <td>
-                                    {% set levels = profile.user.experience - level[profile.user.level - 1] %}
-                                    {% set procent =  levels * 100 / (level[profile.user.level] - level[ profile.user.level - 1]) %}
-
-                                    <div class="text-muted"> {{ profile.user.level }} ({{ procent|round }}%)</div>
+                                    {% if level[profile.user.level] is defined and level[profile.user.level] is not empty %}
+                                        {% set levels = profile.user.experience - level[profile.user.level - 1] ?? 0 %}
+                                        {% set procent =  levels * 100 / (level[profile.user.level] - level[ profile.user.level - 1]) %}
+                                        <div class="text-muted"> {{ profile.user.level }} ({{ procent|round }}%)</div>
+                                    {% else%}
+                                        <div class="text-muted"> {{ profile.user.level }} (0%)</div>
+                                    {% endif %}
                                 </td>
                                 <td>
                                     <div class="text-muted">{{ profile.user.sut }}</div>
@@ -168,10 +171,13 @@
                                     </div>
                                 </td>
                                 <td>
-                                    {% set levels = item.experience - level[item.level - 1] %}
-                                    {% set procent =  levels * 100 / (level[item.level] - level[item.level - 1]) %}
-
-                                    <div class="text-muted"> {{ item.level }} ({{ procent|round }}%)</div>
+                                    {% if level[item.level] is defined and level[item.level] is not empty %}
+                                        {% set levels = item.experience - level[item.level - 1]  %}
+                                        {% set procent =  levels * 100 / (level[item.level] - level[item.level - 1]) %}
+                                        <div class="text-muted"> {{ item.level }} ({{ procent|round }}%)</div>
+                                    {% else%}
+                                           <div class="text-muted"> {{ item.level }} (0%)</div>
+                                    {% endif %}
                                 </td>
                                 <td>
                                     <div class="text-muted">{{ item.sut }}</div>

@@ -686,6 +686,7 @@ abstract class RegimentLibs
         "win_boss_8" => ["title" => "Бок", "type" => "boss", "category" => "bosses", "group" => "usual", "id" => 8],
         "win_boss_9" => ["title" => "Гот", "type" => "boss", "category" => "bosses", "group" => "usual", "id" => 9],
         "win_boss_10" => ["title" => "Паулюс", "type" => "boss", "category" => "bosses", "group" => "usual", "id" => 10],
+        "win_boss_11" => ["title" => "Вейхс", "type" => "boss", "category" => "bosses", "group" => "usual", "id" => 11],
         "win_boss_14" => ["title" => "Геббельс", "type" => "boss", "category" => "bosses", "group" => "night", "id" => 14],
         "win_boss_15" => ["title" => "Муссолини", "type" => "boss", "category" => "bosses", "group" => "night", "id" => 15],
         "win_boss_18" => ["title" => "Роммель", "type" => "boss", "category" => "bosses", "group" => "night", "id" => 18],

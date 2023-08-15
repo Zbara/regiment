@@ -1,2 +1,2 @@
-Sitemap: https://regiment.zbara.ru/sitemap.xml
+Sitemap: https://regiment.zbara.dev/sitemap.xml
 User-agent: *

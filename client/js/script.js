@@ -1,8 +1,8 @@
 ﻿(function () {
-        let getUserInfo = 'https://regiment.zbara.ru/friends/get/social';
-        let getUserInfoApi = 'https://regiment.zbara.ru/friends/get/username';
+        let getUserInfo = 'https://regiment.zbara.dev/friends/get/social';
+        let getUserInfoApi = 'https://regiment.zbara.dev/friends/get/username';
         let user = 0;
-        let version = 0.4;
+        let version = 0.5;
         let userPage = null;
 
         async function myId() {

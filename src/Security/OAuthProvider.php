@@ -31,7 +31,7 @@ class OAuthProvider implements OAuthAwareUserProviderInterface, UserProviderInte
 
         if (null === $user) {
             $user = new User();
-            $user->setEmail(uniqid('', true) . '@zbara.ru');
+            $user->setEmail(uniqid('', true) . '@zbara.dev');
             $user->setVkontakteID($response->getUsername());
             $user->setPassword(md5(uniqid('', true)));
             $user->setFirstName($response->getFirstName());

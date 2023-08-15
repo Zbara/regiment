@@ -787,9 +787,9 @@ abstract class RegimentLibs
     ];
 
     const IMAGES = [
-        'encryptions' => 'https://regiment.zbara.ru/images/encryptions.png',
-        'tickets' => 'https://regiment.zbara.ru/images/tickets.png',
-        'coins' => 'https://regiment.zbara.ru/images/coin.png',
+        'encryptions' => 'https://regiment.zbara.dev/images/encryptions.png',
+        'tickets' => 'https://regiment.zbara.dev/images/tickets.png',
+        'coins' => 'https://regiment.zbara.dev/images/coin.png',
     ];
 
     #[ArrayShape([

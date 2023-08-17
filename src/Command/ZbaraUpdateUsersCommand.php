@@ -34,6 +34,8 @@ class ZbaraUpdateUsersCommand extends Command
 
         foreach ($users as $user){
 
+            dump('Start ' . $user->getId());
+
             $updateStatus = $this->friends->updateLocal($user);
 
             if($updateStatus) {

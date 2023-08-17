@@ -197,7 +197,7 @@ class Friends
         $this->entityManager->flush();
     }
 
-    private function update($data, $userId): ?RegimentUsers
+    public function update($data, $userId): ?RegimentUsers
     {
         $user = $this->regimentUsersRepository->findOneBy(['socId' => (int)$userId]);
 

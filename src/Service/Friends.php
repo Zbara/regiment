@@ -124,14 +124,11 @@ class Friends
         if ($this->connectGame->getAuthInfo()) {
             $user = $this->connectGame->generateQuery("action", "requests=" . json_encode(
                     [
-                        ["method" => 'friends.view', "params" => ["friend" => $users->getId()]]
+                        ["method" => 'friends.view', "params" => ["friend" => $users->getSocId()]]
                     ])
             );
 
-            dd($user);
-
-
-            $userId = $users->getId();
+            $userId = $users->getSocId();
 
             if (isset($user['result']) && $user['result'] == 'ok') {
                 $this->update($user['friends'][$userId], $userId);

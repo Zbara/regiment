@@ -24,7 +24,6 @@ class ZbaraUpdateUsersCommand extends Command
     public function __construct(
         private RegimentUsersRepository $regimentUsersRepository,
         private Friends                 $friends,
-        private ConnectGame             $connectGame,
     ) {
         parent::__construct();
     }
@@ -34,25 +33,12 @@ class ZbaraUpdateUsersCommand extends Command
         $users =  $this->regimentUsersRepository->findAll();
 
         foreach ($users as $user){
-            $user = $this->connectGame->generateQuery("action", "requests=" . json_encode(
-                    [
-                        ["method" => 'friends.view', "params" => ["friend" => $user->getId()]]
-                    ])
-            );
-            $userId = $user->getId();
 
-            if (isset($user['result'])) {
+            $updateStatus = $this->friends->updateLocal($user);
 
-                if ($user['result'] == 'ok') {
-                    $this->friends->update($user['friends'][$userId], $userId);
-
-                    dump('Update Ok ' . $userId);
-                }
-
-            } elseif (in_array($user['descr'], ['session expired', 'failed authorization'])) {
-                return Command::FAILURE;
-            }
-            sleep(1);
+            if($updateStatus) {
+                sleep(1);
+            } else return Command::FAILURE;
         }
         return Command::SUCCESS;
     }

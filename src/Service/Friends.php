@@ -127,6 +127,10 @@ class Friends
                         ["method" => 'friends.view', "params" => ["friend" => $users->getId()]]
                     ])
             );
+
+            dd($user);
+
+
             $userId = $users->getId();
 
             if (isset($user['result']) && $user['result'] == 'ok') {
@@ -197,7 +201,7 @@ class Friends
     }
 
 
-    private function userLocal($ownerId)
+    private function userLocal($ownerId): void
     {
         $user = $this->usersScriptRepository->findOneBy(['platformId' => (int)$ownerId]);
 

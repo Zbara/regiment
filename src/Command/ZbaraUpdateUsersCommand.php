@@ -45,11 +45,14 @@ class ZbaraUpdateUsersCommand extends Command
 
                 if ($user['result'] == 'ok') {
                     $this->friends->update($user['friends'][$userId], $userId);
+
+                    dump('Update Ok ' . $userId);
                 }
 
             } elseif (in_array($user['descr'], ['session expired', 'failed authorization'])) {
                 return Command::FAILURE;
             }
+            sleep(1);
         }
         return Command::SUCCESS;
     }

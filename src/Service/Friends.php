@@ -121,19 +121,21 @@ class Friends
         RegimentUsers $users
     ): bool
     {
-        $user = $this->connectGame->generateQuery("action", "requests=" . json_encode(
-                [
-                    ["method" => 'friends.view', "params" => ["friend" => $users->getId()]]
-                ])
-        );
-        $userId = $users->getId();
+        if ($this->connectGame->getAuthInfo()) {
+            $user = $this->connectGame->generateQuery("action", "requests=" . json_encode(
+                    [
+                        ["method" => 'friends.view', "params" => ["friend" => $users->getId()]]
+                    ])
+            );
+            $userId = $users->getId();
 
-        if (isset($user['result']) && $user['result'] == 'ok') {
-            $this->update($user['friends'][$userId], $userId);
-            dump('Update Ok ' . $userId);
-            return true;
-        } elseif (in_array($user['descr'], ['session expired', 'failed authorization'])) {
-            return false;
+            if (isset($user['result']) && $user['result'] == 'ok') {
+                $this->update($user['friends'][$userId], $userId);
+                dump('Update Ok ' . $userId);
+                return true;
+            } elseif (in_array($user['descr'], ['session expired', 'failed authorization'])) {
+                return false;
+            }
         }
 
         return false;
